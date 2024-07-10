@@ -1,0 +1,6 @@
+/server/php/db_upass.php
+/server/php/mailer_config.php
+/server/py/users/*
+/server/py/public/*
+composer.lock
+vendor

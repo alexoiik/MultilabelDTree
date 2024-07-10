@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link 
+            rel="icon" 
+            type="image/x-icon" 
+            href="../src/assets/img/tree.png"
+        >
+        <link 
+            rel="stylesheet" 
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+            integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+            crossorigin="anonymous"
+        > 
+        <link 
+            rel="stylesheet" 
+            href="../src/css/modelCreation.css"
+        >
+        <script 
+            src="../src/js/jquery-3.7.0.min.js">
+        </script>
+        <script 
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" 
+            crossorigin="anonymous">
+        </script>
+        <script 
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" 
+            integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" 
+            crossorigin="anonymous">
+        </script>   
+        <script 
+            src="../src/js/modelCreation.js">
+        </script>
+        <title>
+            MultilabelDTree - Build a Model
+        </title>
+    </head>
+    <body>
+        <!-- Responsive Navbar -->
+        <nav class="navbar navbar-expand-xl bg-light mr-2 fixed-top">
+            <div 
+                id="navContainer"
+                class="container-fluid" 
+            >
+                <a 
+                    class="appTitle" 
+                    href="../"
+                >
+                    <img 
+                        src="../src/assets/img/tree.png" 
+                        alt="App Logo" 
+                        width="40px" 
+                        style="margin-bottom: 10px;"
+                    >
+                    MLDTree
+                </a>
+                <button 
+                    type="button" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#navbarSupportedContent" 
+                    aria-controls="navbarSupportedContent" 
+                    aria-expanded="false" 
+                    aria-label="Toggle navigation"
+                    class="navbar-toggler" 
+                >
+                    <span class="navbar-toggler-icon">
+                    </span>
+                </button>
+                <div 
+                    class="collapse navbar-collapse" 
+                    id="navbarSupportedContent"
+                >
+                    <div class="navbar-nav me-auto">
+                        <a 
+                            class="font-size navLink"
+                            href="../"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                            </svg>
+                            <span>Home</span>
+                        </a>
+                        <a 
+                            class="font-size navLink active" 
+                            href="#" 
+                            role="button" 
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 22px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z" />
+                            </svg>
+                            <span>Build a Model</span>
+                        </a>
+                        <a 
+                            class="font-size navLink" 
+                            href="./pretrainedModels.html" 
+                            role="button" 
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 22px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3" />
+                            </svg>
+                            <span>Pretrained Models</span>
+                        </a>
+                        <a 
+                            class="font-size navLink" 
+                            href="./about.html"
+                            role="button"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 22px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                            </svg>
+                            <span>About</span>
+                        </a>
+                        <a  
+                            class="font-size navLink"
+                            href="#"
+                            role="button"
+                            target="_blank"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 22px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
+                            </svg>
+                            <span>Rate Us!</span>
+                        </a>
+                    </div>
+                    <div class="navbar-nav">
+                        <div 
+                            class="nav-item dropdown" 
+                            id="acc_dropdown"
+                        >
+                            <a      
+                                class="nav-link btn-dropdown" 
+                                style="color: #2869bede; text-align: left;"
+                                href="#" 
+                                role="button" 
+                                data-bs-toggle="dropdown" 
+                                aria-expanded="false"
+                            >
+                                <img 
+                                    src="../src/assets/img/user.png" 
+                                    alt="User Icon" 
+                                    width="48px"
+                                >
+                            </a>
+                            <ul 
+                                style="right: -40px;"
+                                class="dropdown-menu dropdown-menu-end drop-ul"
+                                id="drop_width" 
+                            >
+                                <li>
+                                    <p 
+                                        class="dropdown-header userName" 
+                                        id="username"
+                                    >
+                                        Username
+                                    </p>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a 
+                                        class="dropdown-item" 
+                                        href="#"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                        </svg>
+                                        <span>Edit Account</span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-submenu-left">
+                                        <li>
+                                            <a 
+                                                class="dropdown-item" 
+                                                href="./editAccount.html"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" style="width: 17px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                                                </svg>
+                                                <span>Edit Credentials</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a 
+                                                class="dropdown-item" 
+                                                href="./editEmail.html"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" style="width: 17px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25" />
+                                                </svg>
+                                                <span>Edit Email</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a 
+                                                class="dropdown-item" 
+                                                href="./deleteAccount.html"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" style="width: 17px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM4 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 10.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                                                </svg>
+                                                <span>Delete Account</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a 
+                                        class="dropdown-item" 
+                                        href="./apiDocs.html"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                                        </svg>
+                                        <span>API Docs</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a 
+                                        class="dropdown-item" 
+                                        href="#"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                                        </svg>
+                                        <span>Logout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+            
+        <!-- Page Title -->
+        <div class="pageTitle">
+            Build a Model
+        </div>
+
+        <!-- Main Card Container -->
+        <div class="main-card-container">
+    
+            <!-- Dataset Uploading or Selection -->
+            <div class="content">
+                <div class="container">
+                    <div class="steps">
+                        <strong>Step 1.</strong> Upload or Select a Dataset
+                    </div>
+                    <div class="gap-2 col-12 mx-auto edit-button2">
+                        <button 
+                            class="btn btn-dark" 
+                            type="button" 
+                            id="upload_btn"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
+                            </svg>
+                            <span class="btn-text">
+                                Upload New Dataset
+                            </span>
+                        </button>
+                    </div>
+                    <select 
+                        class="form-select edit-select" 
+                        id="select_dataset" 
+                        aria-label="Dataset Selection"
+                    >
+                    </select>
+                    <div class="edit-button dnload-del-btn">
+                        <button 
+                            class="btn btn-primary" 
+                            type="button" 
+                            id="dnload-btn" 
+                            disabled=""
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0-3-3m3 3 3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                            </svg>
+                            <span class="btn-text">
+                                Download Dataset
+                            </span>
+                        </button>
+                        <button
+                            class="btn btn-danger" 
+                            type="button" 
+                            id="delbtn" 
+                            disabled=""
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                            </svg>
+                            <span class="btn-text">
+                                Delete Dataset
+                            </span>
+                        </button>
+                        <button 
+                            class="btn btn-danger" 
+                            type="button" 
+                            id="loadingbtn2" 
+                            disabled=""
+                        >
+                            <span 
+                                class="spinner-border spinner-border-sm loading-spinner" 
+                                role="status" 
+                                aria-hidden="true"
+                            >
+                            </span>
+                            <span class="loading-text">
+                                Processing ...
+                            </span>
+                        </button>
+                    </div>
+                    <div 
+                        class="d-grid gap-2 col-12 mx-auto edit-button2"
+                    >
+                        <button 
+                            class="btn btn-light" 
+                            type="button" 
+                            id="loadingbtn_dataset"
+                            disabled=""
+                        >
+                            <span 
+                                class="spinner-border spinner-border-sm loading-spinner" 
+                                role="status" 
+                                aria-hidden="true"
+                            >
+                            </span>
+                            <span class="loading-text">
+                                Processing Dataset ...
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dataset Preview -->
+            <div 
+                class="content" 
+                id="table_div"
+            >
+                <div class="container_2">
+                    <div class="page-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+                        </svg>
+                        Dataset Preview
+                    </div>
+                    <div style="overflow-x:auto">
+                        <table 
+                            id="data_table" 
+                            class="table table-bordered table-striped table-style table-hover"
+                        >
+                            <thead>
+                                <tr id="data_table_head_tr">
+                                </tr>
+                            </thead>
+                            <tbody 
+                                class="table-group-divider" 
+                                id="data_table_tbody"
+                            >
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="page-subtitle">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>                          
+                        <span>
+                            This is a <strong>15-Row</strong> sample of your selected dataset.
+                        </span><br/>
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
+                            </svg>
+                            There are total <strong id="record-count"></strong> records in the dataset.
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parameters Selection -->
+            <div 
+                class="content" 
+                id="params_div"
+            >
+                <div class="container_2">
+                    <div class="steps">
+                        <strong>Step 2.</strong> Choose Parameters for Classification
+                    </div>
+
+                    <div class="page-subtitle2">
+                        <span 
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="right" 
+                            data-bs-title="Features represent only numerical columns without missing values."
+                            style="font-size: 18px; font-weight: 300;"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m0 0a2.246 2.246 0 0 0-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0 1 21 12v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6c0-.98.626-1.813 1.5-2.122" />
+                            </svg>
+                            Select Your Features: (<span class="quesMark">?</span>)
+                        </span>
+                    </div>
+                    <div 
+                        class="form-check form-check-inline" 
+                        id="checkSelectAll"
+                    >
+                    </div>
+                    <form id="checkBoxes">
+                    </form>
+                
+                    <div class="page-subtitle2">
+                        <span 
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="right"
+                            data-bs-title="Labels represent only binary (0, 1) columns without missing values."
+                            style="font-size: 18px; font-weight: 300;"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
+                            </svg>
+                            Select Your Labels (<span class="quesMark">?</span>)
+                        </span>
+                    </div>
+                    <div 
+                        class="form-check form-check-inline" 
+                        id="checkSelectAll2"
+                    >
+                    </div>
+                    <form id="select_class">
+                    </form> 
+
+                    <div class="page-subtitle2">
+                        <span 
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="right"
+                            data-bs-title="Auto mode is recommended for the best classifier selection."
+                            style="font-size: 18px; font-weight: 300;"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 28px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                            </svg>
+                            Select Your Classifier (<span class="quesMark">?</span>)
+                        </span>
+                    </div>
+                    <select 
+                        class="form-select edit-select3" 
+                        id="select_classifier"
+                        aria-label="Default select example"
+                    >
+                    </select>
+
+                    <div 
+                        class="page-subtitle2"
+                        style="margin-top: 28px;"
+                    >
+                        <span 
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="right"
+                            data-bs-title="Auto mode is available for the max_depth and min_samples_leaf parameters."
+                            style="font-size: 18px; font-weight: 300;"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 28px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" />
+                            </svg>
+                            Select parameters for the DTree base classifier &amp; the k-fold cross-validation method (<span class="quesMark">?</span>)
+                        </span>
+                    </div>
+
+                    <form action="#">
+                        <div id="params">
+                            <div class="form-floating inline_form">
+                                <input 
+                                    type="text" 
+                                    id="max_depth" 
+                                    class="form-control" 
+                                    placeholder="max_depth" 
+                                    data-bs-toggle="tooltip" 
+                                    data-bs-placement="left"
+                                    data-bs-title="The Max Depth of the DTree. You can give a specific value &ge; 1, an empty input to let the Tree fully expand or enable Auto Mode for the best Max Depth selection."
+                                >
+                                <label for="max_depth">
+                                    <span class="field-text">
+                                        max_depth
+                                    </span>
+                                </label>
+                                <div class="div-styling">
+                                    <input 
+                                        type="checkbox"
+                                        class="checkbox-styling"
+                                        id="max_depth_auto_checkbox"
+                                    >
+                                    <span class="auto-name">
+                                        Auto
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-floating inline_form">
+                                <input 
+                                    type="text" 
+                                    id="min_samples_leaf" 
+                                    class="form-control" 
+                                    placeholder="min_samples_leaf" 
+                                    data-bs-toggle="tooltip" 
+                                    data-bs-placement="left" 
+                                    data-bs-title="The Minimum number of Samples per Leaf node. You can give a specific value &ge; 1 or enable Auto Mode for the best Min Samples Leaf selection."
+                                >
+                                <label for="min_samples_leaf">
+                                    <span class="field-text">
+                                        min_samples_leaf
+                                    </span>
+                                </label>
+                                <div class="div-styling">
+                                    <input 
+                                        type="checkbox"
+                                        class="checkbox-styling"
+                                        id="min_samples_leaf_auto_checkbox"
+                                    >
+                                    <span class="auto-name">
+                                        Auto
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-floating inline_form2">
+                                <input 
+                                    type="text" 
+                                    id="kFolds" 
+                                    class="form-control" 
+                                    placeholder="k" 
+                                    data-bs-toggle="tooltip" 
+                                    data-bs-placement="left" 
+                                    data-bs-title="The number of folds for k-fold Cross-Validation. Range of accepted values: 5 - 50."
+                                >
+                                <label for="kFolds">
+                                    <span class="field-text">
+                                        k
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mx-auto">
+                            <button 
+                                class="btn btn-primary btn-build-model" 
+                                type="button" 
+                                id="buildModelBtn"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" style="width: 22px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z" />
+                                </svg>
+                                <span class="btn-text2">
+                                    Build Model
+                                </span>
+                            </button>
+                            <button 
+                                class="btn btn-primary btn-build-model" 
+                                type="button" 
+                                id="loadingbtn3" 
+                                disabled=""
+                            >
+                                <span 
+                                    class="spinner-border spinner-border-sm loading-spinner" 
+                                    role="status" 
+                                    aria-hidden="true"
+                                >
+                                </span>
+                                <span class="loading-text">
+                                    Processing...
+                                </span>
+                            </button>
+                            <button 
+                                class="btn btn-danger btn-cancel" 
+                                type="button" 
+                                id="cancelBtn"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" style="width: 22px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                                </svg>
+                                <span class="btn-text2">
+                                    Cancel
+                                </span>
+                            </button>
+                        </div>
+                    
+                    </form>
+                </div>
+            </div>
+
+            <!-- Model Evaluation & Save Model -->
+
+            <!-- Visualize DTree -->
+
+            <div id="margin_div"></div>
+            
+            <!-- Upload New Dataset <Modal> -->
+            <div 
+                class="modal fade" 
+                id="upl_modal" 
+                data-bs-backdrop="static" 
+                data-bs-keyboard="false" 
+                tabindex="-1" 
+                aria-labelledby="staticBackdropLabel" 
+                aria-hidden="true"
+            >
+                <div 
+                    class="modal-dialog modal-dialog-centered"
+                >
+                    <div 
+                        class="modal-content"
+                    >
+                        <div class="modal-header">
+                            <h5 
+                                id="staticBackdropLabel"
+                                class="modal-title fs-5" 
+                            >
+                                Upload New Dataset
+                            </h5>
+                            <button 
+                                type="button" 
+                                class="close-modal btn-close"
+                                data-bs-dismiss="modal" 
+                                aria-label="Close" 
+                            >
+                            </button>
+                        </div>
+                        <div 
+                            class="modal-body"
+                        >
+                            <div 
+                                id="alertPlaceholder"
+                            >
+                            </div>
+                            <div class="mb-3">
+                                <label 
+                                    for="formFile" 
+                                    class="form-label edit-select2"
+                                >
+                                    Please select only <strong>.csv</strong> files.<br/>
+                                    Max file size: <strong>10MB.</strong>
+                                </label>
+                                <input 
+                                    class="form-control" 
+                                    type="file" 
+                                    id="formFile"
+                                >
+                            </div>
+                            <select 
+                                class="form-select edit-select" 
+                                id="select_folder" 
+                                aria-label="Default select example"
+                            >
+                                <option 
+                                    selected 
+                                    value="0"
+                                >
+                                    Select a folder type
+                                </option>
+                                <option>Private folder</option>
+                                <option>Public folder</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button 
+                                type="button" 
+                                class="btn btn-primary" 
+                                id="conf_upl"
+                            >
+                                Upload
+                            </button>
+                            <button 
+                                class="btn btn-success" 
+                                type="button" 
+                                id="loadingbtn" 
+                                disabled=""
+                            >
+                                <span 
+                                    class="spinner-border spinner-border-sm loading-spinner" 
+                                    role="status" 
+                                    aria-hidden="true">
+                                </span>
+                                <span class="loading-text">
+                                    Loading...
+                                </span>
+                            </button>
+                            <button 
+                                type="button" 
+                                class="btn btn-dark" 
+                                data-bs-dismiss="modal" 
+                                id="cancelbtn"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PopUp Notification <Modal> -->
+            <div 
+                class="modal fade" 
+                id="modal2" 
+                data-bs-backdrop="static" 
+                data-bs-keyboard="false" 
+                tabindex="-1" 
+                aria-labelledby="staticBackdropLabel2" 
+                aria-hidden="true"
+            >
+                <div 
+                    class="modal-dialog modal-dialog-centered"
+                >
+                    <div 
+                        class="modal-content"
+                    >
+                        <div class="modal-header">
+                            <h5 
+                                id="staticBackdropLabel2"
+                                class="modal-title fs-5" 
+                            >
+                                Notification
+                            </h5>
+                            <button 
+                                type="button" 
+                                class="btn-close" 
+                                data-bs-dismiss="modal" 
+                                aria-label="Close"
+                            >
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div 
+                                id="modal2_text" 
+                                class="edit-select2"
+                            >
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button 
+                                id="modal_btn" 
+                                type="button" 
+                                class="btn btn-primary" 
+                                data-bs-dismiss="modal"
+                            >
+                                OK
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
