@@ -26,7 +26,7 @@
 
     if(!isset($input['folder'])) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"Please select a folder."]);
+        print json_encode(['errormesg'=>"Please select a folder type."]);
         exit;
     }
 
@@ -34,13 +34,13 @@
 
     if($folder != "private" && $folder != "public") {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"Please select a folder."]);
+        print json_encode(['errormesg'=>"Please select a folder type."]);
         exit;
     }
 
-    if(!isset($input['file'])){
+    if(!isset($input['file'])) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"Please select a file to delete."]);
+        print json_encode(['errormesg'=>"Please select a dataset to delete."]);
         exit;
     }
 
@@ -57,9 +57,9 @@
         // $publicPermission = $res->fetch_assoc()['publicPermission']; 
         
 
-        // if($publicPermission == 0){
+        // if($publicPermission == 0) {
         //     header("HTTP/1.1 403 Forbidden");
-        //     print json_encode(['errormesg'=>"You aren't allowed to delete public data."]);
+        //     print json_encode(['errormesg'=>"You don't have the permission to delete public data."]);
         //     exit;
         // }
         

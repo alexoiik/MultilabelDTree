@@ -16,7 +16,7 @@
 
     if(!isset($_GET['folder'])) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"Please select folder."]);
+        print json_encode(['errormesg'=>"Please select a folder type."]);
         exit;
     }
 
@@ -24,13 +24,13 @@
 
     if($folder != "private" && $folder != "public") {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"Please select folder."]);
+        print json_encode(['errormesg'=>"Please select a folder type."]);
         exit;
     }
 
     if(!isset($_GET['file'])) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"Please select file to download."]);
+        print json_encode(['errormesg'=>"Please select a dataset to download."]);
         exit;
     }
 

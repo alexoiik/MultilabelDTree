@@ -6,7 +6,7 @@ $(function() {
     $('#loadingbtn3').hide();
     $('#table_div').hide();
     $('#params_div').hide();
-    $('#results_div').hide();
+    $('#modelEvaluationResults').hide();
     $('#loadingbtn_dataset').hide();
     $('#loadingbtnSave').hide();
 
@@ -93,7 +93,7 @@ $(function() {
                 $('#dnload-btn').prop("disabled",true);
                 $('#table_div').hide();
                 $('#params_div').hide();
-                $('#results_div').hide();
+                $('#modelEvaluationResults').hide();
             },
             error: function(xhr, status, error) {
                 var response = JSON.parse(xhr.responseText);
@@ -107,7 +107,7 @@ $(function() {
                 $('#dnload-btn').prop("disabled",true);
                 $('#table_div').hide();
                 $('#params_div').hide();
-                $('#results_div').hide();
+                $('#modelEvaluationResults').hide();
             }
         });
     }
@@ -255,7 +255,7 @@ $(function() {
     // Selecting All Labels.
     $("#checkSelectAll2").click(function() {
         var selAll = $("input[name=select_all2]:checked");
-        var check = $("input[name=fields1]");
+        var check = $("input[name=binary_fields]");
         if(selAll.length > 0) {
             for(var i = 0; i < check.length; i++) {
                 if(check[i].type == 'checkbox') {
@@ -279,7 +279,7 @@ $(function() {
 
         $('#table_div').hide();
         $('#params_div').hide();
-        $('#results_div').hide();
+        $('#modelEvaluationResults').hide();
 
         var selected = $("#select_dataset :selected").val();
         var folder = $("#select_dataset :selected").attr("class");
@@ -363,7 +363,7 @@ $(function() {
                     for(var i = 0; i < fields1.length; i++) {
                         $('#select_class').append($(`
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input edit_checkbox" type="checkbox" name="fields1" value="${fields1[i]}" id="flexCheckDefault">
+                                <input class="form-check-input edit_checkbox" type="checkbox" name="binary_fields" value="${fields1[i]}" id="flexCheckDefault">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     ${fields1[i]}
                                 </label>
@@ -432,7 +432,7 @@ $(function() {
                 $("#select_dataset").val("default");
                 $('#table_div').hide();
                 $('#params_div').hide();
-                $('#results_div').hide();
+                $('#modelEvaluationResults').hide();
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
                 $('#modal2_text').html("Dataset successfully deleted.");
@@ -446,7 +446,7 @@ $(function() {
                 $("#select_dataset").val("default");
                 $('#table_div').hide();
                 $('#params_div').hide();
-                $('#results_div').hide();
+                $('#modelEvaluationResults').hide();
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
                 $('#modal2_text').html(errormes);
@@ -484,7 +484,7 @@ $(function() {
     // Handling Build Model Classification.
     $("#buildModelBtn").click(function() {
 
-        $('#results_div').hide();
+        $('#modelEvaluationResults').hide();
 
         $("#max_depth:focus").blur(); // Max Depth.
         $("#min_samples_leaf:focus").blur(); // Min Samples Leaf.
@@ -501,28 +501,28 @@ $(function() {
             $('#modal2_text').html("You didn't select any feature.");
             return;
         }
-        var checkVal = {};
+        var selected_features = {};
         $.each(check, function(i) {
-            checkVal[i] = $(this).val();
+            selected_features[i] = $(this).val();
         });
 
         // Labels Selection Validation.
-        var check2 = $("input[name=fields1]:checked");
+        var check2 = $("input[name=binary_fields]:checked");
 
         if(check2.length < 2) {
             $('#modal2_text').html("");
             $('#modal2').modal('show');
-            $('#modal2_text').html("You have to select two or more labels.");
+            $('#modal2_text').html("You must select two or more labels.");
             return;
         }
-        var checkVal2 = {};
+        var selected_labels = {};
         $.each(check2, function(i) {
-            checkVal2[i] = $(this).val();
+            selected_labels[i] = $(this).val();
         });
 
         // Classifier Selection Validation.
-        var selected = $("#select_classifier :selected").val();
-        if(selected == 'default') {
+        var selected_classifier = $("#select_classifier :selected").val();
+        if(selected_classifier == 'default') {
             $('#modal2_text').html("");
             $('#modal2').modal('show');
             $('#modal2_text').html("Please select a classifier.");
@@ -539,13 +539,13 @@ $(function() {
             if(Number.isNaN(max_depth)) {
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
-                $('#modal2_text').html("Please give a valid value for the max_depth.");
+                $('#modal2_text').html("Please give a valid value for the Max Depth.");
                 return;
             }
             if(max_depth < 1) {
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
-                $('#modal2_text').html("You should give a max_depth &ge; 1.");
+                $('#modal2_text').html("You should give a Max Depth &ge; 1.");
                 return;
             }
         }
@@ -558,7 +558,7 @@ $(function() {
             if(min_samples_leaf.length == 0) {
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
-                $('#modal2_text').html("Please give a min_samples_leaf.");
+                $('#modal2_text').html("Please give a Min Samples Leaf.");
                 return;
             }
 
@@ -567,14 +567,14 @@ $(function() {
             if(Number.isNaN(min_samples_leaf)) {
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
-                $('#modal2_text').html("Please give a valid value for the min_samples_leaf.");
+                $('#modal2_text').html("Please give a valid value for the Min Samples Leaf.");
                 return;
             }
 
             if(min_samples_leaf < 1) {
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
-                $('#modal2_text').html("You should give a min_samples_leaf &ge; 1.");
+                $('#modal2_text').html("You should give a Min Samples Leaf &ge; 1.");
                 return;
             }
         }
@@ -610,21 +610,26 @@ $(function() {
         $("#loadingbtn3").show();
 
         $.ajax({
-            url: '../server/php/api/cross_validation.php',
+            url: '../server/php/api/multilabelCrossValidation.php',
             method: 'POST',
             data: JSON.stringify({
-                token: token, 
-                checkVal: checkVal, 
-                selected: selected, 
-                max_depth: max_depth, 
-                min_samples_leaf: min_samples_leaf, 
-                folder: folder, 
-                file: file, 
-                kFoldsInt: kFoldsInt
+                token: token, // Current token.
+                features: selected_features, // Features selection.
+                labels: selected_labels, // Labels selection.
+                classifier: selected_classifier, // Classifier selection.
+                max_depth: max_depth, // Max Depth selection.
+                min_samples_leaf: min_samples_leaf, // Min Samples Leaf selection.
+                folder: folder, // Folder Type selection.
+                file: file, // File selection.
+                kFoldsInt: kFoldsInt // K for KFold selection.
             }),
             dataType: "json",
             contentType: 'application/json',
             success: function(data) {
+
+                // console.log(data)
+
+                var avg_hl = data.avg_hl;
                 var avg_acc = data.avg_acc;
                 var avg_pre = data.avg_pre; 
                 var avg_rec = data.avg_rec;
@@ -633,12 +638,15 @@ $(function() {
                 var rec_per_label = data.rec_per_label;
                 var fsc_per_label = data.fsc_per_label;
                 var labels = data.labels;
-                $("#results_tr").html("");
-                $("#results_tr").append($(`<td>${avg_acc}</td>`));
-                $("#results_tr").append($(`<td>${avg_pre}</td>`));
-                $("#results_tr").append($(`<td>${avg_rec}</td>`));
-                $("#results_tr").append($(`<td>${avg_fsc}</td>`));
-                $("#results_tbody").html("");
+                var classifier = data.classifier;
+                var max_depth = data.max_depth;
+                var min_samples_leaf = data.min_samples_leaf;
+
+                var labelsLength = (data.labels.length)
+
+                // Petrics For Labels Information Display.
+                $("#results_container").html("");
+
                 for(var i = 0; i < labels.length; i++) {
                     $("#results_tbody").append($(`
                         <tr>
@@ -649,10 +657,60 @@ $(function() {
                         </tr>    
                     `));
                 }
+
+                // Create tables for each label
+                for (var i = 0; i < labelsLength; i++) {
+                    var tableHtml = `
+                        <div id="results_tableDiv${i + 1}" style="margin-top: 33px;">
+                            <table id="results_table${i + 1}" class="table table-bordered table-striped table-style table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" colspan="4">Metrics for Label ${i + 1}</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Label</th>
+                                        <th scope="col">Precision</th>
+                                        <th scope="col">Recall</th>
+                                        <th scope="col">F-score</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-group-divider">`;
+
+                    for (var j = 0; j < labels[i].length; j++) {
+                        var precision = pre_per_label[i][j] !== undefined ? pre_per_label[i][j] : 0;
+                        var recall = rec_per_label[i][j] !== undefined ? rec_per_label[i][j] : 0;
+                        var fscore = fsc_per_label[i][j] !== undefined ? fsc_per_label[i][j] : 0;
+
+                        tableHtml += `
+                            <tr>
+                                <td>${labels[i][j]}</td>
+                                <td>${precision}</td>
+                                <td>${recall}</td>
+                                <td>${fscore}</td>
+                            </tr>`;
+                    }
+
+                    tableHtml += `
+                                </tbody>
+                            </table>
+                        </div>`;
+                        
+                    $("#results_container").append($(tableHtml));
+                }
+
+                // Average Metrics Information Display.
+                $("#results_tr").html("");
+                $("#results_tr").append($(`<td>${avg_hl}</td>`));
+                $("#results_tr").append($(`<td>${avg_acc}</td>`));
+                $("#results_tr").append($(`<td>${avg_pre}</td>`));
+                $("#results_tr").append($(`<td>${avg_rec}</td>`));
+                $("#results_tr").append($(`<td>${avg_fsc}</td>`));
+
+
                 $("#loadingbtn3").hide();
                 $("#buildModelBtn").show();
-                $('#results_div').show();
-                window.location.href = '#results_div';
+                $('#modelEvaluationResults').show();
+                window.location.href = '#modelEvaluationResults';
             },
             error: function(xhr, status, error) {
                 var response = JSON.parse(xhr.responseText);
@@ -674,10 +732,5 @@ $(function() {
     // Handling Save Model.
 
     // Handling Visualize DTree.
-
-    // DataTable Selected Row Feature.
-    $("#data_table").click(function(event) {
-        $(".selectedRow").removeClass("selectedRow");
-        $(event.target).closest("tr").addClass("selectedRow");
-    });
+    
 });
