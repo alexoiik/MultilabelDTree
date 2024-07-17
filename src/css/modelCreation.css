@@ -245,6 +245,12 @@ nav a.active {
     font-weight: 300;
 }
 
+.btn-text3 {
+    font-size: 16px;
+    padding-left: 3px;
+    font-weight: 300;
+}
+
 #dnload-btn {
     margin-right: 10px;
     margin-bottom: 10px;
@@ -359,10 +365,6 @@ nav a.active {
     cursor: pointer;
 }
 
-#results_table2 tbody tr:hover {
-    background-color: lightblue;
-}
-
 .edit-select3 {
     font-size: 15px;
     margin-bottom: 20px;
@@ -463,20 +465,68 @@ nav a.active {
     }
 }
 
-.edit-icon {
-    width: 35px;
-    height: 35px;
-    fill: #6b6b6b;
-    padding-right: 10px;
+.selectedParams {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.edit-select4 {
-    font-size: 18px;
+.selectedParams p {
+    margin-bottom: 4px;
+    text-align: left;
+    font-weight: 350;
 }
 
-.edit-select5 {
-    font-size: 15px;
+.selectedParams p span {
+    font-weight: 400;
 }
+
+#results_tableDiv {
+    overflow-x: auto;
+    max-height: 500px;
+}
+
+#results_tableDiv2 {
+    overflow-x: auto;
+    margin-top: 33px;
+}
+
+.saveModelBtn button {
+    height: 55px;
+    width: 150px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.model-save-div {
+    display: flex;
+}
+
+@media(max-width: 770px) {
+    .model-save-div {
+        display: block;
+    }
+    
+    .saveModelBtn button {
+        margin-top: 10px;
+    }
+}
+
+.app_href {
+    padding-top: 15px;
+}
+
+.app_href a {
+    text-decoration: none;
+}
+
+.app_href a:hover {
+    text-decoration: underline;
+}
+
+/* .......... */
 
 #dnload-model {
     margin-right: 10px;
@@ -492,41 +542,8 @@ nav a.active {
     margin-bottom: 10px;
 }
 
-.saveDiv_button {
-    font-size: 20px;
-    font-weight: 500;
-    margin-left: 5px;
-}
-
 #showMetrics {
     font-size: 18px;
-}
-
-.btn_size button {
-    height: 56px;
-    width: 160px;
-}
-
-.app_href {
-    padding-top: 15px;
-}
-
-.app_href a {
-    text-decoration: none;
-}
-
-.app_href a:hover {
-    text-decoration: underline;
-}
-
-#results_tableDiv {
-    overflow-x: auto;
-    max-height: 500px;
-}
-
-#results_tableDiv2 {
-    overflow-x: auto;
-    margin-top: 33px;
 }
 
 #checkBoxes2 label {
@@ -546,6 +563,8 @@ nav a.active {
     overflow-x: auto;
     margin-top: 15px;
 }
+
+/* .......... */
 
 #margin_div {
     padding-top: 7vh;

@@ -59,21 +59,22 @@ $(function() {
     input_key.on("keypress", function(event) {
         if(event.key === "Enter"){
             event.preventDefault();
-            if($("#save_btn").css("display") !== "none"){
-                $("#save_btn").click();
+            if($("#saveModelBtn").css("display") !== "none"){
+                $("#saveModelBtn").click();
             }
         }
     });
 
-    // Function for getting all datasets.
+    // Function for Getting all Datasets.
     function getDatasets() {
 
         var link = '../server/php/api/receiveDatasets.php?token=' + token;
 
+        // AJAX Request for Receiving all Datasets.
         $.ajax({
             url: link,
             method: 'GET',
-            success: function(data){
+            success: function(data) {
                 var data2 = JSON.parse(data);
                 var publicDatasets = data2.public_data;
                 var privateDatasets = data2.private_data;
@@ -151,7 +152,7 @@ $(function() {
         $("#formFile").val("");
     });
 
-    $('#cancelbtn').click(function(){
+    $('#cancelbtn').click(function() {
         $('#alertPlaceholder').html("");
     });
 
@@ -294,7 +295,7 @@ $(function() {
         $('#dnload-btn').prop("disabled",false);
         $('#loadingbtn_dataset').show();
         
-        // AJAX Request for getting the dataset content.
+        // AJAX Request for Getting the Dataset Content.
         $.ajax({
             url: `../server/php/api/multilabelDatasetContent.php?token=${token}&file=${selected}&folder=${folder}`,
             method: 'GET',
@@ -418,6 +419,7 @@ $(function() {
         $('#delbtn').hide();
         $('#loadingbtn2').show();
 
+        // AJAX Request for Deleting a Dataset.
         $.ajax({
             url: '../server/php/api/destroyDataset.php',
             method: 'DELETE',
@@ -481,7 +483,7 @@ $(function() {
         }
     });
 
-    // Handling Build Model Classification.
+    // Handling Build Model for Multilabel Cross Validation.
     $("#buildModelBtn").click(function() {
 
         $('#modelEvaluationResults').hide();
@@ -490,7 +492,7 @@ $(function() {
         $("#min_samples_leaf:focus").blur(); // Min Samples Leaf.
         $("#kFolds:focus").blur(); // K for KFold.
 
-        $("#model_name").val("my_model");
+        $("#model_name").val("my_multilabel_model"); // Default Model's Name.
         
         // Features Selection Validation.
         var check = $("input[name=num_field]:checked");
@@ -603,12 +605,13 @@ $(function() {
             return;
         }
 
-        var file = $("#select_dataset :selected").val();
-        var folder = $("#select_dataset :selected").attr("class");
+        var file = $("#select_dataset :selected").val(); // Getting current file selection.
+        var folder = $("#select_dataset :selected").attr("class"); // Getting current folder type selection.
 
         $("#buildModelBtn").hide();
         $("#loadingbtn3").show();
 
+        // AJAX Request for Performing Multilabel Cross Validation.
         $.ajax({
             url: '../server/php/api/multilabelCrossValidation.php',
             method: 'POST',
@@ -627,7 +630,7 @@ $(function() {
             contentType: 'application/json',
             success: function(data) {
 
-                // console.log(data)
+                // console.log(data);
 
                 var avg_hl = data.avg_hl;
                 var avg_acc = data.avg_acc;
@@ -641,10 +644,11 @@ $(function() {
                 var classifier = data.classifier;
                 var max_depth = data.max_depth;
                 var min_samples_leaf = data.min_samples_leaf;
+                var k = data.k;
 
-                var labelsLength = (data.labels.length)
+                var labelsLength = (data.labels.length);
 
-                // Petrics For Labels Information Display.
+                // Metrics Information Display for Each Label.
                 $("#results_container").html("");
 
                 for(var i = 0; i < labels.length; i++) {
@@ -658,11 +662,11 @@ $(function() {
                     `));
                 }
 
-                // Create tables for each label
+                // Dynamic Tables for each label.
                 for (var i = 0; i < labelsLength; i++) {
                     var tableHtml = `
-                        <div id="results_tableDiv${i + 1}" style="margin-top: 33px;">
-                            <table id="results_table${i + 1}" class="table table-bordered table-striped table-style table-hover">
+                        <div id="results_tableDiv${i + 1}" style="margin-top: 33px; overflow-x:auto">
+                            <table id="results_table${i + 1}" class="table table-bordered table-style table-hover">
                                 <thead>
                                     <tr>
                                         <th scope="col" colspan="4">Metrics for Label ${i + 1}</th>
@@ -677,9 +681,9 @@ $(function() {
                                 <tbody class="table-group-divider">`;
 
                     for (var j = 0; j < labels[i].length; j++) {
-                        var precision = pre_per_label[i][j] !== undefined ? pre_per_label[i][j] : 0;
-                        var recall = rec_per_label[i][j] !== undefined ? rec_per_label[i][j] : 0;
-                        var fscore = fsc_per_label[i][j] !== undefined ? fsc_per_label[i][j] : 0;
+                        var precision = pre_per_label[i][j] !== undefined ? pre_per_label[i][j] : 1;
+                        var recall = rec_per_label[i][j] !== undefined ? rec_per_label[i][j] : 1;
+                        var fscore = fsc_per_label[i][j] !== undefined ? fsc_per_label[i][j] : 1;
 
                         tableHtml += `
                             <tr>
@@ -706,7 +710,12 @@ $(function() {
                 $("#results_tr").append($(`<td>${avg_rec}</td>`));
                 $("#results_tr").append($(`<td>${avg_fsc}</td>`));
 
-
+                // Model's Parameters Information Display.
+                $("#selectedClassifier").text(classifier);
+                $("#selectedMaxDepth").text(max_depth ? max_depth : "None");
+                $("#selectedMinSamplesLeaf").text(min_samples_leaf);
+                $("#selectedK").text(k);
+                
                 $("#loadingbtn3").hide();
                 $("#buildModelBtn").show();
                 $('#modelEvaluationResults').show();
@@ -724,12 +733,113 @@ $(function() {
         });
     });
 
-    // Handling Cancel Btn.
+    // Handling Cancel Btns.
     $('#cancelBtn').click(function() {
+        location.reload();
+    });
+    $('#cancelBtn2').click(function() {
         location.reload();
     });
 
     // Handling Save Model.
+    $("#saveModelBtn").click(function() {
+
+        $("#model_name:focus").blur(); // Model Name.
+        
+        // Features Selection Validation.
+        var check = $("input[name=num_field]:checked");
+
+        if(check.length == 0) {
+            $('#modal2_text').html("");
+            $('#modal2').modal('show');
+            $('#modal2_text').html("You didn't select any feature.");
+            return;
+        }
+        var selected_features = {};
+        $.each(check, function(i) {
+            selected_features[i] = $(this).val();
+        });
+
+        // Labels Selection Validation.
+        var check2 = $("input[name=binary_fields]:checked");
+
+        if(check2.length < 2) {
+            $('#modal2_text').html("");
+            $('#modal2').modal('show');
+            $('#modal2_text').html("You must select two or more labels.");
+            return;
+        }
+        var selected_labels = {};
+        $.each(check2, function(i) {
+            selected_labels[i] = $(this).val();
+        });
+
+        // Getting Calculated Classifier Selection.
+        var selected_classifier = $("#selectedClassifier").html();
+
+        // Getting Calculated Max Depth Selection.
+        var max_depth = $("#selectedMaxDepth").html();
+
+        // Getting Calculated Min Samples Leaf Selection.
+        var min_samples_leaf = $("#selectedMinSamplesLeaf").html();
+
+        // Model Name Validation.
+        var model_name = $("#model_name").val().trim();
+
+        if(model_name.length == 0) {
+            $('#modal2_text').html("");
+            $('#modal2').modal('show');
+            $('#modal2_text').html("Please give a name for your Model.");
+            return;
+        }
+
+        var file = $("#select_dataset :selected").val(); // Getting current file selection.
+        var folder = $("#select_dataset :selected").attr("class"); // Getting current folder type selection.
+
+        $("#saveModelBtn").hide();
+        $("#loadingbtnSave").show();
+
+        // AJAX Request for Saving User's Model.
+        $.ajax({
+            url: '../server/php/api/saveMultilabelModel.php',
+            method: 'POST',
+            data: JSON.stringify({
+                token: token, // Current token.
+                features: selected_features, // Features selection.
+                labels: selected_labels, // Labels selection.
+                classifier: selected_classifier, // Classifier selection.
+                max_depth: max_depth, // Max Depth selection.
+                min_samples_leaf: min_samples_leaf, // Min Samples Leaf selection.
+                folder: folder, // Folder Type selection.
+                file: file, // File selection.
+                model_name: model_name // Model Name selection.
+            }),
+            dataType: "json",
+            contentType: 'application/json',
+            success: function(data) {
+                var mes = data.message;
+                $("#loadingbtnSave").hide();
+                $("#saveModelBtn").show();
+                $('#modal2_text').html("");
+                $('#modal2').modal('show');
+                $('#modal2_text').html($(`
+                    <div>${mes}</div>
+                    <div class="app_href">
+                        You can now check out your model by going in the <a href="pretrainedModels.html">Pretrained Models</a> page!
+                    </div>
+                `));
+            },
+            error: function(xhr, status, error) {
+                var response = JSON.parse(xhr.responseText);
+                var errormes = response.errormesg;
+                $("#loadingbtnSave").hide();
+                $("#saveModelBtn").show();
+                $('#modal2_text').html("");
+                $('#modal2').modal('show');
+                $('#modal2_text').html(errormes);
+            }
+        });
+    });
 
     // Handling Visualize DTree.
     

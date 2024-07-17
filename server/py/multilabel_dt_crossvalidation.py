@@ -47,7 +47,7 @@ labels = classLabels.apply(lambda x: x.unique())
 # print("Selected k for cross-validation:", k)
 # print("Selected classifier:", sys.argv[7], "\n")
 
-# Define the multilabel classifiers.
+# Defining the multilabel classifiers.
 classifiers = {
     'BinaryRelevance': BinaryRelevance(
         classifier=DecisionTreeClassifier(), # Initializing empty parameters.
@@ -68,7 +68,7 @@ def auto_select_param(param_name, param_range, attr, classLabels, kf, classifier
     best_param = None
     best_hamming_loss = float('inf')
 
-    # print(f"> Testing {param_name}:")
+    # print(f"> AutoML {param_name}:")
     for i in param_range:
         hamming_losses = []
         for train_index, test_index in kf.split(attr):
@@ -98,7 +98,7 @@ if sys.argv[7] == 'Auto':
     best_classifier = None
     best_hamming_loss = float('inf')
 
-    # print("> Testing classifiers:")
+    # print("> AutoML classifier:")
     for name, clf in classifiers.items():
         hamming_losses = []
         for train_index, test_index in kf.split(attr):
@@ -106,13 +106,6 @@ if sys.argv[7] == 'Auto':
             y_train, y_test = classLabels.iloc[train_index], classLabels.iloc[test_index]
 
             clf.fit(X_train, y_train)
-
-            # Fitting the base DTree classifier also, when needed.
-            if(best_classifier_name == 'RakelD'): 
-                clf.base_classifier.fit(X_train, y_train)
-            if(best_classifier_name == 'LabelSpacePartitioning'):
-                clf.classifier.fit(X_train, y_train)
-
             predictions = clf.predict(X_test)
 
             hamming_loss = metrics.hamming_loss(y_test, predictions)
@@ -153,7 +146,7 @@ else: # Specific classifier selection.
     
     # Unkown classifier message interrupt.
     if classifier is None:
-        # print(f"\nError: Unknown classifier type: {sys.argv[7]}")
+        print(f"\nError: Unknown classifier type: {sys.argv[7]}")
         sys.exit(1)
 
       # Auto min_samples_leaf selection.
@@ -198,13 +191,6 @@ for train_index, test_index in kf.split(attr):
     y_train, y_test = classLabels.iloc[train_index], classLabels.iloc[test_index]
      
     classifier.fit(X_train, y_train) 
-
-    # Fitting the base DTree classifier also, when needed.
-    if(best_classifier_name == 'RakelD'): 
-        classifier.base_classifier.fit(X_train, y_train)
-    if(best_classifier_name == 'LabelSpacePartitioning'):
-        classifier.classifier.fit(X_train, y_train)
-
     predictions = classifier.predict(X_test)
     
     if(best_classifier_name == 'MajorityVoting'):
@@ -243,12 +229,6 @@ avg_recall = round(avg_recall, 2)
 avg_f1_score = sum(f_scores) / k
 avg_f1_score = round(avg_f1_score, 2)
 
-# print('\nAvg Hamming Loss: {}'.format(avg_hamming_loss))
-# print('Avg Accuracy: {}'.format(avg_accuracy))
-# print('Avg Precision: {}'.format(avg_precision))
-# print('Avg Recall: {}'.format(avg_recall))
-# print('Avg F1-score: {}'.format(avg_f1_score))
-
 # Calculating average metrics per label.
 pre_per_label = [[round(sum(label_metrics) / k, 2) for label_metrics in zip(*label)] for label in arr_pre]
 rec_per_label = [[round(sum(label_metrics) / k, 2) for label_metrics in zip(*label)] for label in arr_rec]
@@ -259,7 +239,6 @@ label_arrays = [labels[column].to_numpy() for column in labels.columns]
 # Converting the labels: From a list of NumPy arrays to a list of lists.
 labels = [array.tolist() for array in label_arrays]
 
-# print('\n')
 print(json.dumps({
     "avg_hl": avg_hamming_loss, 
     "avg_acc": avg_accuracy, 
@@ -272,5 +251,6 @@ print(json.dumps({
     "labels": labels,
     "classifier": best_classifier_name,
     "max_depth": max_depth,
-    "min_samples_leaf": min_samples_leaf
+    "min_samples_leaf": min_samples_leaf,
+    "k": k
 }))

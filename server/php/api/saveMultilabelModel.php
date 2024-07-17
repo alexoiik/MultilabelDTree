@@ -101,19 +101,15 @@
 
     $max_depth = $input['max_depth'];
 
-    if($max_depth == "") {
+    if($max_depth == 'None') {
         $max_depth = 'None';
     }
     else {
-        if($max_depth == "Auto") {
-            $max_depth = 'Auto';
-        } else {
-            $max_depth = intval($max_depth);
-            if($max_depth < 1) {
-                header("HTTP/1.1 400 Bad Request");
-                print json_encode(['errormesg'=>"You should give a Max Depth >= 1."]);
-                exit;
-            }
+        $max_depth = intval($max_depth);
+        if($max_depth < 1) {
+            header("HTTP/1.1 400 Bad Request");
+            print json_encode(['errormesg'=>"You should give a Max Depth >= 1."]);
+            exit;
         }
     }
 
@@ -126,34 +122,38 @@
 
     $min_samples_leaf = $input['min_samples_leaf'];
 
-    if($min_samples_leaf == "Auto") {
-        $min_samples_leaf = 'Auto';
-    } else {
-        $min_samples_leaf = intval($min_samples_leaf);
-        if($min_samples_leaf < 1) {
-            header("HTTP/1.1 400 Bad Request");
-            print json_encode(['errormesg'=>"You should give a Min Samples Leaf >= 1."]);
-            exit;
-        }
-    }
+    $min_samples_leaf = intval($min_samples_leaf);
 
-    // K for KFold Validation.  
-    if(!isset($input['kFoldsInt'])) {
+    if($min_samples_leaf < 1) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"Please give the k value."]);
+        print json_encode(['errormesg'=>"You should give a Min Samples Leaf >= 1."]);
         exit;
     }
 
-    $kFolds = $input['kFoldsInt'];
-    $kFoldsInt = intval($kFolds);
-
-    if(($kFoldsInt < 5) || ($kFoldsInt > 50)) {
+    // Model Name Validation.
+    if(!isset($input['model_name'])) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"Incorrect k. Range of accepted values: 5 - 50."]);
+        print json_encode(['errormesg'=>"Please give a name for your model."]);
         exit;
     }
 
+    $model_name = $input['model_name'];
     
+    if(strlen($model_name) == 0) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Please give a name for your model."]);
+        exit;
+    }
+
+    if(preg_match("@(^[^a-z]| )@i", $model_name)) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Please give a valid name for your model. <br><br> > First character should be a letter. <br/> > Spaces aren't allowed."]);
+        exit;
+    }
+
+    $model_file = $model_name . ".pkl";
+
+
     $file_path = "";
 
     if($folder == "public") {
@@ -288,21 +288,53 @@
         $featuresImplode = implode(",", $features);
 
         $labelsImplode = implode(",", $labels);
+        
+        // Model's Existance Validation.
+
+        // $email = user_mail($input['token']);
+        // $hash_user = md5($email);
+        // $model_path = "../../py/users/$hash_user/models/$model_file";
+
+        // if(file_exists($model_path)) {
+        //     header("HTTP/1.1 400 Bad Request");
+        //     print json_encode(['errormesg'=>"Model already exists. Try a different name."]);
+        //     exit;
+        // }
+
+        $model_path = "../../py/users/$model_file"; // ΕΓΩ ΤΟ ΕΒΑΛΑ. (Testing model_path to save the model).
+
+        if(file_exists($model_path)) {
+            header("HTTP/1.1 400 Bad Request");
+            print json_encode(['errormesg'=>"Model already exists. Try a different name."]);
+            exit;
+        }
 
         $results;
         try {
-            $results = shell_exec("python ../../py/multilabel_dt_crossvalidation.py $file_path $featuresImplode $labelsImplode $max_depth $min_samples_leaf $kFoldsInt $classifier");
+            $results = shell_exec("python ../../py/save_multilabel_model.py $file_path $featuresImplode $labelsImplode $max_depth $min_samples_leaf $model_path $classifier");
         } catch(Exception $e) {
             header("HTTP/1.1 400 Bad Request");
-            print json_encode(['errormesg'=>"An error has occured while trying to run the Python module for Cross-Validation. <br><br> Please check the possibility of missing values existence in given columns and try again."]);
+            print json_encode(['errormesg'=>"An error has occured while trying to run the Python module. <br><br> Please check the possibility of missing values existence in given columns and try again."]);
             exit;
         }
 
         if(!$results || $results == null) {
             header("HTTP/1.1 400 Bad Request");
-            print json_encode(['errormesg'=>"An error has occured while trying to run the Python module for Cross-Validation. <br><br> Please check the possibility of missing values existence in given columns and try again."]);
+            print json_encode(['errormesg'=>"An error has occured while trying to run the Python module. <br><br> Please check the possibility of missing values existence in given columns and try again."]);
             exit;
         }
+
+        // $query = 'select id from users where token=?';
+        // $st = $mysqli->prepare($query);
+        // $st->bind_param('s', $input['token']);
+        // $st->execute();
+        // $res = $st->get_result();
+        // $id = $res->fetch_assoc()['id'];
+
+        // $query = 'insert into model_class(id, model_name, class_name) values(?,?,?)';
+        // $st = $mysqli->prepare($query);
+        // $st->bind_param('iss', $id, $model_file, $selected);
+        // $st->execute();
 
         print($results);
     }
