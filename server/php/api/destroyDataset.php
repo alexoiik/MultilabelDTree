@@ -49,15 +49,15 @@
     $delete = false;
 
     if($folder == "public") {
-        // $query = 'select publicPermission from users where token=?';
+        // $query = 'select public_permission from users where token=?';
         // $st = $mysqli->prepare($query);
         // $st->bind_param('s',$input['token']);
         // $st->execute();
         // $res = $st->get_result();
-        // $publicPermission = $res->fetch_assoc()['publicPermission']; 
+        // $public_permission = $res->fetch_assoc()['public_permission']; 
         
 
-        // if($publicPermission == 0) {
+        // if($public_permission == 0) {
         //     header("HTTP/1.1 403 Forbidden");
         //     print json_encode(['errormesg'=>"You don't have the permission to delete public data."]);
         //     exit;

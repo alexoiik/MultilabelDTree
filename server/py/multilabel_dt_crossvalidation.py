@@ -22,30 +22,12 @@ dataset.columns = res
 attr = dataset[selectedFeatures]
 classLabels = dataset[selectedLabels]
 
-# Convert byte strings to integers for specific columns.
-def convert_byte_string_to_int(x):
-    if isinstance(x, str) and x.startswith("b'"):
-        return int(x.strip("b'"))
-    return x
-
-attr = attr.map(convert_byte_string_to_int)
-classLabels = classLabels.map(convert_byte_string_to_int)
-
 # Initialize KFold for cross-validation.
 k = int(sys.argv[6])
 kf = KFold(n_splits = k, random_state = None, shuffle = True)
 
 # Getting unique labels for each column.
 labels = classLabels.apply(lambda x: x.unique())
-
-# print("\n10-row Dataset preview:\n", dataset.head())
-# print("\nSelected Features:\n", attr)
-# print("\nSelected Labels:\n", classLabels)
-# print("\nUnique Labels values:\n", labels, "\n")
-# print("\nSelected max_depth:", max_depth)
-# print("Selected min_samples_leaf:", min_samples_leaf)
-# print("Selected k for cross-validation:", k)
-# print("Selected classifier:", sys.argv[7], "\n")
 
 # Defining the multilabel classifiers.
 classifiers = {
@@ -68,7 +50,6 @@ def auto_select_param(param_name, param_range, attr, classLabels, kf, classifier
     best_param = None
     best_hamming_loss = float('inf')
 
-    # print(f"> AutoML {param_name}:")
     for i in param_range:
         hamming_losses = []
         for train_index, test_index in kf.split(attr):
@@ -83,7 +64,6 @@ def auto_select_param(param_name, param_range, attr, classLabels, kf, classifier
             hamming_losses.append(hamming_loss)
 
         avg_hamming_loss = sum(hamming_losses) / k
-        # print(f'{param_name}: {i}, Avg Hamming Loss: {avg_hamming_loss}')
 
         if avg_hamming_loss < best_hamming_loss:
             best_hamming_loss = avg_hamming_loss
@@ -98,7 +78,6 @@ if sys.argv[7] == 'Auto':
     best_classifier = None
     best_hamming_loss = float('inf')
 
-    # print("> AutoML classifier:")
     for name, clf in classifiers.items():
         hamming_losses = []
         for train_index, test_index in kf.split(attr):
@@ -112,7 +91,6 @@ if sys.argv[7] == 'Auto':
             hamming_losses.append(hamming_loss)
         
         avg_hamming_loss = sum(hamming_losses) / k
-        # print(f'Classifier: {name}, Avg Hamming Loss: {avg_hamming_loss}')
         
         if avg_hamming_loss < best_hamming_loss:
             best_hamming_loss = avg_hamming_loss
@@ -120,19 +98,16 @@ if sys.argv[7] == 'Auto':
             best_classifier_name = name
     
     classifier = best_classifier # The best classifier. 
-    # print(f'\nBest Classifier: {best_classifier_name} with Avg Hamming Loss: {best_hamming_loss}\n')
 
     # Auto min_samples_leaf selection.
     if min_samples_leaf == 'Auto':
         min_samples_leaf, best_hamming_loss = auto_select_param('min_samples_leaf', range(5, 50, 3), attr, classLabels, kf, classifier, k)
-        # print(f'\nBest min_samples_leaf: {min_samples_leaf} with Avg Hamming Loss: {best_hamming_loss}\n')
     else:
         min_samples_leaf = int(min_samples_leaf) # Specific min_samples_leaf selection.
     
     # Auto max_depth selection.
     if max_depth == 'Auto':
         max_depth, best_hamming_loss = auto_select_param('max_depth', range(5, 50, 3), attr, classLabels, kf, classifier, k)
-        # print(f'\nBest max_depth: {max_depth} with Avg Hamming Loss: {best_hamming_loss}')
     elif max_depth == 'None': # None max_depth selection.
         max_depth = None
     else: 
@@ -149,25 +124,21 @@ else: # Specific classifier selection.
         print(f"\nError: Unknown classifier type: {sys.argv[7]}")
         sys.exit(1)
 
-      # Auto min_samples_leaf selection.
+    # Auto min_samples_leaf selection.
     if min_samples_leaf == 'Auto':
         min_samples_leaf, best_hamming_loss = auto_select_param('min_samples_leaf', range(5, 50, 3), attr, classLabels, kf, classifier, k)
-        # print(f'\nBest min_samples_leaf: {min_samples_leaf} with Avg Hamming Loss: {best_hamming_loss}\n')
     else:
         min_samples_leaf = int(min_samples_leaf) # Specific min_samples_leaf selection.
     
     # Auto max_depth selection.
     if max_depth == 'Auto':
         max_depth, best_hamming_loss = auto_select_param('max_depth', range(5, 50, 3), attr, classLabels, kf, classifier, k)
-        # print(f'\nBest max_depth: {max_depth} with Avg Hamming Loss: {best_hamming_loss}')
     elif max_depth == 'None': # None max_depth selection.
         max_depth = None
     else: 
         max_depth = int(max_depth) # Specific max_depth selection.
 
     classifier.classifier = DecisionTreeClassifier(max_depth=max_depth, min_samples_leaf=min_samples_leaf) # Final DTree parameters.
-
-# print("\nFinal Classifier:", classifier)
 
 # Initialize list of lists to store metrics for each class label.
 arr_pre = [[] for _ in range(len(selectedLabels))]
@@ -189,14 +160,10 @@ f_scores = []
 for train_index, test_index in kf.split(attr):
     X_train, X_test = attr.iloc[train_index, :], attr.iloc[test_index, :]
     y_train, y_test = classLabels.iloc[train_index], classLabels.iloc[test_index]
-     
+
     classifier.fit(X_train, y_train) 
     predictions = classifier.predict(X_test)
-    
-    if(best_classifier_name == 'MajorityVoting'):
-        pred = predictions # Don't convert predictions to dense format.
-    else:
-        pred = classifier.predict(X_test).toarray() # Convert predictions to dense format.
+    pred = classifier.predict(X_test).toarray() # Converting predictions to dense format.
 
     # Calculating precision, recall, and f-score for each class label.
     for i, label in enumerate(selectedLabels):
@@ -205,12 +172,12 @@ for train_index, test_index in kf.split(attr):
         arr_pre[i].append(pre)
         arr_rec[i].append(rec)
         arr_fsc[i].append(fsc)
-        
+    
     # Calculating evaluation metrics.
     hamming_loss = metrics.hamming_loss(y_test, predictions)
     accuracy = metrics.accuracy_score(y_test, predictions)
     precision, recall, fscore, _ = metrics.precision_recall_fscore_support(y_test, predictions, average='macro', zero_division=0.0)
-
+    
     hamming_losses.append(hamming_loss)
     accuracy_scores.append(accuracy)
     precision_scores.append(precision)

@@ -302,26 +302,21 @@ $(function() {
             success: function(data) {
                 try {
                     var data2 = JSON.parse(data);
-                    //console.log(data2)
                     var csv_array = data2.csv_array;
-                    //console.log(csv_array)
                     var num_fields = data2.numerical_fields;
-                    //console.log(num_fields)
                     var fields1 = data2.fields;
-                    //console.log(fields1)
 
                     $("#data_table_head_tr").html("");
                     $("#data_table_tbody").html("");
                         
                     // 15-Row Preview of the dataset.
-                    $.each(csv_array[0], function(index,val){
+                    $.each(csv_array[0], function(index, val) {
                         $("#data_table_head_tr").append($(`<th scope="col">${val}</th>`));
                     });
-
-                    for(var i = 1; i <= 15; i++){
+                    for(var i = 1; i <= 15; i++) {
                         var tr_id = 'tr' + i;
                         $("#data_table_tbody").append($(`<tr id="${tr_id}"></tr>`));
-                        $.each(csv_array[i], function(index3,val3){
+                        $.each(csv_array[i], function(index3, val3) {
                             $(`#${tr_id}`).append($(`<td><div class="data_table_tbody_td">${val3}</div></td>`)); 
                         });
                     }
@@ -394,7 +389,7 @@ $(function() {
                     $('#dnload-btn').prop("disabled",true);
                     $('#modal2_text').html("");
                     $('#modal2').modal('show');
-                    $('#modal2_text').html("Unable to proccess this dataset, because it's not well formated as a csv file.");
+                    $('#modal2_text').html("Unable to proccess this dataset.");
                 }
             },
             error: function(xhr, status, error) {
@@ -661,8 +656,6 @@ $(function() {
                         </tr>    
                     `));
                 }
-
-                // Dynamic Tables for each label.
                 for (var i = 0; i < labelsLength; i++) {
                     var tableHtml = `
                         <div id="results_tableDiv${i + 1}" style="margin-top: 33px; overflow-x:auto">

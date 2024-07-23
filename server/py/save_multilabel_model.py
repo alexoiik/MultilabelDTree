@@ -25,15 +25,6 @@ dataset.columns = res
 attr = dataset[selectedFeatures]
 classLabels = dataset[selectedLabels]
 
-# Convert byte strings to integers for specific columns.
-def convert_byte_string_to_int(x):
-    if isinstance(x, str) and x.startswith("b'"):
-        return int(x.strip("b'"))
-    return x
-
-attr = attr.map(convert_byte_string_to_int)
-classLabels = classLabels.map(convert_byte_string_to_int)
-
 model_path = sys.argv[6] # given model path. 
 
 # Defining the multilabel classifiers.

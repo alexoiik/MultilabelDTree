@@ -245,12 +245,6 @@ nav a.active {
     font-weight: 300;
 }
 
-.btn-text3 {
-    font-size: 16px;
-    padding-left: 3px;
-    font-weight: 300;
-}
-
 #dnload-btn {
     margin-right: 10px;
     margin-bottom: 10px;
@@ -412,12 +406,7 @@ nav a.active {
 
 .div-styling {
     display: flex;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-.div-styling input {
-    border-radius: 80%;
+    padding-top: 15px;
 }
 
 .checkbox-styling {
@@ -426,7 +415,6 @@ nav a.active {
 
 .auto-name {
     font-size: 18px;
-    padding-top: 5px;
 }
 
 .field-text {
@@ -500,8 +488,19 @@ nav a.active {
     font-weight: 300;
 }
 
+.saveModelBtn button#visualizeTree,
+.saveModelBtn button#loadingbtnTree {
+    height: 55px;
+    width: 190px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 300;
+}
+
 .model-save-div {
     display: flex;
+    justify-content: center; 
+    align-items: center;
 }
 
 @media(max-width: 770px) {
@@ -536,10 +535,6 @@ nav a.active {
 #del-model, #loadingbtnModel {
     margin-bottom: 10px;
     margin-right: 10px;
-}
-
-#visualizeTree, #loadingbtnTree {
-    margin-bottom: 10px;
 }
 
 #showMetrics {

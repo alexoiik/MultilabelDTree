@@ -180,12 +180,9 @@
 
     $countFields = 0;
     $num_fields = array(); // Only numerical fields (features).
-    $fields = array();    // Only fields that have values b'0', b'1' or 0, 1 only (labels).
+    $fields = array();    // Only fields that have values 0, 1 only (labels).
     $csv_array = array();
-    $count2 = array();
     $row = 0;
-    $isFirstRow = true;
-    $firstRowLength = 0;
 
     if(($open_file = fopen($file_path, "r")) !== FALSE) {
         
@@ -193,20 +190,9 @@
             // Empty rows validation. If such rows exist, exclude them from the dataset.
             if (array_filter($row_data)) {
                 $countFields = count($row_data);
-
-                // Wrong value length validation, based on the first row's value length.
-                // If such rows exist, add 0s to their values (Zero Imputation Preprocessing).
-                if ($isFirstRow) {
-                    $firstRowLength = $countFields;
-                    $isFirstRow = false;
+                for($i = 0; $i < $countFields; $i++){
+                    $csv_array[$row][$i] = $row_data[$i];
                 }
-                if ($countFields < $firstRowLength) {
-                    for ($i = $countFields; $i < $firstRowLength; $i++) {
-                        $row_data[] = 0;
-                    }
-                }
-                
-                $csv_array[$row] = $row_data;
                 $row++;
             }
         }
@@ -220,7 +206,7 @@
         }
         
         // Storing numerical fields only without missing values (features).
-        for ($j = 0; $j < $firstRowLength; $j++) {
+        for ($j = 0; $j < $countFields; $j++) {
             $is_numeric = true;
             for ($i = 1; $i < count($csv_array); $i++) {
                 $value = $csv_array[$i][$j];
@@ -248,12 +234,12 @@
             exit;
         }
 
-        // Storing fields that have values b'0', b'1' or 0, 1 only without missing values (labels).
-        for ($j2 = 0; $j2 < $firstRowLength; $j2++) {
+        // Storing fields that have values 0, 1 only without missing values (labels).
+        for ($j2 = 0; $j2 < $countFields; $j2++) {
             $is_binary = true;
             for ($i2 = 1; $i2 < count($csv_array); $i2++) {
                 $value = $csv_array[$i2][$j2];
-                if ($value === "" || !preg_match('/^(b\'[01]\')|^[01]$/', $value)) {
+                if ($value === "" || !preg_match('/^[01]$/', $value)) {
                     $is_binary = false;
                     break;
                 }
@@ -324,18 +310,40 @@
             exit;
         }
 
-        // $query = 'select id from users where token=?';
-        // $st = $mysqli->prepare($query);
-        // $st->bind_param('s', $input['token']);
-        // $st->execute();
-        // $res = $st->get_result();
-        // $id = $res->fetch_assoc()['id'];
+            /* Database Manipulation Steps. */
+        // 1) Getting the unique id from users table.
+        $token = 'faketoken'; // fake token.
+        $query = 'select id from users where token=?';
+        $st = $mysqli->prepare($query); // late addition: $input['token'] 
+        $st->bind_param('s', $token);
+        $st->execute();
+        $res = $st->get_result();
+        $user_id = $res->fetch_assoc()['id'];
 
-        // $query = 'insert into model_class(id, model_name, class_name) values(?,?,?)';
-        // $st = $mysqli->prepare($query);
-        // $st->bind_param('iss', $id, $model_file, $selected);
-        // $st->execute();
+        // 2) Inserting the created model in the models table.
+        $query = 'insert into models(user_id, model_name) values(?,?)';
+        $st = $mysqli->prepare($query);
+        $st->bind_param('is', $user_id, $model_file);
+        $st->execute();
 
+        // 3) Getting the unique id from models table.
+        $query = 'select id from models where model_name=?';
+        $st = $mysqli->prepare($query);
+        $st->bind_param('s', $model_file);
+        $st->execute();
+        $res = $st->get_result();
+        $model_id = $res->fetch_assoc()['id'];
+
+        // 4) Inserting the selected labels in the labels table.
+        $labelsArray = explode(',', $labelsImplode);
+        $query = 'insert into labels(model_id, label_name) values(?,?)';
+        $st = $mysqli->prepare($query);
+        foreach ($labelsArray as $label) {
+            $st->bind_param('is', $model_id, $label);
+            $st->execute();
+        }
+
+        // Printing the results.
         print($results);
     }
     else {

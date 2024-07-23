@@ -70,12 +70,9 @@
 
     $countFields = 0;
     $num_fields = array(); // Only numerical fields (features).
-    $fields = array();    // Only fields that have values b'0', b'1' or 0, 1 only (labels).
+    $fields = array();    // Only fields that have values 0, 1 only (labels).
     $csv_array = array();
-    $count2 = array();
     $row = 0;
-    $isFirstRow = true;
-    $firstRowLength = 0;
 
     if(($open_file = fopen($file_path, "r")) !== FALSE) {
         
@@ -83,20 +80,9 @@
             // Empty rows validation. If such rows exist, exclude them from the dataset.
             if (array_filter($row_data)) {
                 $countFields = count($row_data);
-
-                // Wrong value length validation, based on the first row's value length.
-                // If such rows exist, add 0s to their values (Zero Imputation Preprocessing).
-                if ($isFirstRow) {
-                    $firstRowLength = $countFields;
-                    $isFirstRow = false;
+                for($i = 0; $i < $countFields; $i++){
+                    $csv_array[$row][$i] = $row_data[$i];
                 }
-                if ($countFields < $firstRowLength) {
-                    for ($i = $countFields; $i < $firstRowLength; $i++) {
-                        $row_data[] = 0;
-                    }
-                }
-                
-                $csv_array[$row] = $row_data;
                 $row++;
             }
         }
@@ -110,7 +96,7 @@
         }
         
         // Storing numerical fields only without missing values (features).
-        for ($j = 0; $j < $firstRowLength; $j++) {
+        for ($j = 0; $j < $countFields; $j++) {
             $is_numeric = true;
             for ($i = 1; $i < count($csv_array); $i++) {
                 $value = $csv_array[$i][$j];
@@ -138,12 +124,12 @@
             exit;
         }
 
-        // Storing fields that have values b'0', b'1' or 0, 1 only without missing values (labels).
-        for ($j2 = 0; $j2 < $firstRowLength; $j2++) {
+        // Storing fields that have values 0, 1 only without missing values (labels).
+        for ($j2 = 0; $j2 < $countFields; $j2++) {
             $is_binary = true;
             for ($i2 = 1; $i2 < count($csv_array); $i2++) {
                 $value = $csv_array[$i2][$j2];
-                if ($value === "" || !preg_match('/^(b\'[01]\')|^[01]$/', $value)) {
+                if ($value === "" || !preg_match('/^[01]$/', $value)) {
                     $is_binary = false;
                     break;
                 }
