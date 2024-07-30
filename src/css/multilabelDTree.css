@@ -464,6 +464,7 @@ nav a.active {
     margin-bottom: 4px;
     text-align: left;
     font-weight: 350;
+    gap: 5;
 }
 
 .selectedParams p span {
@@ -488,13 +489,24 @@ nav a.active {
     font-weight: 300;
 }
 
-.saveModelBtn button#visualizeTree,
-.saveModelBtn button#loadingbtnTree {
+/* .saveModelBtn button#visualizeDTree,
+.saveModelBtn button#loadingbtnDTree {
     height: 55px;
     width: 190px;
     border-radius: 10px;
     font-size: 16px;
     font-weight: 300;
+} */
+
+.vdtree-btn {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-right: 8px;
+}
+
+.vdtree-btn button {
+    width: 62%;
 }
 
 .model-save-div {

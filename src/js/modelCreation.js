@@ -282,8 +282,8 @@ $(function() {
         $('#params_div').hide();
         $('#modelEvaluationResults').hide();
 
-        var selected = $("#select_dataset :selected").val();
-        var folder = $("#select_dataset :selected").attr("class");
+        var selected = $("#select_dataset :selected").val(); // Getting current file selection.
+        var folder = $("#select_dataset :selected").attr("class"); // Getting current folder type selection.
 
         if(selected == "default") {
             $('#delbtn').prop("disabled", true);
@@ -324,7 +324,7 @@ $(function() {
                     $('#loadingbtn_dataset').hide();
                     $('#table_div').show();
 
-                    // Getting the total record length.
+                    // Displaying the total record length.
                     $('#record-count').text(csv_array.length);
 
                     // Features Selection.
@@ -481,7 +481,7 @@ $(function() {
     // Handling Build Model for Multilabel Cross Validation.
     $("#buildModelBtn").click(function() {
 
-        $('#modelEvaluationResults').hide();
+        $('#modelEvaluationResults').hide(); // Hidding Model Evaluation Results.
 
         $("#max_depth:focus").blur(); // Max Depth.
         $("#min_samples_leaf:focus").blur(); // Min Samples Leaf.
@@ -662,7 +662,7 @@ $(function() {
                             <table id="results_table${i + 1}" class="table table-bordered table-style table-hover">
                                 <thead>
                                     <tr>
-                                        <th scope="col" colspan="4">Metrics for Label ${i + 1}</th>
+                                        <th scope="col" colspan="4">Metrics for Label ${i + 1} - ${selected_labels[i]}</th>
                                     </tr>
                                     <tr>
                                         <th scope="col">Label</th>
@@ -674,9 +674,9 @@ $(function() {
                                 <tbody class="table-group-divider">`;
 
                     for (var j = 0; j < labels[i].length; j++) {
-                        var precision = pre_per_label[i][j] !== undefined ? pre_per_label[i][j] : 1;
-                        var recall = rec_per_label[i][j] !== undefined ? rec_per_label[i][j] : 1;
-                        var fscore = fsc_per_label[i][j] !== undefined ? fsc_per_label[i][j] : 1;
+                        var precision = pre_per_label[i][j] !== undefined ? pre_per_label[i][j] : 0;
+                        var recall = rec_per_label[i][j] !== undefined ? rec_per_label[i][j] : 0;
+                        var fscore = fsc_per_label[i][j] !== undefined ? fsc_per_label[i][j] : 0;
 
                         tableHtml += `
                             <tr>
@@ -834,6 +834,4 @@ $(function() {
         });
     });
 
-    // Handling Visualize DTree.
-    
 });

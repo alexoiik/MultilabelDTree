@@ -22,6 +22,7 @@
     //     exit;
     // }
 
+    // Folder Validation.
     if(!isset($_GET['folder'])) {
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"Please select a folder type."]);
@@ -36,6 +37,7 @@
         exit;
     }
 
+    // File Validation.
     if(!isset($_GET['file'])) {
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"Please select a dataset."]);
