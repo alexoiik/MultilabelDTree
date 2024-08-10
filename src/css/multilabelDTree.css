@@ -360,9 +360,7 @@ nav a.active {
 }
 
 .edit-select3 {
-    font-size: 15px;
     margin-bottom: 20px;
-    width: 255px;
 }
 
 .quesMark {
@@ -395,12 +393,12 @@ nav a.active {
 .inline_form {
     display: flex;
     gap: 22px;
-    width: 35%;
+    width: 40%;
     margin-bottom: 15px;
 }
  
 .inline_form2 {
-    width: 23.5%;
+    width: 28.5%;
     margin-bottom: 15px;
 }
 
@@ -437,13 +435,13 @@ nav a.active {
     }
 }
 
-@media(max-width: 590px) {
+@media(max-width: 550px) {
     .inline_form {
         width: 65%;
     }
 }
 
-@media(max-width: 455px) {
+@media(max-width: 488px) {
     .inline_form {
         display: block;
     }

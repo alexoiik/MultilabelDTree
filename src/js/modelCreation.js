@@ -35,32 +35,13 @@ $(function() {
         event.stopPropagation();
     });
 
+    // Handling PopUp Notification Modal.
     var modal_key = $("#modal2");
     modal_key.on("keypress", function(event) {
-        if(event.key === "Enter"){
+        if(event.key === "Enter") {
             event.preventDefault();
-            if($("#modal2").css("display") !== "none"){
+            if($("#modal2").css("display") !== "none") {
                 $("#modal_btn").click();
-            }
-        }
-    });
-
-    var input_key = $("#params input");
-    input_key.on("keypress", function(event) {
-        if(event.key === "Enter"){
-            event.preventDefault();
-            if($("#buildModelBtn").css("display") !== "none"){
-                $("#buildModelBtn").click();
-            }
-        }
-    });
-
-    var input_key = $("#model_name");
-    input_key.on("keypress", function(event) {
-        if(event.key === "Enter"){
-            event.preventDefault();
-            if($("#saveModelBtn").css("display") !== "none"){
-                $("#saveModelBtn").click();
             }
         }
     });
@@ -90,8 +71,8 @@ $(function() {
                 //     $("#select_dataset").append($(`<option class='private' value='${privateDatasets[i]}'>[PRIVATE]  ${privateDatasets[i]}</option>`));
                 // }
 
-                $('#delbtn').prop("disabled",true);
-                $('#dnload-btn').prop("disabled",true);
+                $('#delbtn').prop("disabled", true);
+                $('#dnload-btn').prop("disabled", true);
                 $('#table_div').hide();
                 $('#params_div').hide();
                 $('#modelEvaluationResults').hide();
@@ -104,8 +85,8 @@ $(function() {
                 $('#modal2_text').html(errormes);
                 $("#select_dataset").html("");
                 $("#select_dataset").append($("<option value='default' selected>Select an existing Dataset</option>"));
-                $('#delbtn').prop("disabled",true);
-                $('#dnload-btn').prop("disabled",true);
+                $('#delbtn').prop("disabled", true);
+                $('#dnload-btn').prop("disabled", true);
                 $('#table_div').hide();
                 $('#params_div').hide();
                 $('#modelEvaluationResults').hide();
@@ -386,7 +367,7 @@ $(function() {
                     $('#params_div').show();
                 } catch(error) {
                     $('#loadingbtn_dataset').hide();
-                    $('#dnload-btn').prop("disabled",true);
+                    $('#dnload-btn').prop("disabled", true);
                     $('#modal2_text').html("");
                     $('#modal2').modal('show');
                     $('#modal2_text').html("Unable to proccess this dataset.");
@@ -407,10 +388,10 @@ $(function() {
 
     // Handling Dataset Deletion.
     $('#delbtn').click(function() {
-        var file = $("#select_dataset :selected").val();
-        var folder = $("#select_dataset :selected").attr("class");
+        var file = $("#select_dataset :selected").val(); // Getting current file selection.
+        var folder = $("#select_dataset :selected").attr("class"); // Getting current folder type selection.
 
-        $('#dnload-btn').prop("disabled",true);
+        $('#dnload-btn').prop("disabled", true);
         $('#delbtn').hide();
         $('#loadingbtn2').show();
 
@@ -424,7 +405,7 @@ $(function() {
             success: function() {
                 $("#loadingbtn2").hide();
                 $("#delbtn").show();
-                $('#delbtn').prop("disabled",true);
+                $('#delbtn').prop("disabled", true);
                 $("#select_dataset :selected").remove();
                 $("#select_dataset").val("default");
                 $('#table_div').hide();
@@ -439,7 +420,7 @@ $(function() {
                 var errormes = response.errormesg;
                 $("#loadingbtn2").hide();
                 $("#delbtn").show();
-                $('#delbtn').prop("disabled",true);
+                $('#delbtn').prop("disabled", true);
                 $("#select_dataset").val("default");
                 $('#table_div').hide();
                 $('#params_div').hide();
@@ -451,7 +432,7 @@ $(function() {
         });
     });
 
-    // Handling dataset's downloading.
+    // Handling Dataset's downloading.
     $('#dnload-btn').click(function(event) {
         var file = $("#select_dataset :selected").val();
         var folder = $("#select_dataset :selected").attr("class");

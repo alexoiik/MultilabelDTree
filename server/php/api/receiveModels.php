@@ -22,24 +22,21 @@
     //     exit;
     // }
 
-    $public_path = "../../py/public/datasets";
-    $public_data = getFiles($public_path);
-
     // $email = user_mail($_GET['token']);
     // $hash_user = md5($email);
     
-    // $private_path = "../../py/users/$hash_user/datasets";
-    // $private_data = getFiles($private_path);
+    // $models_path = "../../py/users/$hash_user/models"; # << CORRECT (for later addition)
+    $models_path = "../../py/users"; # << ΕΓΩ ΤΟ ΈΒΑΛΑ 
+    $models_data = getFiles($models_path); # << CORRECT (for later addition)
 
-    function getFiles($path) {
+    function getFiles($path){
         $data = [];
-        $data2 = glob($path . '/' . '*');
+        $data2 = glob($path . '/' . '*' . '.pkl');
         foreach($data2 as $d2){
             array_push($data,basename($d2));
         }
         return $data;
     }
 
-    // print json_encode(['public_data'=>$public_data,'private_data'=>$private_data]); # << CORRECT (for later addition)
-    print json_encode(['public_data'=>$public_data]); # << ΕΓΩ ΤΟ ΈΒΑΛΑ 
+    print json_encode(['models_data'=>$models_data]);
 ?>

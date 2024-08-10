@@ -314,8 +314,8 @@
         // 1) Getting the unique id from users table.
         $token = 'faketoken'; // fake token.
         $query = 'select id from users where token=?';
-        $st = $mysqli->prepare($query); // late addition: $input['token'] 
-        $st->bind_param('s', $token);
+        $st = $mysqli->prepare($query);
+        $st->bind_param('s', $token); // later addition: $input['token'] 
         $st->execute();
         $res = $st->get_result();
         $user_id = $res->fetch_assoc()['id'];
