@@ -50,6 +50,26 @@ def auto_select_param(param_name, param_range, attr, classLabels, kf, classifier
     best_param = None
     best_hamming_loss = float('inf')
 
+    # Calculating the classifier with max_depth=None.
+    if param_name == 'max_depth':
+            none_max_depth = None
+            none_hamming_loss = float('inf')
+            hamming_losses = []
+            for train_index, test_index in kf.split(attr):
+                X_train, X_test = attr.iloc[train_index, :], attr.iloc[test_index, :]
+                y_train, y_test = classLabels.iloc[train_index], classLabels.iloc[test_index]
+
+                model = DecisionTreeClassifier(max_depth=None)
+                classifier.classifier = model
+                classifier.fit(X_train, y_train)
+                predictions = classifier.predict(X_test)
+                hamming_loss = metrics.hamming_loss(y_test, predictions)
+                hamming_losses.append(hamming_loss)
+
+            none_hamming_loss = sum(hamming_losses) / k
+            none_max_depth = classifier.classifier.get_depth() # Returning classifier's max_depth.
+
+    # Calculating auto-selected parameters (max_depth or min_samples_leaf).
     for i in param_range:
         hamming_losses = []
         for train_index, test_index in kf.split(attr):
@@ -69,7 +89,16 @@ def auto_select_param(param_name, param_range, attr, classLabels, kf, classifier
             best_hamming_loss = avg_hamming_loss
             best_param = i
 
-    return best_param, best_hamming_loss
+    # Comparing auto-selected max_depth with the depth from max_depth=None.
+    if param_name == 'max_depth':
+        if none_max_depth < best_param:
+            return none_max_depth, none_hamming_loss # Returning smaller max_depth from None param.
+        else:
+            return best_param, best_hamming_loss # Returning smaller auto-selected max_depth.
+    
+    # Returning auto-selected min_samples_leaf.
+    if param_name == 'min_samples_leaf':
+        return best_param, best_hamming_loss
 
 best_classifier_name = None
 
@@ -101,13 +130,13 @@ if sys.argv[7] == 'Auto':
 
     # Auto min_samples_leaf selection.
     if min_samples_leaf == 'Auto':
-        min_samples_leaf, best_hamming_loss = auto_select_param('min_samples_leaf', range(5, 50, 3), attr, classLabels, kf, classifier, k)
+        min_samples_leaf, best_hamming_loss = auto_select_param('min_samples_leaf', range(1, 50, 3), attr, classLabels, kf, classifier, k)
     else:
         min_samples_leaf = int(min_samples_leaf) # Specific min_samples_leaf selection.
     
     # Auto max_depth selection.
     if max_depth == 'Auto':
-        max_depth, best_hamming_loss = auto_select_param('max_depth', range(5, 50, 3), attr, classLabels, kf, classifier, k)
+        max_depth, best_hamming_loss = auto_select_param('max_depth', range(1, 50, 3), attr, classLabels, kf, classifier, k)
     elif max_depth == 'None': # None max_depth selection.
         max_depth = None
     else: 
@@ -126,13 +155,13 @@ else: # Specific classifier selection.
 
     # Auto min_samples_leaf selection.
     if min_samples_leaf == 'Auto':
-        min_samples_leaf, best_hamming_loss = auto_select_param('min_samples_leaf', range(5, 50, 3), attr, classLabels, kf, classifier, k)
+        min_samples_leaf, best_hamming_loss = auto_select_param('min_samples_leaf', range(1, 50, 3), attr, classLabels, kf, classifier, k)
     else:
         min_samples_leaf = int(min_samples_leaf) # Specific min_samples_leaf selection.
     
     # Auto max_depth selection.
     if max_depth == 'Auto':
-        max_depth, best_hamming_loss = auto_select_param('max_depth', range(5, 50, 3), attr, classLabels, kf, classifier, k)
+        max_depth, best_hamming_loss = auto_select_param('max_depth', range(1, 50, 3), attr, classLabels, kf, classifier, k)
     elif max_depth == 'None': # None max_depth selection.
         max_depth = None
     else: 
