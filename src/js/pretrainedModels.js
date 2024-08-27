@@ -9,6 +9,7 @@ $(function () {
     $('#loadingbtnModel2').hide();
     $('#loadingbtnDTree').hide();
     $('#loadingbtn_dataset').hide();
+    $('#uplDiv_0').hide();
     $('#uplDiv').hide();
     $('#table_div').hide();
     $('#results_div').hide();
@@ -84,6 +85,7 @@ $(function () {
                 $('#dnload-model').prop("disabled", true);
                 $('#visualizeDTree').prop("disabled", true);
                 $('#params_div2').hide();
+                $('#uplDiv_0').hide();
                 $('#uplDiv').hide();
                 $('#table_div').hide();
                 $('#results_div').hide();
@@ -98,6 +100,7 @@ $(function () {
                 $('#dnload-model').prop("disabled", true);
                 $('#visualizeDTree').prop("disabled", true);
                 $('#params_div2').hide();
+                $('#uplDiv_0').hide();
                 $('#uplDiv').hide();
                 $('#table_div').hide();
                 $('#results_div').hide();
@@ -140,6 +143,7 @@ $(function () {
     $("#select_model").on("change", function () {
 
         $('#params_div2').hide();
+        $('#uplDiv_0').hide();
         $('#uplDiv').hide();
         $('#table_div').hide();
         $('#results_div').hide();
@@ -210,7 +214,8 @@ $(function () {
 
                 $('#loadingbtnModel2').hide();
                 $('#params_div2').show();
-                // getDatasets();
+                getDatasets();
+                $('#uplDiv_0').show();
                 $('#uplDiv').show();
             },
             error: function (xhr, status, error) {
@@ -250,6 +255,7 @@ $(function () {
                 $('#dnload-model').prop("disabled", true);
                 $('#visualizeDTree').prop("disabled", true);
                 $('#params_div2').hide();
+                $('#uplDiv_0').hide();
                 $('#uplDiv').hide();
                 $('#table_div').hide();
                 $('#results_div').hide();
@@ -267,6 +273,7 @@ $(function () {
                 $('#dnload-model').prop("disabled", true);
                 $('#visualizeDTree').prop("disabled", true);
                 $('#params_div2').hide();
+                $('#uplDiv_0').hide();
                 $('#uplDiv').hide();
                 $('#table_div').hide();
                 $('#results_div').hide();
@@ -282,5 +289,234 @@ $(function () {
         var file = $("#select_model :selected").val();
         event.preventDefault();
         window.location.href = `../server/php/api/downloadModel.php?token=${token}&file=${file}`;
+    });
+
+    // Handling DTrees Visualization.
+    // ...
+
+    // Handling DTrees Download.
+    // ...
+
+    // Function for Getting all Unclassifed Datasets.
+    function getDatasets() {
+        // AJAX Request for Receiving all Unclassified Datasets.
+        $.ajax({
+            url: `../server/php/api/receiveUnclassifiedDatasets.php?token=${token}`,
+            method: 'GET',
+            success: function (data) {
+                var data2 = JSON.parse(data);
+                var datasets = data2.unclassified_data;
+
+                $("#select_dataset").html("");
+                $("#select_dataset").append($("<option value='default' selected>Select an Unclassified Dataset</option>"));
+                for (var i = 0; i < datasets.length; i++) {
+                    $("#select_dataset").append($(`<option value='${datasets[i]}'>[UNCLASSIFIED]  ${datasets[i]}</option>`));
+                }
+                $('#delbtn').prop("disabled", true);
+                $('#dnload-btn').prop("disabled", true);
+                $('#table_div').hide();
+                $('#results_div').hide();
+            },
+            error: function (xhr, status, error) {
+                var response = JSON.parse(xhr.responseText);
+                var errormes = response.errormesg;
+                $('#modal2_text').html("");
+                $('#modal2').modal('show');
+                $('#modal2_text').html(errormes);
+                $("#select_dataset").html("");
+                $("#select_dataset").append($("<option value='default' selected>Select an Unclassified Dataset</option>"));
+                $('#delbtn').prop("disabled", true);
+                $('#dnload-btn').prop("disabled", true);
+                $('#table_div').hide();
+                $('#results_div').hide();
+            }
+        });
+    }
+
+    // Handling Upload Unclassified Dataset Button.
+    $("#upload_btn").click(function () {
+        $('#upl_modal').modal('show');
+        $('#alertPlaceholder').html("");
+        $("#formFile").val("");
+    });
+
+    $('#cancelbtn').click(function () {
+        $('#alertPlaceholder').html("");
+    });
+
+    // Handling Unclassified Dataset's Uploading.
+    $('#conf_upl').click(function () {
+
+        $('#alertPlaceholder').html("");
+
+        // File Uploading Validation.
+        if ($("#formFile").prop('files').length == 0) {
+            alert_danger("You must upload a dataset.");
+            return;
+        }
+
+        var file = $("#formFile").prop('files')[0];
+        var checkFile = /(\.csv)$/i;
+
+        if (!checkFile.test(file.name)) {
+            alert_danger("Only .csv files are allowed.");
+            return;
+        }
+        if (file.size > 10485760) {
+            alert_danger("Max dataset size is 10 MB.");
+            return;
+        }
+
+        var formData = new FormData();
+        formData.set("token", token);
+        formData.set("file", file);
+
+        $('#alertPlaceholder').html("");
+        $("#conf_upl").hide();
+        $('#loadingbtn').show();
+
+        // AJAX Request for Uploading Unclassified Dataset.
+        $.ajax({
+            url: '../server/php/api/uploadUnclassifiedDataset.php',
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function () {
+                alert_success("File uploaded successfully.");
+                $("#formFile").val("");
+                $("#loadingbtn").hide();
+                $("#conf_upl").show();
+                getDatasets();
+            },
+            error: function (xhr, status, error) {
+                var response = JSON.parse(xhr.responseText);
+                var errormes = response.errormesg;
+                alert_danger(errormes);
+                $("#formFile").val("");
+                $("#loadingbtn").hide();
+                $("#conf_upl").show();
+            }
+        });
+    });
+
+    // Handling Dataset Selection.
+    $("#select_dataset").on("change", function () {
+
+        $('#table_div').hide();
+        $('#results_div').hide();
+
+        var selected = $("#select_dataset :selected").val(); // Getting current file selection.
+
+        if (selected == "default") {
+            $('#delbtn').prop("disabled", true);
+            $('#dnload-btn').prop("disabled", true);
+            return;
+        }
+
+        $('#delbtn').prop("disabled", false);
+        $('#dnload-btn').prop("disabled", false);
+        $('#loadingbtn_dataset').show();
+
+        // AJAX Request for Getting Unclassified Dataset Content.
+        $.ajax({
+            url: `../server/php/api/multilabelUnclassifiedDatasetContent.php?token=${token}&file=${selected}`,
+            method: 'GET',
+            success: function (data) {
+                try {
+                    var data2 = JSON.parse(data);
+                    var csv_array = data2.csv_array;
+
+                    $("#data_table_head_tr").html("");
+                    $("#data_table_tbody").html("");
+
+                    // 15-Row Preview of the dataset.
+                    $.each(csv_array[0], function (index, val) {
+                        $("#data_table_head_tr").append($(`<th scope="col">${val}</th>`));
+                    });
+                    for (var i = 1; i <= 15; i++) {
+                        var tr_id = 'tr' + i;
+                        $("#data_table_tbody").append($(`<tr id="${tr_id}"></tr>`));
+                        $.each(csv_array[i], function (index3, val3) {
+                            $(`#${tr_id}`).append($(`<td><div class="data_table_tbody_td">${val3}</div></td>`));
+                        });
+                    }
+
+                    $('#loadingbtn_dataset').hide();
+                    $('#table_div').show();
+
+                    // Displaying the total record length.
+                    $('#record-count').text(csv_array.length);
+
+                    window.location.href = "#select_class";
+                } catch (error) {
+                    $('#loadingbtn_dataset').hide();
+                    $('#dnload-btn').prop("disabled", true);
+                    $('#modal2_text').html("");
+                    $('#modal2').modal('show');
+                    $('#modal2_text').html("Unable to proccess this dataset.");
+                }
+            },
+            error: function (xhr, status, error) {
+                var response = JSON.parse(xhr.responseText);
+                var errormes = response.errormesg;
+                $('#loadingbtn_dataset').hide();
+                $('#dnload-btn').prop("disabled", true);
+                $('#modal2_text').html("");
+                $('#modal2').modal('show');
+                $('#modal2_text').html(errormes);
+            }
+        });
+    });
+
+    // Handling Unclassified Dataset's Deletion.
+    $('#delbtn').click(function () {
+        var file = $("#select_dataset :selected").val(); // Getting current file selection.
+
+        $('#dnload-btn').prop("disabled", true);
+        $('#delbtn').hide();
+        $('#loadingbtn2').show();
+
+        // AJAX Request for Deleting Unclassified Dataset.
+        $.ajax({
+            url: '../server/php/api/destroyUnclassifiedDataset.php',
+            method: 'DELETE',
+            data: JSON.stringify({ file: file, token: token }),
+            dataType: "json",
+            contentType: 'application/json',
+            success: function () {
+                $("#loadingbtn2").hide();
+                $("#delbtn").show();
+                $('#delbtn').prop("disabled", true);
+                $("#select_dataset :selected").remove();
+                $("#select_dataset").val("default");
+                $('#table_div').hide();
+                $('#results_div').hide();
+                $('#modal2_text').html("");
+                $('#modal2').modal('show');
+                $('#modal2_text').html("Dataset successfully deleted.");
+            },
+            error: function (xhr, status, error) {
+                var response = JSON.parse(xhr.responseText);
+                var errormes = response.errormesg;
+                $("#loadingbtn2").hide();
+                $("#delbtn").show();
+                $('#delbtn').prop("disabled", true);
+                $("#select_dataset").val("default");
+                $('#table_div').hide();
+                $('#results_div').hide();
+                $('#modal2_text').html("");
+                $('#modal2').modal('show');
+                $('#modal2_text').html(errormes);
+            }
+        });
+    });
+
+    // Handling Unclassified Dataset's Downloading.
+    $('#dnload-btn').click(function (event) {
+        var file = $("#select_dataset :selected").val();
+        var link = `../server/php/api/downloadUnclassifiedDataset.php?token=${token}&file=${file}`;
+        event.preventDefault();
+        window.location.href = link
     });
 });

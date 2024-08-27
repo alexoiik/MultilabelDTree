@@ -51,7 +51,7 @@
         print json_encode(['errormesg'=>"Only .csv files are allowed."]);
         exit;
     }
-    
+
     if($_FILES["file"]["size"] >  10485760) { 
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"Max dataset size is 10 MB."]);
@@ -86,11 +86,11 @@
     }
     else {
         // $email = user_mail($_POST['token']);
-
         // $hash_user = md5($email);
+
         // $file_path = "../../py/users/$hash_user/datasets/" . basename($_FILES['file']['name']);
 
-        // if(file_exists($file_path)){
+        // if(file_exists($file_path)) {
         //     header("HTTP/1.1 400 Bad Request");
         //     print json_encode(['errormesg'=>"File already exists."]);
         //     exit;

@@ -25,7 +25,8 @@ dataset.columns = res
 attr = dataset[selectedFeatures]
 classLabels = dataset[selectedLabels]
 
-model_path = sys.argv[6] # given model path. 
+model_trf = sys.argv[6] # given model trf name. 
+model_path = sys.argv[7] # given model path name. 
 
 # Defining the multilabel classifiers.
 classifiers = {
@@ -43,9 +44,10 @@ classifiers = {
     )
 }
 
-classifier = classifiers.get(sys.argv[7]) # selected classifier.
+classifier = classifiers.get(sys.argv[8]) # selected classifier.
 
 classifier.fit(attr, classLabels)
+joblib.dump(classifier, model_trf)
 classifier.classifier.fit(attr, classLabels)
 joblib.dump(classifier, model_path)
 

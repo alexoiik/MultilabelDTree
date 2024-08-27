@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `labels` (
 CREATE TABLE IF NOT EXISTS `models` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
+  `transformation_approach` varchar(50) NOT NULL,
   `model_name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `userFK` (`user_id`),

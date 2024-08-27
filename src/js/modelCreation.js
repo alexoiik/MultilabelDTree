@@ -137,7 +137,7 @@ $(function() {
         $('#alertPlaceholder').html("");
     });
 
-    // Handling new dataset's uploading.
+    // Handling New Dataset's Uploading.
     $('#conf_upl').click(function() {
         
         $('#alertPlaceholder').html("");
@@ -257,7 +257,7 @@ $(function() {
     });
 
     // Handling Dataset Selection.
-    $("#select_dataset").on("change",function() {
+    $("#select_dataset").on("change", function() {
 
         $('#table_div').hide();
         $('#params_div').hide();
@@ -272,8 +272,8 @@ $(function() {
             return;
         }
 
-        $('#delbtn').prop("disabled",false);
-        $('#dnload-btn').prop("disabled",false);
+        $('#delbtn').prop("disabled", false);
+        $('#dnload-btn').prop("disabled", false);
         $('#loadingbtn_dataset').show();
         
         // AJAX Request for Getting the Dataset Content.
@@ -386,7 +386,7 @@ $(function() {
         });
     });
 
-    // Handling Dataset Deletion.
+    // Handling Dataset's Deletion.
     $('#delbtn').click(function() {
         var file = $("#select_dataset :selected").val(); // Getting current file selection.
         var folder = $("#select_dataset :selected").attr("class"); // Getting current folder type selection.
@@ -432,7 +432,7 @@ $(function() {
         });
     });
 
-    // Handling Dataset's downloading.
+    // Handling Dataset's Downloading.
     $('#dnload-btn').click(function(event) {
         var file = $("#select_dataset :selected").val();
         var folder = $("#select_dataset :selected").attr("class");

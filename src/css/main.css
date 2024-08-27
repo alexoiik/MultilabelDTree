@@ -68,7 +68,7 @@ nav a.active {
 
 #navContainer {
   margin-left: 10%;
-  margin-right: 10%;
+  margin-right: 5%;
 }
 
 .font-size {
@@ -76,14 +76,24 @@ nav a.active {
   font-weight: 400;
 }
 
-@media(max-width: 1476px) {
-  .appTitle {
-    margin-right: 3%;
-  }
-
+@media(max-width: 1700px) {
   #navContainer {
     margin-left: 7%;
-    margin-right: 7%;
+    margin-right: 0%;
+  }
+
+  .appTitle {
+    margin-right: 8%;
+  }
+}
+
+@media(max-width: 1476px) {
+  #navContainer {
+    margin-left: 3%;
+  }
+
+  .appTitle {
+    margin-right: 2%;
   }
 }
 
@@ -119,7 +129,7 @@ nav a.active {
 
 .drop-ul li a {
   margin: auto;
-  font-size: 16px;  
+  font-size: 16px;
 }
 
 .drop-ul li a {
@@ -154,7 +164,16 @@ nav a.active {
   font-weight: 300;
 }
 
-@media(max-width: 1199px) {
+@media(max-width: 1300px) {
+  #navContainer {
+    margin-left: 7%;
+    margin-right: 7%;
+  }
+
+  .appTitle {
+    margin-right: 3%;
+  }
+
   .dropdown-menu .dropdown-submenu-left {
     display: none;
     position: absolute;
@@ -1121,7 +1140,7 @@ h1.intro-header::before {
   .home-content-left h1 {
     margin-bottom: 3.6rem;
   }
-  
+
   .home-social-list {
     top: 35%;
   }

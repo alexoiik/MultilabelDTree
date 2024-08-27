@@ -63,6 +63,7 @@ def auto_select_param(param_name, param_range, attr, classLabels, kf, classifier
                 classifier.classifier = model
                 classifier.fit(X_train, y_train)
                 predictions = classifier.predict(X_test)
+                classifier.classifier.fit(X_train, y_train)
                 hamming_loss = metrics.hamming_loss(y_test, predictions)
                 hamming_losses.append(hamming_loss)
 

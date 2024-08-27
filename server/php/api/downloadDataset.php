@@ -53,7 +53,7 @@
         // $hash_user = md5($email);
         // $file_path = "../../py/users/$hash_user/datasets/$file";
 
-        // if(!file_exists($file_path)){
+        // if(!file_exists($file_path)) {
         //     header("HTTP/1.1 400 Bad Request");
         //     print json_encode(['errormesg'=>"File doesn't exist."]);
         //     exit;

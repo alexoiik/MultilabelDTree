@@ -151,8 +151,8 @@
         exit;
     }
 
+    $model_file_transformation = $model_name . "_transformation.pkl";
     $model_file = $model_name . ".pkl";
-
 
     $file_path = "";
 
@@ -279,13 +279,28 @@
 
         // $email = user_mail($input['token']);
         // $hash_user = md5($email);
-        // $model_path = "../../py/users/$hash_user/models/$model_file";
 
+        // $model_transformation = "../../py/users/$hash_user/transformations/$model_file_transformation";
+        // if(file_exists($model_transformation)) {
+        //     header("HTTP/1.1 400 Bad Request");
+        //     print json_encode(['errormesg'=>"Model already exists. Try a different name."]);
+        //     exit;
+        // }
+
+        // $model_path = "../../py/users/$hash_user/models/$model_file";
         // if(file_exists($model_path)) {
         //     header("HTTP/1.1 400 Bad Request");
         //     print json_encode(['errormesg'=>"Model already exists. Try a different name."]);
         //     exit;
         // }
+
+        $model_transformation = "../../py/users/transformations/$model_file_transformation";  // ΕΓΩ ΤΟ ΕΒΑΛΑ. (Testing model_transformation to save the transformation).
+
+        if(file_exists($model_transformation)) {
+            header("HTTP/1.1 400 Bad Request");
+            print json_encode(['errormesg'=>"Model already exists. Try a different name."]);
+            exit;
+        }
 
         $model_path = "../../py/users/$model_file"; // ΕΓΩ ΤΟ ΕΒΑΛΑ. (Testing model_path to save the model).
 
@@ -297,7 +312,7 @@
 
         $results;
         try {
-            $results = shell_exec("python ../../py/save_multilabel_model.py $file_path $featuresImplode $labelsImplode $max_depth $min_samples_leaf $model_path $classifier");
+            $results = shell_exec("python ../../py/save_multilabel_model.py $file_path $featuresImplode $labelsImplode $max_depth $min_samples_leaf $model_transformation $model_path $classifier");
         } catch(Exception $e) {
             header("HTTP/1.1 400 Bad Request");
             print json_encode(['errormesg'=>"An error has occured while trying to run the Python module. <br><br> Please check the possibility of missing values existence in given columns and try again."]);
@@ -320,10 +335,10 @@
         $res = $st->get_result();
         $user_id = $res->fetch_assoc()['id'];
 
-        // 2) Inserting the created model in the models table.
-        $query = 'insert into models(user_id, model_name) values(?,?)';
+        // 2) Inserting the transformation & the created model in the models table.
+        $query = 'insert into models(user_id, transformation_approach, model_name) values(?,?,?)';
         $st = $mysqli->prepare($query);
-        $st->bind_param('is', $user_id, $model_file);
+        $st->bind_param('iss', $user_id, $model_file_transformation, $model_file);
         $st->execute();
 
         // 3) Getting the unique id from models table.

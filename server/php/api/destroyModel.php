@@ -37,16 +37,30 @@
 
     // $file_path = "../../py/users/$hash_user/models/$file"; # << CORRECT (for later addition)
     $file_path = "../../py/users/$file"; # << ΕΓΩ ΤΟ ΈΒΑΛΑ 
-
     if(!file_exists($file_path)) {
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"File doesn't exist."]);
         exit;
     }
     
+    $trf_file = str_replace('.pkl', '', $file);
+    // $transformation_path = "../../py/users/transformations/$hash_user/" . $trf_file . "_transformation.pkl"; # << CORRECT (for later addition)
+    $transformation_path = "../../py/users/transformations/" . $trf_file . "_transformation.pkl";
+    if(!file_exists($transformation_path)) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"File doesn't exist."]);
+        exit;
+    }
+
     $delete = unlink($file_path);
-    
     if(!$delete) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Unable to delete this file."]);
+        exit;
+    }
+
+    $delete2 = unlink($transformation_path);
+    if(!$delete2) {
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"Unable to delete this file."]);
         exit;

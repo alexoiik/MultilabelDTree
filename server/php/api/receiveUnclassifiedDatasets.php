@@ -1,7 +1,7 @@
 <?php
     require_once "../dbconnect.php";
     // require_once "../global_functions.php";
-
+    
     $method = $_SERVER['REQUEST_METHOD'];
 
     if($method != "GET") {
@@ -24,19 +24,15 @@
 
     // $email = user_mail($_GET['token']);
     // $hash_user = md5($email);
-    
-    // $models_path = "../../py/users/$hash_user/models"; # << CORRECT (for later addition)
-    $models_path = "../../py/users"; # << ΕΓΩ ΤΟ ΈΒΑΛΑ 
-    $models_data = getFiles($models_path);
 
-    function getFiles($path){
-        $data = [];
-        $data2 = glob($path . '/' . '*' . '.pkl');
-        foreach($data2 as $d2){
-            array_push($data,basename($d2));
-        }
-        return $data;
+    // $path = "../../py/users/$hash_user/unclassified_datasets";
+    $path = "../../py/users/unclassified_datasets";
+
+    $unclassified_data = [];
+    $data = glob($path . '/' . '*');
+    foreach($data as $d) {
+        array_push($unclassified_data, basename($d));
     }
 
-    print json_encode(['models_data'=>$models_data]);
+    print json_encode(['unclassified_data'=>$unclassified_data]);
 ?>
