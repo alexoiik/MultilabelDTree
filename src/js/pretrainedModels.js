@@ -148,7 +148,7 @@ $(function () {
         $('#table_div').hide();
         $('#results_div').hide();
 
-        var selected = $("#select_model :selected").val(); // Getting current file selection.
+        var selected = $("#select_model :selected").val(); // Getting current model file selection.
 
         if (selected == "default") {
             $('#del-model').prop("disabled", true);
@@ -198,7 +198,7 @@ $(function () {
                 for (var i = 0; i < labels.length; i++) {
                     $('#model_labels').append($(`
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input edit_checkbox" type="checkbox" id="flexCheckDefault2" name="num_field" value="${labels[i]}" checked disabled>
+                            <input class="form-check-input edit_checkbox" type="checkbox" id="flexCheckDefault2" name="binary_fields" value="${labels[i]}" checked disabled>
                             <label class="form-check-label" for="flexCheckDefault2">
                                 ${labels[i]}
                             </label>
@@ -233,7 +233,8 @@ $(function () {
 
     // Handling Model Deletion.
     $('#del-model').click(function () {
-        var file = $("#select_model :selected").val(); // Getting current file selection.
+
+        var file = $("#select_model :selected").val(); // Getting current model file selection.
 
         $('#del-model').prop("disabled", true);
         $('#del-model').hide();
@@ -430,7 +431,7 @@ $(function () {
                     $("#data_table_head_tr").html("");
                     $("#data_table_tbody").html("");
 
-                    // 15-Row Preview of the dataset.
+                    // 15-Row Preview of the Unclasified Dataset.
                     $.each(csv_array[0], function (index, val) {
                         $("#data_table_head_tr").append($(`<th scope="col">${val}</th>`));
                     });
@@ -518,5 +519,153 @@ $(function () {
         var link = `../server/php/api/downloadUnclassifiedDataset.php?token=${token}&file=${file}`;
         event.preventDefault();
         window.location.href = link
+    });
+
+    // Handling Unclassified Dataset's Multilabel Classification.
+    $("#classifyMultilabelData_btn").click(function () {
+
+        $('#results_div').hide();
+        $('#showMetrics').prop("disabled", true);
+
+        // Features Selection Validation.
+        var check = $("input[name=num_field]:checked");
+
+        var selected_features = {};
+        $.each(check, function (i) {
+            selected_features[i] = $(this).val();
+        });
+
+        // Labels Selection Validation.
+        var check2 = $("input[name=binary_fields]:checked");
+
+        var selected_labels = {};
+        $.each(check2, function (i) {
+            selected_labels[i] = $(this).val();
+        });
+
+        var file = $("#select_dataset :selected").val(); // Getting current file selection.
+        var model = $("#select_model :selected").val(); // Getting current model file selection.
+
+        $("#classifyMultilabelData_btn").hide();
+        $("#loadingbtn3").show();
+
+        $.ajax({
+            url: '../server/php/api/classifyMultilabelData.php',
+            method: 'POST',
+            data: JSON.stringify({
+                token: token, // Current token.
+                features: selected_features, // Features selection.
+                labels: selected_labels, // Labels selection.
+                file: file, // File selection.
+                model: model // Model selection.
+            }),
+            dataType: "json",
+            contentType: 'application/json',
+            success: function (data) {
+
+                console.log(data);
+
+                var csv_array = data.dataset;
+                var avg_hl = data.avg_hl;
+                var avg_acc = data.avg_acc;
+                var avg_pre = data.avg_pre;
+                var avg_rec = data.avg_rec;
+                var avg_fsc = data.avg_fsc;
+                var pre_per_label = data.pre_per_label;
+                var rec_per_label = data.rec_per_label;
+                var fsc_per_label = data.fsc_per_label;
+                var labels = data.labels;
+
+                $("#data_table2_head_tr").html("");
+                $("#data_table2_tbody").html("");
+
+                // 15-Row Preview of the Classified Dataset.
+                $.each(csv_array[0], function (index, val) {
+                    $("#data_table2_head_tr").append($(`<th scope="col">${val}</th>`));
+                });
+                for (var i = 1; i <= 10; i++) {
+                    var tr2_id = 'tr2' + i;
+                    $("#data_table2_tbody").append($(`<tr id="${tr2_id}"></tr>`));
+                    $.each(csv_array[i], function (index3, val3) {
+                        $(`#${tr2_id}`).append($(`<td><div class="data_table_tbody_td">${val3}</div></td>`));
+                    });
+                }
+
+                var labelsLength = (data.labels.length);
+
+                // Metrics Information Display for Each Label.
+                for (var i = 0; i < labels.length; i++) {
+                    $("#results_tbody").append($(`
+                        <tr>
+                            <td>${labels[i]}</td>
+                            <td>${pre_per_label[i]}</td>
+                            <td>${rec_per_label[i]}</td>
+                            <td>${fsc_per_label[i]}</td>
+                        </tr>    
+                    `));
+                }
+                for (var i = 0; i < labelsLength; i++) {
+                    var tableHtml = `
+                        <div id="results_tableDiv${i + 1}" style="margin-top: 33px; overflow-x:auto">
+                            <table id="results_table${i + 1}" class="table table-bordered table-style table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" colspan="4">Metrics for Label ${i + 1} - ${selected_labels[i]}</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Label</th>
+                                        <th scope="col">Precision</th>
+                                        <th scope="col">Recall</th>
+                                        <th scope="col">F-score</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-group-divider">`;
+
+                    for (var j = 0; j < labels[i].length; j++) {
+                        var precision = pre_per_label[i][j] !== undefined ? pre_per_label[i][j] : 0;
+                        var recall = rec_per_label[i][j] !== undefined ? rec_per_label[i][j] : 0;
+                        var fscore = fsc_per_label[i][j] !== undefined ? fsc_per_label[i][j] : 0;
+
+                        tableHtml += `
+                            <tr>
+                                <td>${labels[i][j]}</td>
+                                <td>${precision}</td>
+                                <td>${recall}</td>
+                                <td>${fscore}</td>
+                            </tr>`;
+                    }
+
+                    tableHtml += `
+                                </tbody>
+                            </table>
+                        </div>`;
+
+                    $("#results_container").append($(tableHtml));
+                }
+
+                // Average Metrics Information Display.
+                $("#results_tr").html("");
+                $("#results_tr").append($(`<td>${avg_hl}</td>`));
+                $("#results_tr").append($(`<td>${avg_acc}</td>`));
+                $("#results_tr").append($(`<td>${avg_pre}</td>`));
+                $("#results_tr").append($(`<td>${avg_rec}</td>`));
+                $("#results_tr").append($(`<td>${avg_fsc}</td>`));
+
+                $('#showMetrics').prop("disabled", false);
+                $("#loadingbtn3").hide();
+                $("#classifyMultilabelData_btn").show();
+                $('#results_div').show();
+                window.location.href = '#results_div';
+            },
+            error: function (xhr, status, error) {
+                var response = JSON.parse(xhr.responseText);
+                var errormes = response.errormesg;
+                $("#loadingbtn3").hide();
+                $("#classifyMultilabelData_btn").show();
+                $('#modal2_text').html("");
+                $('#modal2').modal('show');
+                $('#modal2_text').html(errormes);
+            }
+        });
     });
 });

@@ -26,7 +26,7 @@
     // $hash_user = md5($email);
     
     // $models_path = "../../py/users/$hash_user/models"; # << CORRECT (for later addition)
-    $models_path = "../../py/users"; # << ΕΓΩ ΤΟ ΈΒΑΛΑ 
+    $models_path = "../../py/users/models"; # << ΕΓΩ ΤΟ ΈΒΑΛΑ 
     $models_data = getFiles($models_path);
 
     function getFiles($path){

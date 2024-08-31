@@ -58,8 +58,10 @@ nav a.active {
 }
 
 .navLink {
-  padding: 10px 5px;
+  padding: 0 5px;
   text-align: left;
+  padding-top: 15px;
+  padding-bottom: 10px;
 }
 
 .navLink span {
@@ -165,21 +167,30 @@ nav a.active {
 }
 
 @media(max-width: 1300px) {
-  #navContainer {
-    margin-left: 7%;
-    margin-right: 7%;
-  }
-
-  .appTitle {
-    margin-right: 3%;
-  }
-
   .dropdown-menu .dropdown-submenu-left {
     display: none;
     position: absolute;
     right: 5%;
     left: 5%;
     top: 32px;
+  }
+}
+
+@media(max-width: 1199px) {
+  #navContainer {
+    margin-left: 7%;
+    margin-right: 7%;
+  }
+
+  .navLink {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .appTitle {
+    margin-right: 3%;
   }
 }
 

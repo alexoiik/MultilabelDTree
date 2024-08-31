@@ -26,7 +26,7 @@
     // $hash_user = md5($email);
 
     // $file_path = "../../py/users/$hash_user/models/$file"; # << CORRECT (for later addition)
-    $file_path = "../../py/users/$file"; # << ΕΓΩ ΤΟ ΈΒΑΛΑ 
+    $file_path = "../../py/users/models/$file"; # << ΕΓΩ ΤΟ ΈΒΑΛΑ 
 
     if(!file_exists($file_path)) {
         header("HTTP/1.1 400 Bad Request");

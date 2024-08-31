@@ -265,14 +265,11 @@
 
         // Replacing.
         $features = str_replace(" ", "_", $features);
-
         $labels = str_replace(" ", "_", $labels);
-
         $classifier = str_replace(" ", "_", $classifier);
         
         // Imploding.
         $featuresImplode = implode(",", $features);
-
         $labelsImplode = implode(",", $labels);
         
         // Model's Existance Validation.
@@ -302,7 +299,7 @@
             exit;
         }
 
-        $model_path = "../../py/users/$model_file"; // ΕΓΩ ΤΟ ΕΒΑΛΑ. (Testing model_path to save the model).
+        $model_path = "../../py/users/models/$model_file"; // ΕΓΩ ΤΟ ΕΒΑΛΑ. (Testing model_path to save the model).
 
         if(file_exists($model_path)) {
             header("HTTP/1.1 400 Bad Request");
