@@ -133,6 +133,7 @@ $(function() {
         $("#formFile").val("");
     });
 
+    // Handling Cancel btn of Modal.
     $('#cancelbtn').click(function() {
         $('#alertPlaceholder').html("");
     });
@@ -707,11 +708,31 @@ $(function() {
         });
     });
 
-    // Handling Cancel Btns.
-    $('#cancelBtn').click(function() {
-        location.reload();
+    // Handling Clear Btn.
+    $('#clearBtn').click(function() {
+        // Unchecking the checkboxes of the patameters.
+        $('#checkSelectAll input[type="checkbox"], #checkBoxes input[type="checkbox"], #checkSelectAll2 input[type="checkbox"], #select_class input[type="checkbox"], #max_depth_auto_checkbox, #min_samples_leaf_auto_checkbox').each(function() {
+            $(this).prop('checked', false);
+        });
+        // Initializing the values of the parameters.
+        $("#select_classifier").html("");
+        $("#select_classifier").append($("<option value='default' selected>Select classifier</option>"));
+        var classifiers = [
+            'Auto', 
+            'BinaryRelevance', 
+            'LabelPowerset', 
+            'ClassifierChain'
+        ];
+        for(var i = 0; i < classifiers.length; i++) {
+            $("#select_classifier").append($(`<option value='${classifiers[i]}'>${classifiers[i]}</option>`));
+        }
+        $("#min_samples_leaf").val("1");
+        $("#max_depth").val("");
+        $("#kFolds").val("5");
     });
-    $('#cancelBtn2').click(function() {
+
+    // Handling Cancel Btn.
+    $('#cancelBtn').click(function() {
         location.reload();
     });
 

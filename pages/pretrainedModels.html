@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="../src/img/tree.png">
-    <!-- CSS Links -->
+    <!-- Favicon -->
     <link 
         rel="icon" 
         type="image/x-icon" 
         href="../src/assets/img/tree.png"
+    >
+    <!-- CSS Links -->
+    <link 
+        rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     >
     <link 
         rel="stylesheet" 
@@ -16,6 +20,10 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
         crossorigin="anonymous"
     > 
+    <link 
+        rel="stylesheet" 
+        href="../src/css/vendor.css"
+    >
     <link 
         rel="stylesheet" 
         href="../src/css/multilabelDTree.css"
@@ -35,15 +43,21 @@
         crossorigin="anonymous">
     </script>   
     <script 
+        src="../src/js/pace.min.js">
+    </script>
+    <script 
         src="../src/js/pretrainedModels.js">
     </script>
     <title>
         MultilabelDTree - Pretrained Models
     </title>
 </head>
-<body>
+<body id="top">
     <!-- Responsive Navbar -->
-    <nav class="navbar navbar-expand-xl bg-light mr-2 fixed-top">
+    <nav 
+        class="navbar navbar-expand-xl bg-light mr-2 fixed-top"
+        data-aos="fade-down"
+    >
         <div 
             id="navContainer"
             class="container-fluid" 
@@ -238,7 +252,10 @@
     </nav>
 
     <!-- Page Title -->
-    <div class="pageTitle">
+    <div 
+        class="pageTitle" 
+        data-aos="fade-down"
+    >
         Pretrained Models
     </div>
 
@@ -246,7 +263,10 @@
     <div class="main-card-container">
 
         <!-- Pretrained Model Selection -->
-        <div class="content">
+        <div 
+            class="content" 
+            data-aos="fade-up"
+        >
             <div class="container">
                 <div class="steps">
                     <strong>Step 1.</strong> Select a Pretrained Model
@@ -623,9 +643,10 @@
             </div>
         </div>
 
+        <!-- Metrics Display and Classified Dataset Export -->
         <div
             class="content" 
-            id="results_div"
+            id="classifiedDatasetResults"
         >
             <div class="container_2">
                 <div class="steps">
@@ -668,7 +689,7 @@
                         To access the entire classified dataset, click the <strong>'Export to .csv'</strong> button.
                     </span><br/>
                     <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z" />
                     </svg>
                     <span>
                         Finally, see the metrics of your classified dataset, by clicking the <strong>'Show Metrics'</strong> button.
@@ -679,10 +700,10 @@
                     style="display: flex; align-items: center; justify-content: center; margin-top: 12px; gap: 5px;"
                 >
                     <button 
-                        class="btn btn-primary"
+                        class="btn btn-success"
                         type="button"
-                        id="save_btn"
-                        style="width: 50%; padding: 9.3px 0;"
+                        id="exportToCsvBtn"
+                        style="width: 33.3%; padding: 9.3px 0;"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" style="width: 21px; margin-bottom: 2px;" viewBox="0 0 512 512" fill="currentColor">
                             <path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V304H176c-35.3 0-64 28.7-64 64V512H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128zM200 352h16c22.1 0 40 17.9 40 40v8c0 8.8-7.2 16-16 16s-16-7.2-16-16v-8c0-4.4-3.6-8-8-8H200c-4.4 0-8 3.6-8 8v80c0 4.4 3.6 8 8 8h16c4.4 0 8-3.6 8-8v-8c0-8.8 7.2-16 16-16s16 7.2 16 16v8c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40zm133.1 0H368c8.8 0 16 7.2 16 16s-7.2 16-16 16H333.1c-7.2 0-13.1 5.9-13.1 13.1c0 5.2 3 9.9 7.8 12l37.4 16.6c16.3 7.2 26.8 23.4 26.8 41.2c0 24.9-20.2 45.1-45.1 45.1H304c-8.8 0-16-7.2-16-16s7.2-16 16-16h42.9c7.2 0 13.1-5.9 13.1-13.1c0-5.2-3-9.9-7.8-12l-37.4-16.6c-16.3-7.2-26.8-23.4-26.8-41.2c0-24.9 20.2-45.1 45.1-45.1zm98.9 0c8.8 0 16 7.2 16 16v31.6c0 23 5.5 45.6 16 66c10.5-20.3 16-42.9 16-66V368c0-8.8 7.2-16 16-16s16 7.2 16 16v31.6c0 34.7-10.3 68.7-29.6 97.6l-5.1 7.7c-3 4.5-8 7.1-13.3 7.1s-10.3-2.7-13.3-7.1l-5.1-7.7c-19.3-28.9-29.6-62.9-29.6-97.6V368c0-8.8 7.2-16 16-16z"/>
@@ -696,17 +717,30 @@
                         type="button"
                         id="showMetrics"
                         disabled=""
-                        style="width: 50%; padding: 8.2px 0;"
+                        style="width: 33.3%; padding: 8.2px 0;"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z" />
                         </svg>
                         <span class="btn-text2">
                             Show Metrics
                         </span>
                     </button>
+                    <button 
+                        class="btn btn-danger" 
+                        type="button" 
+                        id="cancelBtn"
+                        style="width: 33.3%; padding: 8.2px 0;"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                        </svg>
+                        <span class="btn-text2">
+                            Cancel
+                        </span>
+                    </button>
                 </div>
-            </div>
+            </div>  
         </div>
         
         <div id="margin_div"></div>
@@ -857,6 +891,136 @@
                 </div>
             </div>
         </div>
+
+        <!-- PopUp DTrees Visualization <Modal> -->
+        <!-- ....... -->
+
+        <!-- PopUp Metrics Display <Modal> -->
+        <div 
+            class="modal fade" 
+            id="metrics_modal" 
+            data-bs-backdrop="static" 
+            data-bs-keyboard="false" 
+            tabindex="-1" 
+            aria-labelledby="staticBackdropLabel4" 
+            aria-hidden="true"
+        >
+            <div 
+                class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
+            >
+                <div 
+                    class="modal-content"
+                >
+                    <div class="modal-header">
+                        <h5 
+                            class="modal-title fs-5" 
+                            id="staticBackdropLabel4"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z" />
+                            </svg>
+                            Dataset's Evaluation Metrics
+                        </h5>
+                        <button 
+                            type="button" 
+                            class="btn-close" 
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        >
+                        </button>
+                    </div>
+                    <div 
+                        class="modal-body" 
+                        id="metrics_modalBody"
+                    >
+                        <div class="page-title2">
+                            <span 
+                                data-bs-toggle="tooltip" 
+                                data-bs-placement="right"
+                                data-bs-title="Dataset's metrics for each label, based on your selected pretrained model."
+                                style="font-size: 18px; font-weight: 300;"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+                                </svg>
+                                Calculations of Metrics For Each Label (<span class="quesMark">?</span>)
+                            </span>
+                        </div>
+                        <div id="results_container">
+                        </div>
+                    
+                        <div class="page-title2">
+                            <span 
+                                data-bs-toggle="tooltip" 
+                                data-bs-placement="right"
+                                data-bs-title="Dataset's average metrics, based on your selected pretrained model."
+                                style="font-size: 18px; font-weight: 300;"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75" />
+                                </svg>
+                                Calculations of Avg Metrics (<span class="quesMark">?</span>)
+                            </span>
+                        </div>
+                        <div class="results_tableDiv">
+                            <table 
+                                id="results_table" 
+                                class="table table-bordered table-style table-hover"
+                            >
+                                <thead>
+                                    <tr>
+                                        <th scope="col" colspan="5">
+                                            Average Metrics
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Hamming Loss</th>
+                                        <th scope="col">Accuracy</th>
+                                        <th scope="col">Precision</th>
+                                        <th scope="col">Recall</th>
+                                        <th scope="col">F-Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-group-divider">
+                                    <tr id="results_tr">
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button 
+                            type="button" 
+                            class="btn btn-dark" 
+                            data-bs-dismiss="modal" 
+                            id="metricsBtn"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- GoTop Button -->
+    <div id="go-top">
+        <a 
+            class="smoothscroll" 
+            title="Back to Top" 
+            href="#top"
+        >
+            <i class="fa fa-long-arrow-up"></i>
+        </a>
+    </div>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- JS Scripts -->
+    <script src="../src/js/plugins.js"></script>
+    <script src="../src/js/main.js"></script>
 </body>
 </html>

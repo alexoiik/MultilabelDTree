@@ -12,7 +12,10 @@ $(function () {
     $('#uplDiv_0').hide();
     $('#uplDiv').hide();
     $('#table_div').hide();
-    $('#results_div').hide();
+    $('#classifiedDatasetResults').hide();
+
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
     if (sessionStorage.getItem("token") !== null) {
         $("#username").html($(`
@@ -88,7 +91,7 @@ $(function () {
                 $('#uplDiv_0').hide();
                 $('#uplDiv').hide();
                 $('#table_div').hide();
-                $('#results_div').hide();
+                $('#classifiedDatasetResults').hide();
             },
             error: function (xhr, status, error) {
                 var response = JSON.parse(xhr.responseText);
@@ -103,7 +106,7 @@ $(function () {
                 $('#uplDiv_0').hide();
                 $('#uplDiv').hide();
                 $('#table_div').hide();
-                $('#results_div').hide();
+                $('#classifiedDatasetResults').hide();
             }
         });
     }
@@ -146,7 +149,7 @@ $(function () {
         $('#uplDiv_0').hide();
         $('#uplDiv').hide();
         $('#table_div').hide();
-        $('#results_div').hide();
+        $('#classifiedDatasetResults').hide();
 
         var selected = $("#select_model :selected").val(); // Getting current model file selection.
 
@@ -259,7 +262,7 @@ $(function () {
                 $('#uplDiv_0').hide();
                 $('#uplDiv').hide();
                 $('#table_div').hide();
-                $('#results_div').hide();
+                $('#classifiedDatasetResults').hide();
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
                 $('#modal2_text').html("Model successfully deleted.");
@@ -277,7 +280,7 @@ $(function () {
                 $('#uplDiv_0').hide();
                 $('#uplDiv').hide();
                 $('#table_div').hide();
-                $('#results_div').hide();
+                $('#classifiedDatasetResults').hide();
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
                 $('#modal2_text').html(errormes);
@@ -316,7 +319,7 @@ $(function () {
                 $('#delbtn').prop("disabled", true);
                 $('#dnload-btn').prop("disabled", true);
                 $('#table_div').hide();
-                $('#results_div').hide();
+                $('#classifiedDatasetResults').hide();
             },
             error: function (xhr, status, error) {
                 var response = JSON.parse(xhr.responseText);
@@ -329,7 +332,7 @@ $(function () {
                 $('#delbtn').prop("disabled", true);
                 $('#dnload-btn').prop("disabled", true);
                 $('#table_div').hide();
-                $('#results_div').hide();
+                $('#classifiedDatasetResults').hide();
             }
         });
     }
@@ -341,6 +344,7 @@ $(function () {
         $("#formFile").val("");
     });
 
+    // Handling Cancel btn of Modal.
     $('#cancelbtn').click(function () {
         $('#alertPlaceholder').html("");
     });
@@ -405,7 +409,7 @@ $(function () {
     $("#select_dataset").on("change", function () {
 
         $('#table_div').hide();
-        $('#results_div').hide();
+        $('#classifiedDatasetResults').hide();
 
         var selected = $("#select_dataset :selected").val(); // Getting current file selection.
 
@@ -492,7 +496,7 @@ $(function () {
                 $("#select_dataset :selected").remove();
                 $("#select_dataset").val("default");
                 $('#table_div').hide();
-                $('#results_div').hide();
+                $('#classifiedDatasetResults').hide();
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
                 $('#modal2_text').html("Dataset successfully deleted.");
@@ -505,7 +509,7 @@ $(function () {
                 $('#delbtn').prop("disabled", true);
                 $("#select_dataset").val("default");
                 $('#table_div').hide();
-                $('#results_div').hide();
+                $('#classifiedDatasetResults').hide();
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
                 $('#modal2_text').html(errormes);
@@ -524,7 +528,7 @@ $(function () {
     // Handling Unclassified Dataset's Multilabel Classification.
     $("#classifyMultilabelData_btn").click(function () {
 
-        $('#results_div').hide();
+        $('#classifiedDatasetResults').hide();
         $('#showMetrics').prop("disabled", true);
 
         // Features Selection Validation.
@@ -583,7 +587,7 @@ $(function () {
                 $.each(csv_array[0], function (index, val) {
                     $("#data_table2_head_tr").append($(`<th scope="col">${val}</th>`));
                 });
-                for (var i = 1; i <= 10; i++) {
+                for (var i = 1; i <= 15; i++) {
                     var tr2_id = 'tr2' + i;
                     $("#data_table2_tbody").append($(`<tr id="${tr2_id}"></tr>`));
                     $.each(csv_array[i], function (index3, val3) {
@@ -654,8 +658,8 @@ $(function () {
                 $('#showMetrics').prop("disabled", false);
                 $("#loadingbtn3").hide();
                 $("#classifyMultilabelData_btn").show();
-                $('#results_div').show();
-                window.location.href = '#results_div';
+                $('#classifiedDatasetResults').show();
+                window.location.href = '#classifiedDatasetResults';
             },
             error: function (xhr, status, error) {
                 var response = JSON.parse(xhr.responseText);
@@ -667,5 +671,23 @@ $(function () {
                 $('#modal2_text').html(errormes);
             }
         });
+    });
+
+    // Handling Export to .csv Button.
+    $('#exportToCsvBtn').click(function (event) {
+        var file = $("#select_dataset :selected").val();
+        var link = `../server/php/api/downloadClassifiedDataset.php?token=${token}&file=${file}`;
+        event.preventDefault();
+        window.location.href = link;
+    });
+
+    // Handling Show Metrics Button.
+    $('#showMetrics').click(function () {
+        $('#metrics_modal').modal('show');
+    });
+
+    // Handling Cancel Btn.
+    $('#cancelBtn').click(function() {
+        location.reload();
     });
 });

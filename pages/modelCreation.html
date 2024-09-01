@@ -2,13 +2,17 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- CSS Links -->
+        <!-- Favicon -->
         <link 
             rel="icon" 
             type="image/x-icon" 
             href="../src/assets/img/tree.png"
+        >
+        <!-- CSS Links -->
+        <link 
+            rel="stylesheet" 
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         >
         <link 
             rel="stylesheet" 
@@ -16,6 +20,10 @@
             integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
             crossorigin="anonymous"
         > 
+        <link 
+            rel="stylesheet" 
+            href="../src/css/vendor.css"
+        >
         <link 
             rel="stylesheet" 
             href="../src/css/multilabelDTree.css"
@@ -35,15 +43,21 @@
             crossorigin="anonymous">
         </script>   
         <script 
+            src="../src/js/pace.min.js">
+        </script>
+        <script 
             src="../src/js/modelCreation.js">
         </script>
         <title>
             MultilabelDTree - Build a Model
         </title>
     </head>
-    <body>
+    <body id="top">
         <!-- Responsive Navbar -->
-        <nav class="navbar navbar-expand-xl bg-light mr-2 fixed-top">
+        <nav 
+            class="navbar navbar-expand-xl bg-light mr-2 fixed-top"
+            data-aos="fade-down"
+        >
             <div 
                 id="navContainer"
                 class="container-fluid" 
@@ -238,7 +252,10 @@
         </nav>
             
         <!-- Page Title -->
-        <div class="pageTitle">
+        <div 
+            class="pageTitle"
+            data-aos="fade-down"
+        >
             Build a Model
         </div>
 
@@ -246,7 +263,10 @@
         <div class="main-card-container">
     
             <!-- Dataset Uploading or Selection -->
-            <div class="content">
+            <div 
+                class="content"
+                data-aos="fade-up"
+            >
                 <div class="container">
                     <div class="steps">
                         <strong>Step 1.</strong> Upload or Select a Dataset
@@ -575,15 +595,18 @@
                                 </span>
                             </button>
                             <button 
-                                class="btn btn-danger btn-cancel" 
+                                class="btn btn-danger btn-clear" 
                                 type="button" 
-                                id="cancelBtn"
+                                id="clearBtn"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" style="width: 22px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
                                 </svg>
-                                <span class="btn-text2">
-                                    Cancel
+                                <span 
+                                    class="btn-text2" 
+                                    style="padding-left: 0px;"
+                                >
+                                    Clear All
                                 </span>
                             </button>
                         </div>
@@ -602,28 +625,46 @@
                         <strong>Step 3.</strong> Model Evaluation Results
                     </div>
 
-                    <div>
-                        <div class="page-title3">
-                            <span 
-                                data-bs-toggle="tooltip" 
-                                data-bs-placement="right"
-                                data-bs-title="Model's final parameters, after enabling Auto Mode or selecting specific values."
-                                style="font-size: 18px; font-weight: 300;"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" style="width: 23px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                                </svg>
-                                Calculations of Selected Parameters (<span class="quesMark">?</span>)
-                            </span>
-                        </div>
-                        <div class="selectedParams">
-                            <p>
-                                Classifier: <span id="selectedClassifier"></span><br/>
-                                Max Depth: <span id="selectedMaxDepth"></span><br/>
-                                Min Samples Leaf: <span id="selectedMinSamplesLeaf"></span><br/>
-                                K: <span id="selectedK"></span>
-                            </p>
-                        </div>
+                    <div class="page-title2">
+                        <span 
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="right"
+                            data-bs-title="Model's final parameters, after enabling Auto Mode or selecting specific values."
+                            style="font-size: 18px; font-weight: 300;"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 23px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                            </svg>
+                            Calculations of Selected Parameters (<span class="quesMark">?</span>)
+                        </span>
+                    </div>
+                    <div class="results_tableDiv">
+                        <table 
+                            id="results_table0"
+                            class="table table-bordered table-style table-hover"
+                        >
+                            <thead>
+                                <tr>
+                                    <th scope="col" colspan="4">
+                                        Model's Parameters
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Classifier</th>
+                                    <th scope="col">Max Depth</th>
+                                    <th scope="col">Min Samples Leaf</th>
+                                    <th scope="col">K</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                <tr>
+                                    <td id="selectedClassifier"></td>
+                                    <td id="selectedMaxDepth"></td>
+                                    <td id="selectedMinSamplesLeaf"></td>
+                                    <td id="selectedK"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                     <div class="page-title2">
@@ -642,7 +683,7 @@
                     <div id="results_container">
                     </div>
                     
-                    <div class="page-title3">
+                    <div class="page-title2">
                         <span 
                             data-bs-toggle="tooltip" 
                             data-bs-placement="right"
@@ -655,7 +696,7 @@
                             Calculations of Avg Metrics (<span class="quesMark">?</span>)
                         </span>
                     </div>
-                    <div id="results_tableDiv2">
+                    <div class="results_tableDiv">
                         <table 
                             id="results_table2"
                             class="table table-bordered table-style table-hover"
@@ -742,7 +783,7 @@
                             <button 
                                 class="btn btn-danger" 
                                 type="button" 
-                                id="cancelBtn2"
+                                id="cancelBtn"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
@@ -1000,5 +1041,25 @@
                 </div>
             </div> -->
         </div>
+
+        <!-- GoTop Button -->
+        <div id="go-top">
+            <a 
+                class="smoothscroll" 
+                title="Back to Top" 
+                href="#top"
+            >
+                <i class="fa fa-long-arrow-up"></i>
+            </a>
+        </div>
+
+        <!-- Preloader -->
+        <div id="preloader">
+            <div id="loader"></div>
+        </div>
+
+        <!-- JS Scripts -->
+        <script src="../src/js/plugins.js"></script>
+        <script src="../src/js/main.js"></script>
     </body>
 </html>
