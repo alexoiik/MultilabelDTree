@@ -105,9 +105,9 @@ nav a.active {
     }
 }
 
-@media(max-width: 402px) {
+@media(max-width: 340px) {
     .navbar-toggler {
-        margin-left: 120px;
+        margin-left: 110px;
         margin-bottom: 10px;
     }
 

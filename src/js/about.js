@@ -15,7 +15,7 @@ $(function () {
 
     $("#logoutb").click(function () {
         sessionStorage.clear();
-        window.location.href = './';
+        window.location.href = '../';
     });
 
     $('#drop_width').click(function (event) {

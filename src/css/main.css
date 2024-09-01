@@ -28,6 +28,22 @@ body {
 }
 
 /* Titles CSS */
+.pageTitle {
+  text-align: center;
+  font-weight: 300;
+  font-size: 40px;
+  letter-spacing: 2px;
+  padding: 20px 0;
+  margin-top: 104px;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to right, #f8f9fa, #e9ecef);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #151515;
+}
+
 .appTitle {
   font-size: 31px;
   font-weight: 300;
@@ -99,9 +115,9 @@ nav a.active {
   }
 }
 
-@media(max-width: 402px) {
+@media(max-width: 340px) {
   .navbar-toggler {
-    margin-left: 120px;
+    margin-left: 110px;
     margin-bottom: 10px;
   }
 
@@ -203,6 +219,41 @@ nav a.active {
 
 #margin_div {
   padding-top: 7vh;
+}
+
+/* Main Card Content CSS */
+.main-card-container {
+  background-color: #219bec41;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to right, #f8f9fa, #ffffff);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+  text-align: justify;
+  margin: 0 20px;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 950px;
+  padding: 0 20px;
+}
+
+/* About The Project */
+.about-the-project div {
+  font-weight: 300;
+  font-size: 19px;
+  line-height: 1.5;
+  word-spacing: 0.1px;
+  color: #151515;
+  padding: 25px 25px;
 }
 
 /* A General CSS Styling Base (by Bootstrap) */
@@ -1382,7 +1433,7 @@ p.lead {
 
 .about-bottom-image img {
   vertical-align: bottom;
-  padding-bottom: 5rem;
+  padding-bottom: 3rem;
 }
 
 /* About (Responsive) */
