@@ -477,22 +477,14 @@ nav a.active {
     font-weight: 300;
 }
 
-/* .saveModelBtn button#visualizeDTree,
-.saveModelBtn button#loadingbtnDTree {
-    height: 55px;
-    width: 190px;
-    font-size: 16px;
-    font-weight: 300;
-} */
-
-.vdtree-btn {
+.vdtrees-btn {
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
     margin-right: 8px;
 }
 
-.vdtree-btn button {
+.vdtrees-btn button {
     width: 62%;
 }
 

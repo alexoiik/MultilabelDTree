@@ -26,7 +26,7 @@
 
     if(!isset($input['file'])) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"Please select a file to delete."]);
+        print json_encode(['errormesg'=>"Please select a model to delete."]);
         exit;
     }
 
@@ -37,6 +37,7 @@
 
     // $file_path = "../../py/users/$hash_user/models/$file"; # << CORRECT (for later addition)
     $file_path = "../../py/users/models/$file"; # << ΕΓΩ ΤΟ ΈΒΑΛΑ 
+
     if(!file_exists($file_path)) {
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"File doesn't exist."]);
@@ -45,7 +46,8 @@
     
     $trf_file = str_replace('.pkl', '', $file);
     // $transformation_path = "../../py/users/transformations/$hash_user/" . $trf_file . "_transformation.pkl"; # << CORRECT (for later addition)
-    $transformation_path = "../../py/users/transformations/" . $trf_file . "_transformation.pkl";
+    $transformation_path = "../../py/users/transformations/" . $trf_file . "_transformation.pkl"; # << ΕΓΩ ΤΟ ΈΒΑΛΑ 
+
     if(!file_exists($transformation_path)) {
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"File doesn't exist."]);

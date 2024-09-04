@@ -1,14 +1,13 @@
 <?php
-
-    // function getdomain() {
-    //     if(gethostname() == 'nireas') {
-    //         $d = 'https://kclusterhub.iee.ihu.gr/multilabeldtree';
-    //     }
-    //     else {
-    //         $d = 'http://localhost/multilabeldtree';
-    //     }
-    //     return $d;
-    // }
+    function getdomain() {
+        if(gethostname() == 'nireas') {
+            $d = 'https://kclusterhub.iee.ihu.gr/MultilabelDTree';
+        }
+        else {
+            $d = 'http://localhost/MultilabelDTree';
+        }
+        return $d;
+    }
 
     // function verif_key_exists($verif_key) {
     //     global $mysqli;
@@ -55,7 +54,7 @@
         global $mysqli;
         $query = 'select count(*) as c from users where token=?';
         $st = $mysqli->prepare($query);
-        $st->bind_param('s',$token);
+        $st->bind_param('s', $token);
         $st->execute();
         $res = $st->get_result();
         $count = $res->fetch_assoc()['c'];

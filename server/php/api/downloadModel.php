@@ -16,7 +16,7 @@
 
     if(!isset($_GET['file'])) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"Please select file to download."]);
+        print json_encode(['errormesg'=>"Please select a model to download."]);
         exit;
     }
 

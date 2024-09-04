@@ -7,7 +7,7 @@ $(function () {
     $('#params_div2').hide();
     $('#loadingbtnModel').hide();
     $('#loadingbtnModel2').hide();
-    $('#loadingbtnDTree').hide();
+    $('#loadingbtnDTrees').hide();
     $('#loadingbtn_dataset').hide();
     $('#uplDiv_0').hide();
     $('#uplDiv').hide();
@@ -86,7 +86,7 @@ $(function () {
 
                 $('#del-model').prop("disabled", true);
                 $('#dnload-model').prop("disabled", true);
-                $('#visualizeDTree').prop("disabled", true);
+                $('#visualizeDTrees').prop("disabled", true);
                 $('#params_div2').hide();
                 $('#uplDiv_0').hide();
                 $('#uplDiv').hide();
@@ -101,7 +101,7 @@ $(function () {
                 $("#select_model").append($("<option value='default' selected>Select a Pretrained Model</option>"));
                 $('#del-model').prop("disabled", true);
                 $('#dnload-model').prop("disabled", true);
-                $('#visualizeDTree').prop("disabled", true);
+                $('#visualizeDTrees').prop("disabled", true);
                 $('#params_div2').hide();
                 $('#uplDiv_0').hide();
                 $('#uplDiv').hide();
@@ -156,13 +156,13 @@ $(function () {
         if (selected == "default") {
             $('#del-model').prop("disabled", true);
             $('#dnload-model').prop("disabled", true);
-            $('#visualizeDTree').prop("disabled", true);
+            $('#visualizeDTrees').prop("disabled", true);
             return;
         }
 
         $('#del-model').prop("disabled", false);
         $('#dnload-model').prop("disabled", false);
-        $('#visualizeDTree').prop("disabled", false);
+        $('#visualizeDTrees').prop("disabled", false);
         $('#loadingbtnModel2').show();
 
         // AJAX Request for Getting the Model Content.
@@ -225,7 +225,7 @@ $(function () {
                 var response = JSON.parse(xhr.responseText);
                 var errormes = response.errormesg;
                 $('#dnload-model').prop("disabled", true);
-                $('#visualizeTree').prop("disabled", true);
+                $('#visualizeDTrees').prop("disabled", true);
                 $('#loadingbtnModel2').hide();
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
@@ -257,7 +257,7 @@ $(function () {
                 $("#select_model :selected").remove();
                 $("#select_model").val("default");
                 $('#dnload-model').prop("disabled", true);
-                $('#visualizeDTree').prop("disabled", true);
+                $('#visualizeDTrees').prop("disabled", true);
                 $('#params_div2').hide();
                 $('#uplDiv_0').hide();
                 $('#uplDiv').hide();
@@ -275,7 +275,7 @@ $(function () {
                 $('#del-model').prop("disabled", true);
                 $("#select_model").val("default");
                 $('#dnload-model').prop("disabled", true);
-                $('#visualizeDTree').prop("disabled", true);
+                $('#visualizeDTrees').prop("disabled", true);
                 $('#params_div2').hide();
                 $('#uplDiv_0').hide();
                 $('#uplDiv').hide();
@@ -296,7 +296,43 @@ $(function () {
     });
 
     // Handling DTrees Visualization.
-    // ...
+    $('#visualizeDTrees').click(function () {
+
+        var file = $("#select_model :selected").val(); // Getting current model file selection.
+
+        $('#dtrees_modalBody').html("");
+        $('#visualizeDTrees').hide();
+        $('#loadingbtnDTrees').show();
+
+        $.ajax({
+            url: `../server/php/api/visualizeDTrees.php?token=${token}&file=${file}`,
+            method: 'GET',
+            success: function (data) {
+
+                var data2 = JSON.parse(data);
+
+                console.log(data2)
+                var image = data2.image;
+
+                $('#dtrees_modalBody').append($(`
+                    <img class="img-fluid mx-auto d-block" style="max-height: 75vh;" src="${image}" alt="DTree Visualization">
+                `));
+
+                $('#dtrees_modal').modal('show');
+                $('#loadingbtnDTrees').hide();
+                $('#visualizeDTrees').show();
+            },
+            error: function (xhr, status, error) {
+                var response = JSON.parse(xhr.responseText);
+                var errormes = response.errormesg;
+                $('#loadingbtnDTrees').hide();
+                $('#visualizeDTrees').show();
+                $('#modal2_text').html("");
+                $('#modal2').modal('show');
+                $('#modal2_text').html(errormes);
+            }
+        });
+    });
 
     // Handling DTrees Download.
     // ...
@@ -687,7 +723,7 @@ $(function () {
     });
 
     // Handling Cancel Btn.
-    $('#cancelBtn').click(function() {
+    $('#cancelBtn').click(function () {
         location.reload();
     });
 });

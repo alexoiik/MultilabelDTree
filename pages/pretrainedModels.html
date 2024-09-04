@@ -320,11 +320,11 @@
                         </span>
                     </button>
                 </div>
-                <div class="vdtree-btn">
+                <div class="vdtrees-btn">
                     <button 
                         class="btn btn-success" 
                         type="button" 
-                        id="visualizeDTree" 
+                        id="visualizeDTrees" 
                         disabled=""
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px; margin-bottom: 2px;" fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
@@ -337,7 +337,7 @@
                     <button 
                         class="btn btn-success"
                         type="button" 
-                        id="loadingbtnDTree" 
+                        id="loadingbtnDTrees" 
                         disabled=""
                     >
                         <span 
@@ -347,7 +347,7 @@
                         >
                         </span>
                         <span class="loading-text">
-                            Processing...
+                            Processing DTrees...
                         </span>
                     </button>
                 </div>
@@ -357,7 +357,8 @@
                     <button 
                         class="btn btn-light" 
                         type="button" 
-                        id="loadingbtnModel2" 
+                        id="loadingbtnModel2"
+                        style="margin-top: 15px;"
                         disabled=""
                     >
                         <span 
@@ -892,7 +893,61 @@
         </div>
 
         <!-- PopUp DTrees Visualization <Modal> -->
-        <!-- ....... -->
+        <div 
+            class="modal fade" 
+            id="dtrees_modal" 
+            data-bs-backdrop="static" 
+            data-bs-keyboard="false" 
+            tabindex="-1" 
+            aria-labelledby="staticBackdropLabel3" 
+            aria-hidden="true"
+        >
+            <div 
+                class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
+            >
+                <div 
+                    class="modal-content"
+                >
+                    <div class="modal-header">
+                        <h5 
+                            class="modal-title fs-5" 
+                            id="staticBackdropLabel3"
+                        >
+                            Decision Tree Visualization
+                        </h5>
+                        <button 
+                            type="button" 
+                            class="btn-close" 
+                            data-bs-dismiss="modal" 
+                            aria-label="Close"
+                        >
+                        </button>
+                    </div>
+                    <div 
+                        class="modal-body" 
+                        id="dtrees_modalBody"
+                    >
+                    </div>
+                    <div class="modal-footer">
+                        <button 
+                            type="button" 
+                            class="btn btn-success" 
+                            id="downloadDTrees"
+                        >
+                            Download
+                        </button>
+                        <button 
+                            type="button" 
+                            class="btn btn-secondary" 
+                            data-bs-dismiss="modal" 
+                            id="closebtn"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- PopUp Metrics Display <Modal> -->
         <div 
