@@ -39,7 +39,7 @@ body {
   margin-right: 20px;
   border-radius: 10px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(to right, #f8f9fa, #e9ecef);
+  background: #f5f6f8f8;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: #151515;
 }

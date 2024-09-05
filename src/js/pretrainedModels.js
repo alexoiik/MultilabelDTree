@@ -316,6 +316,8 @@ $(function () {
             method: 'GET',
             success: function (data) {
 
+                $('#downloadDTrees').prop('disabled', false);
+
                 var data2 = JSON.parse(data);
                 var images = data2.images;
 
@@ -333,10 +335,9 @@ $(function () {
                         // Two or more DTrees is for BinaryRelevance or ClassifierChain classification.
                         $('#dtrees_modalBody').append(`<h4 class="text-center">Decision Trees - ${classifierType} Classification</h4>`);
                         images.forEach(function (image, index) {
-                            var labelName = labels[index] || null;
+                            var labelName = "- " + labels[index] || "";
                             $('#dtrees_modalBody').append(`
-                                <hr/>
-                                <h5 class="text-center">Decision Tree for Label ${index + 1} - ${labelName}</h5>
+                                <h5 class="text-center">Decision Tree for Label ${index + 1} ${labelName}</h5>
                                 <img class="img-fluid mx-auto d-block mb-3" style="max-height: 75vh;" src="${image}" alt="DTree Visualization">
                             `);
                         });
@@ -361,8 +362,67 @@ $(function () {
         });
     });
 
-    // Handling DTrees Download.
-    // ...
+    // Function to download individual .png tree files.
+    function downloadFile(url) {
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = '';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // Handling DTrees Downloading Button.
+    $('#downloadDTrees').click(function () {
+
+        var file = $("#select_model :selected").val(); // Getting current model file selection.
+
+        // Disabling the download button to prevent multiple clicks.
+        $('#downloadDTrees').prop('disabled', true);
+
+        $.ajax({
+            url: `../server/php/api/downloadDTrees.php?token=${token}&file=${file}`,
+            method: 'GET',
+            success: function (data) {
+
+                var data2 = JSON.parse(data);
+                var downloadUrls = data2.download_urls;
+
+                if (downloadUrls && downloadUrls.length > 0) {
+                    downloadUrls.forEach(function (url, index) {
+                        // Dynamically creating a download button for each dtree.
+                        var downloadButton = $('<button>', {
+                            type: 'button',
+                            class: 'btn btn-success',
+                            text: `Download DTree ${index + 1}`,
+                            click: function () {
+                                downloadFile(url);
+                            }
+                        }).css({
+                            'margin-right': '10px',
+                            'margin-bottom': '10px',
+                        });
+                        // Appending the download button to the modal body.
+                        $('#dtrees_modalBody').append(downloadButton);
+                        // Scroll to the first button within the modal body.
+                        $('#dtrees_modalBody').animate({
+                            scrollTop: $('#dtrees_modalBody').find('button').first().offset().top - $('#dtrees_modalBody').offset().top + $('#dtrees_modalBody').scrollTop()
+                        }, 1000);
+                    });
+                } else {
+                    $('#dtrees_modalBody').html("<h5>No images to download from DTrees Visualization were found...</h5>");
+                }
+            },
+            error: function (xhr, status, error) {
+                var response = JSON.parse(xhr.responseText);
+                var errormes = response.errormesg;
+                $('#downloadDTrees').prop('disabled', false);
+                $('#modal2_text').html("");
+                $('#modal2').modal('show');
+                $('#modal2_text').html(errormes);
+            }
+        });
+    });
 
     // Function for Getting all Unclassifed Datasets.
     function getDatasets() {
