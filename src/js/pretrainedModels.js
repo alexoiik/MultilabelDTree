@@ -299,6 +299,13 @@ $(function () {
     $('#visualizeDTrees').click(function () {
 
         var file = $("#select_model :selected").val(); // Getting current model file selection.
+        var classifierType = $("#model_classifierType :selected").text(); // Getting current model classifier type.
+
+        // Getting current model labels.
+        var labels = [];
+        $('#model_labels input[type="checkbox"]:checked').each(function () {
+            labels.push($(this).next('label').text().trim());
+        });
 
         $('#dtrees_modalBody').html("");
         $('#visualizeDTrees').hide();
@@ -310,13 +317,33 @@ $(function () {
             success: function (data) {
 
                 var data2 = JSON.parse(data);
+                var images = data2.images;
 
-                console.log(data2)
-                var image = data2.image;
-
-                $('#dtrees_modalBody').append($(`
-                    <img class="img-fluid mx-auto d-block" style="max-height: 75vh;" src="${image}" alt="DTree Visualization">
-                `));
+                // Displaying the DTrees Dynamically.
+                if (images && images.length > 0) {
+                    if (images.length === 1) {
+                        // One DTree is for LabelPowerset classification only.
+                        images.forEach(function (image) {
+                            $('#dtrees_modalBody').append(`  
+                                <h4 class="text-center">Decision Tree - ${classifierType} Classification</h4>
+                                <img class="img-fluid mx-auto d-block mb-3" style="max-height: 75vh;" src="${image}" alt="DTree Visualization">
+                            `);
+                        });
+                    } else {
+                        // Two or more DTrees is for BinaryRelevance or ClassifierChain classification.
+                        $('#dtrees_modalBody').append(`<h4 class="text-center">Decision Trees - ${classifierType} Classification</h4>`);
+                        images.forEach(function (image, index) {
+                            var labelName = labels[index] || null;
+                            $('#dtrees_modalBody').append(`
+                                <hr/>
+                                <h5 class="text-center">Decision Tree for Label ${index + 1} - ${labelName}</h5>
+                                <img class="img-fluid mx-auto d-block mb-3" style="max-height: 75vh;" src="${image}" alt="DTree Visualization">
+                            `);
+                        });
+                    }
+                } else {
+                    $('#dtrees_modalBody').html("<h4>No images for DTrees Visualization were generated...</h4>");
+                }
 
                 $('#dtrees_modal').modal('show');
                 $('#loadingbtnDTrees').hide();

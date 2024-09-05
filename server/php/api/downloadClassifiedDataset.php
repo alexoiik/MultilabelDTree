@@ -27,6 +27,7 @@
 
     $name = $file;
     $name = substr($name, 0, -4);
+    
     // $file_path = "../../py/users/$hash_user/models/$name" . "_classified.csv";
     $file_path = "../../py/users/models/$name" . "_classified.csv";
 
