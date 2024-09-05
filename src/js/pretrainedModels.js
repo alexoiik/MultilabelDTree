@@ -316,8 +316,6 @@ $(function () {
             method: 'GET',
             success: function (data) {
 
-                $('#downloadDTrees').prop('disabled', false);
-
                 var data2 = JSON.parse(data);
                 var images = data2.images;
 
@@ -327,18 +325,51 @@ $(function () {
                         // One DTree is for LabelPowerset classification only.
                         images.forEach(function (image) {
                             $('#dtrees_modalBody').append(`  
-                                <h4 class="text-center">Decision Tree - ${classifierType} Classification</h4>
-                                <img class="img-fluid mx-auto d-block mb-3" style="max-height: 75vh;" src="${image}" alt="DTree Visualization">
+                                <h4 class="text-center">Decision Tree - ${classifierType}</h4>
+                                <img 
+                                    class="img-fluid mx-auto d-block mb-3" 
+                                    style="max-height: 75vh;" 
+                                    src="${image}" 
+                                    alt="DTree Visualization"
+                                >
+                                <a 
+                                    href="${image}" 
+                                    role="button"
+                                    download="Decision_Tree_${classifierType}.png" 
+                                    class="btn btn-success d-block mx-auto mb-3"
+                                    style="width: 82%;"
+                                >
+                                    Download DTree
+                                </a>
                             `);
                         });
                     } else {
                         // Two or more DTrees is for BinaryRelevance or ClassifierChain classification.
-                        $('#dtrees_modalBody').append(`<h4 class="text-center">Decision Trees - ${classifierType} Classification</h4>`);
                         images.forEach(function (image, index) {
                             var labelName = "- " + labels[index] || "";
                             $('#dtrees_modalBody').append(`
-                                <h5 class="text-center">Decision Tree for Label ${index + 1} ${labelName}</h5>
-                                <img class="img-fluid mx-auto d-block mb-3" style="max-height: 75vh;" src="${image}" alt="DTree Visualization">
+                                <h4 
+                                    class="text-center"
+                                    style="font-weight: 600;"
+                                >
+                                    Decision Tree for Label ${index + 1} ${labelName} - ${classifierType}
+                                </h4>
+                                <img 
+                                    class="img-fluid 
+                                    mx-auto d-block mb-3" 
+                                    style="max-height: 75vh;" 
+                                    src="${image}"
+                                    alt="DTree Visualization"
+                                >
+                                <a 
+                                    href="${image}" 
+                                    role="button"
+                                    download="Decision_Tree_${classifierType}_Label_${index + 1}.png" 
+                                    class="btn btn-success d-block mx-auto mb-3"
+                                    style="width: 82%;"
+                                >
+                                    Download DTree for Label ${index + 1}
+                                </a>
                             `);
                         });
                     }
@@ -377,9 +408,6 @@ $(function () {
 
         var file = $("#select_model :selected").val(); // Getting current model file selection.
 
-        // Disabling the download button to prevent multiple clicks.
-        $('#downloadDTrees').prop('disabled', true);
-
         $.ajax({
             url: `../server/php/api/downloadDTrees.php?token=${token}&file=${file}`,
             method: 'GET',
@@ -416,7 +444,6 @@ $(function () {
             error: function (xhr, status, error) {
                 var response = JSON.parse(xhr.responseText);
                 var errormes = response.errormesg;
-                $('#downloadDTrees').prop('disabled', false);
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
                 $('#modal2_text').html(errormes);
