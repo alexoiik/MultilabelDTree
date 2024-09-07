@@ -548,10 +548,10 @@ nav a.active {
     margin-top: 15px;
 }
 
-/* Upload New Dataset Modal & PopUp Notification Modal CSS */
+/* Upload New Dataset/Model, DTrees Visualization & PopUp Notification Modals CSS */
 .modal-title,
 .modal-body strong {
-    font-weight: 400;
+    font-weight: 500;
     color: #2869bee1;
 }
 
@@ -650,7 +650,7 @@ nav a.active {
     right: 100%;
     height: 100%;
     width: 100%;
-    background: rgba(95, 158, 230, 0.637);
+    background: #6ba0da;
 }
 
 .pace.pace-inactive {

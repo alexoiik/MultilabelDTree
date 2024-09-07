@@ -8,6 +8,7 @@ $(function () {
     $('#loadingbtnModel').hide();
     $('#loadingbtnModel2').hide();
     $('#loadingbtnDTrees').hide();
+    $('#downloadDTrees').hide();
     $('#loadingbtn_dataset').hide();
     $('#uplDiv_0').hide();
     $('#uplDiv').hide();
@@ -295,7 +296,7 @@ $(function () {
         window.location.href = `../server/php/api/downloadModel.php?token=${token}&file=${file}`;
     });
 
-    // Handling DTrees Visualization.
+    // Handling DTrees Visualization & Downloading.
     $('#visualizeDTrees').click(function () {
 
         var file = $("#select_model :selected").val(); // Getting current model file selection.
@@ -322,41 +323,40 @@ $(function () {
                 // Displaying the DTrees Dynamically.
                 if (images && images.length > 0) {
                     if (images.length === 1) {
-                        // One DTree is for LabelPowerset classification only.
+                        // Displaying One DTree for LabelPowerset Classification.
                         images.forEach(function (image) {
-                            $('#dtrees_modalBody').append(`  
-                                <h4 class="text-center">Decision Tree - ${classifierType}</h4>
+                            $('#dtrees_modalBody').append(`
+                                <h4 class="text-center mb-3">
+                                    Decision Tree of ${classifierType} Classification</h4>
+                                </h4>
                                 <img 
                                     class="img-fluid mx-auto d-block mb-3" 
                                     style="max-height: 75vh;" 
                                     src="${image}" 
                                     alt="DTree Visualization"
-                                >
-                                <a 
-                                    href="${image}" 
-                                    role="button"
-                                    download="Decision_Tree_${classifierType}.png" 
-                                    class="btn btn-success d-block mx-auto mb-3"
-                                    style="width: 82%;"
-                                >
-                                    Download DTree
-                                </a>
+                                />
                             `);
+                            $('#downloadDTrees')
+                                .attr('href', image)
+                                .attr('download', `Decision_Tree_${classifierType}.png`)
+                                .show();
                         });
                     } else {
-                        // Two or more DTrees is for BinaryRelevance or ClassifierChain classification.
+                        // Displaying Two or More DTrees for BinaryRelevance or ClassifierChain Classification.
+                        $('#dtrees_modalBody').append(`  
+                            <h4 class="text-center mb-3">
+                                DTrees of ${classifierType} Classification
+                            </h4>
+                        `);
+                        $('#downloadDTrees').hide();
                         images.forEach(function (image, index) {
                             var labelName = "- " + labels[index] || "";
-                            $('#dtrees_modalBody').append(`
-                                <h4 
-                                    class="text-center"
-                                    style="font-weight: 600;"
-                                >
-                                    Decision Tree for Label ${index + 1} ${labelName} - ${classifierType}
-                                </h4>
+                            $('#dtrees_modalBody').append(`  
+                                <h5 class="text-center mb-2">
+                                    Decision Tree for Label ${index + 1} ${labelName}
+                                </h5>
                                 <img 
-                                    class="img-fluid 
-                                    mx-auto d-block mb-3" 
+                                    class="img-fluid mx-auto d-block mb-2"
                                     style="max-height: 75vh;" 
                                     src="${image}"
                                     alt="DTree Visualization"
@@ -366,10 +366,19 @@ $(function () {
                                     role="button"
                                     download="Decision_Tree_${classifierType}_Label_${index + 1}.png" 
                                     class="btn btn-success d-block mx-auto mb-3"
-                                    style="width: 82%;"
+                                    style="width: 300px;"
                                 >
-                                    Download DTree for Label ${index + 1}
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width: 22px; margin-bottom: 1px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0-3-3m3 3 3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                                    </svg>
+                                    Download
                                 </a>
+                                ${index < images.length - 1 ? `
+                                    <hr 
+                                        class="d-block mx-auto mb-3"
+                                        style="width: 500px;"
+                                    />` : ''
+                                }
                             `);
                         });
                     }
@@ -386,64 +395,6 @@ $(function () {
                 var errormes = response.errormesg;
                 $('#loadingbtnDTrees').hide();
                 $('#visualizeDTrees').show();
-                $('#modal2_text').html("");
-                $('#modal2').modal('show');
-                $('#modal2_text').html(errormes);
-            }
-        });
-    });
-
-    // Function to download individual .png tree files.
-    function downloadFile(url) {
-        var link = document.createElement('a');
-        link.href = url;
-        link.download = '';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-
-    // Handling DTrees Downloading Button.
-    $('#downloadDTrees').click(function () {
-
-        var file = $("#select_model :selected").val(); // Getting current model file selection.
-
-        $.ajax({
-            url: `../server/php/api/downloadDTrees.php?token=${token}&file=${file}`,
-            method: 'GET',
-            success: function (data) {
-
-                var data2 = JSON.parse(data);
-                var downloadUrls = data2.download_urls;
-
-                if (downloadUrls && downloadUrls.length > 0) {
-                    downloadUrls.forEach(function (url, index) {
-                        // Dynamically creating a download button for each dtree.
-                        var downloadButton = $('<button>', {
-                            type: 'button',
-                            class: 'btn btn-success',
-                            text: `Download DTree ${index + 1}`,
-                            click: function () {
-                                downloadFile(url);
-                            }
-                        }).css({
-                            'margin-right': '10px',
-                            'margin-bottom': '10px',
-                        });
-                        // Appending the download button to the modal body.
-                        $('#dtrees_modalBody').append(downloadButton);
-                        // Scroll to the first button within the modal body.
-                        $('#dtrees_modalBody').animate({
-                            scrollTop: $('#dtrees_modalBody').find('button').first().offset().top - $('#dtrees_modalBody').offset().top + $('#dtrees_modalBody').scrollTop()
-                        }, 1000);
-                    });
-                } else {
-                    $('#dtrees_modalBody').html("<h5>No images to download from DTrees Visualization were found...</h5>");
-                }
-            },
-            error: function (xhr, status, error) {
-                var response = JSON.parse(xhr.responseText);
-                var errormes = response.errormesg;
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
                 $('#modal2_text').html(errormes);

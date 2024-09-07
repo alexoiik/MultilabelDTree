@@ -255,6 +255,14 @@ nav a.active {
   padding: 25px 25px;
 }
 
+.about-the-project div a {
+  color: #438ae6;
+}
+
+.about-the-project div a:hover {
+  color: #2270d6;
+}
+
 /* A General CSS Styling Base (by Bootstrap) */
 .hr {
   border: 1px solid rgb(36, 36, 36);
@@ -827,7 +835,7 @@ a {
   right: 100%;
   height: 100%;
   width: 100%;
-  background: rgba(95, 158, 230, 0.637);
+  background: #6ba0da;
 }
 
 .pace.pace-inactive {
