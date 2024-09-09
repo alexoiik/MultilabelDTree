@@ -76,12 +76,13 @@ nav a.active {
 .navLink {
   padding: 0 5px;
   text-align: left;
-  padding-top: 15px;
+  padding-top: 14.5px;
   padding-bottom: 10px;
 }
 
 .navLink span {
   margin-left: 3px;
+  font-size: 17.5px;
 }
 
 #navContainer {
@@ -132,9 +133,10 @@ nav a.active {
 
 /* User Menu Dropdown CSS */
 .userName {
-  font-size: 16px;
+  font-size: 16.5px;
   font-weight: 400;
-  color: rgba(0, 0, 0, 0.815);
+  color: black;
+  padding-left: 12px;
 }
 
 .drop-ul li a span {
@@ -143,6 +145,7 @@ nav a.active {
 
 .btn-dropdown {
   border-radius: 5px;
+  padding-top: 12px;
 }
 
 .drop-ul li a {
@@ -152,9 +155,9 @@ nav a.active {
 
 .drop-ul li a {
   border-radius: 12px;
-  --bs-dropdown-link-active-bg: #2869be77;
+  --bs-dropdown-link-active-bg: #6f99d177;
   --bs-dropdown-link-active-color: #2869be77;
-  --bs-dropdown-link-hover-bg: #2869be77;
+  --bs-dropdown-link-hover-bg: #2176e677;
 }
 
 .item-font-size {
@@ -179,7 +182,7 @@ nav a.active {
 }
 
 .dropdown-item span {
-  font-weight: 300;
+  font-weight: 400;
 }
 
 @media(max-width: 1300px) {
@@ -247,8 +250,8 @@ nav a.active {
 
 /* About The Project */
 .about-the-project div {
-  font-weight: 300;
-  font-size: 19px;
+  font-weight: 400;
+  font-size: 18px;
   line-height: 1.5;
   word-spacing: 0.1px;
   color: #151515;
@@ -1029,7 +1032,7 @@ h1.intro-header::before {
 .home-social-list {
   position: absolute;
   right: 42px;
-  top: 52%;
+  top: 53%;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1305,18 +1308,18 @@ h1.intro-header::before {
 
 p.lead {
   font-family: "muli-light", sans-serif;
-  font-size: 2.1rem;
-  line-height: 1.7;
-  word-spacing: 0.1px;
+  font-size: 2rem;
+  line-height: 1.6;
+  word-spacing: 0px;
   color: #838383;
-  /* text-align: justify; */
+  text-align: justify;
 }
 
-/* @media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1024px) {
   p.lead {
     text-align: center;
   }
-} */
+}
 
 @media only screen and (max-width: 768px) {
   p.lead {
@@ -1596,6 +1599,7 @@ p.lead {
   margin-top: 3rem;
   margin-bottom: 3.5rem;
   text-align: center;
+  word-spacing: 0px;
 }
 
 #discover-our-app .row {

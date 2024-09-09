@@ -130,7 +130,7 @@
         
         print json_encode(['csv_array'=>$csv_array]);
     }
-    else{
+    else {
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"An error has occured while trying to read file."]);
         exit;

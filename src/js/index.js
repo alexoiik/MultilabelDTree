@@ -1,5 +1,4 @@
 $(function () {
-
     if (sessionStorage.getItem("token") !== null) {
         $("#loginb").hide();
         $("#regbtn").hide();

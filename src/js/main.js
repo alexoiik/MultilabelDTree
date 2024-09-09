@@ -19,17 +19,6 @@
 		});
 	};
 
-	// Owl Carousel.
-	var ssOwlCarousel = function () {
-		$(".owl-carousel").owlCarousel({
-			loop: true,
-			nav: false,
-			autoHeight: true,
-			items: 1
-		});
-
-	};
-
 	// Smooth Scrolling.
 	var ssSmoothScroll = function () {
 		$('.smoothscroll').on('click', function (e) {
@@ -86,7 +75,6 @@
 	// Initializing main.
 	(function ssInit() {
 		ssPreloader();
-		ssOwlCarousel();
 		ssSmoothScroll();
 		ssPlaceholder();
 		ssAOS();

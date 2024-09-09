@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
 
     // Initializing content.
     $('#loadingbtn').hide();
@@ -13,7 +13,7 @@ $(function() {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
-    if(sessionStorage.getItem("token") !== null) {
+    if (sessionStorage.getItem("token") !== null) {
         $("#username").html($(`
         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -26,21 +26,21 @@ $(function() {
 
     var token = sessionStorage.getItem("token");
 
-    $("#logoutb").click(function() {
+    $("#logoutb").click(function () {
         sessionStorage.clear();
         window.location.href = '../';
     });
 
-    $('#drop_width').click(function(event) {
+    $('#drop_width').click(function (event) {
         event.stopPropagation();
     });
 
     // Handling PopUp Notification Modal.
     var modal_key = $("#modal2");
-    modal_key.on("keypress", function(event) {
-        if(event.key === "Enter") {
+    modal_key.on("keypress", function (event) {
+        if (event.key === "Enter") {
             event.preventDefault();
-            if($("#modal2").css("display") !== "none") {
+            if ($("#modal2").css("display") !== "none") {
                 $("#modal_btn").click();
             }
         }
@@ -55,7 +55,7 @@ $(function() {
         $.ajax({
             url: link,
             method: 'GET',
-            success: function(data) {
+            success: function (data) {
                 var data2 = JSON.parse(data);
                 var publicDatasets = data2.public_data;
                 var privateDatasets = data2.private_data;
@@ -63,7 +63,7 @@ $(function() {
                 $("#select_dataset").html("");
                 $("#select_dataset").append($("<option value='default' selected>Select an existing Dataset</option>"));
 
-                for(var i = 0; i < publicDatasets.length; i++){
+                for (var i = 0; i < publicDatasets.length; i++) {
                     $("#select_dataset").append($(`<option class='public' value='${publicDatasets[i]}'>[PUBLIC]  ${publicDatasets[i]}</option>`));
                 }
 
@@ -77,7 +77,7 @@ $(function() {
                 $('#params_div').hide();
                 $('#modelEvaluationResults').hide();
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 var response = JSON.parse(xhr.responseText);
                 var errormes = response.errormesg;
                 $('#modal2_text').html("");
@@ -98,7 +98,7 @@ $(function() {
 
     // Handling Alert Messages when Uploading New Dataset. 
     const alertPlaceholder = $('#alertPlaceholder');
-    
+
     const alert_danger = (message) => {
         const wrapper = document.createElement('div');
         wrapper.innerHTML = [
@@ -114,9 +114,9 @@ $(function() {
     const alert_success = (message) => {
         const wrapper = document.createElement('div');
         wrapper.innerHTML = [
-            '<div class="alert alert-success d-flex align-items-center alert-dismissible" role="alert">', 
+            '<div class="alert alert-success d-flex align-items-center alert-dismissible" role="alert">',
             '<svg xmlns="http://www.w3.org/2000/svg" class="bi bi-check-circle-fill alert-icon" viewBox="0 0 16 16">',
-                '<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>',
+            '<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>',
             `</svg> <div class="alert-text">${message}</div>`,
             '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
             '</div>'
@@ -126,7 +126,7 @@ $(function() {
     }
 
     // Handling Upload New Dataset Button.
-    $("#upload_btn").click(function() {
+    $("#upload_btn").click(function () {
         $('#upl_modal').modal('show');
         $('#alertPlaceholder').html("");
         $("#select_folder").val('0');
@@ -134,17 +134,17 @@ $(function() {
     });
 
     // Handling Cancel btn of Modal.
-    $('#cancelbtn').click(function() {
+    $('#cancelbtn').click(function () {
         $('#alertPlaceholder').html("");
     });
 
     // Handling New Dataset's Uploading.
-    $('#conf_upl').click(function() {
-        
+    $('#conf_upl').click(function () {
+
         $('#alertPlaceholder').html("");
 
         // File Uploading Validation.
-        if($("#formFile").prop('files').length == 0) {
+        if ($("#formFile").prop('files').length == 0) {
             alert_danger("You must upload a dataset.");
             return;
         }
@@ -152,23 +152,23 @@ $(function() {
         var file = $("#formFile").prop('files')[0];
         var checkFile = /(\.csv)$/i;
 
-        if(!checkFile.test(file.name)) {
+        if (!checkFile.test(file.name)) {
             alert_danger("Only .csv files are allowed.");
             return;
         }
-        if(file.size > 10485760) {
+        if (file.size > 10485760) {
             alert_danger("Max dataset size is 10 MB.");
             return;
         }
 
         var folder = $("#select_folder :selected").val();
 
-        if(folder == "Select a folder type") {
+        if (folder == "Select a folder type") {
             alert_danger("Please select a folder type.");
             return;
-        }   
+        }
 
-        switch(folder) { 
+        switch (folder) {
             case "Private folder":
                 folder = "private";
                 break;
@@ -181,7 +181,7 @@ $(function() {
         formData.set("token", token);
         formData.set("folder", folder);
         formData.set("file", file);
-        
+
         $('#alertPlaceholder').html("");
         $("#conf_upl").hide();
         $('#loadingbtn').show();
@@ -193,15 +193,15 @@ $(function() {
             data: formData,
             processData: false,
             contentType: false,
-            success: function() {
-                alert_success("File uploaded successfully.");
+            success: function () {
+                alert_success("Dataset uploaded successfully.");
                 $("#formFile").val("");
                 $("#select_folder").val('0');
                 $("#loadingbtn").hide();
                 $("#conf_upl").show();
                 getDatasets();
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 var response = JSON.parse(xhr.responseText);
                 var errormes = response.errormesg;
                 alert_danger(errormes);
@@ -214,42 +214,42 @@ $(function() {
     });
 
     // Selecting All Features.
-    $("#checkSelectAll").click(function() {
+    $("#checkSelectAll").click(function () {
         var selAll = $("input[name=select_all]:checked");
         var check = $("input[name=num_field]");
-        if(selAll.length > 0) {
-            for(var i = 0; i < check.length; i++) {
-                if(check[i].type == 'checkbox') {
+        if (selAll.length > 0) {
+            for (var i = 0; i < check.length; i++) {
+                if (check[i].type == 'checkbox') {
                     check[i].checked = true;
                 }
             }
             $("#checkBoxes").click();
         }
         else {
-            for(var i = 0; i < check.length; i++) {
-                if(check[i].type == 'checkbox') {
+            for (var i = 0; i < check.length; i++) {
+                if (check[i].type == 'checkbox') {
                     check[i].checked = false;
                 }
             }
             $("#checkBoxes").click();
         }
     });
-    
+
     // Selecting All Labels.
-    $("#checkSelectAll2").click(function() {
+    $("#checkSelectAll2").click(function () {
         var selAll = $("input[name=select_all2]:checked");
         var check = $("input[name=binary_fields]");
-        if(selAll.length > 0) {
-            for(var i = 0; i < check.length; i++) {
-                if(check[i].type == 'checkbox') {
+        if (selAll.length > 0) {
+            for (var i = 0; i < check.length; i++) {
+                if (check[i].type == 'checkbox') {
                     check[i].checked = true;
                 }
             }
             $("#select_class").click();
         }
         else {
-            for(var i = 0; i < check.length; i++) {
-                if(check[i].type == 'checkbox') {
+            for (var i = 0; i < check.length; i++) {
+                if (check[i].type == 'checkbox') {
                     check[i].checked = false;
                 }
             }
@@ -258,7 +258,7 @@ $(function() {
     });
 
     // Handling Dataset Selection.
-    $("#select_dataset").on("change", function() {
+    $("#select_dataset").on("change", function () {
 
         $('#table_div').hide();
         $('#params_div').hide();
@@ -267,7 +267,7 @@ $(function() {
         var selected = $("#select_dataset :selected").val(); // Getting current file selection.
         var folder = $("#select_dataset :selected").attr("class"); // Getting current folder type selection.
 
-        if(selected == "default") {
+        if (selected == "default") {
             $('#delbtn').prop("disabled", true);
             $('#dnload-btn').prop("disabled", true);
             return;
@@ -276,33 +276,33 @@ $(function() {
         $('#delbtn').prop("disabled", false);
         $('#dnload-btn').prop("disabled", false);
         $('#loadingbtn_dataset').show();
-        
+
         // AJAX Request for Getting the Dataset Content.
         $.ajax({
             url: `../server/php/api/multilabelDatasetContent.php?token=${token}&file=${selected}&folder=${folder}`,
             method: 'GET',
-            success: function(data) {
+            success: function (data) {
                 try {
                     var data2 = JSON.parse(data);
                     var csv_array = data2.csv_array;
                     var num_fields = data2.numerical_fields;
-                    var fields1 = data2.fields;
+                    var fields1 = data2.binary_fields;
 
                     $("#data_table_head_tr").html("");
                     $("#data_table_tbody").html("");
-                        
+
                     // 15-Row Preview of the dataset.
-                    $.each(csv_array[0], function(index, val) {
+                    $.each(csv_array[0], function (index, val) {
                         $("#data_table_head_tr").append($(`<th scope="col">${val}</th>`));
                     });
-                    for(var i = 1; i <= 15; i++) {
+                    for (var i = 1; i <= 15; i++) {
                         var tr_id = 'tr' + i;
                         $("#data_table_tbody").append($(`<tr id="${tr_id}"></tr>`));
-                        $.each(csv_array[i], function(index3, val3) {
-                            $(`#${tr_id}`).append($(`<td><div class="data_table_tbody_td">${val3}</div></td>`)); 
+                        $.each(csv_array[i], function (index3, val3) {
+                            $(`#${tr_id}`).append($(`<td><div class="data_table_tbody_td">${val3}</div></td>`));
                         });
                     }
-                    
+
                     $('#loadingbtn_dataset').hide();
                     $('#table_div').show();
 
@@ -318,7 +318,7 @@ $(function() {
                         </label>
                     `));
                     $('#checkBoxes').html("");
-                    for(var i = 0; i < num_fields.length; i++) {
+                    for (var i = 0; i < num_fields.length; i++) {
                         $('#checkBoxes').append($(`
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input edit_checkbox" type="checkbox" name="num_field" value="${num_fields[i]}" id="flexCheckDefault">
@@ -338,7 +338,7 @@ $(function() {
                         </label>
                     `));
                     $('#select_class').html("");
-                    for(var i = 0; i < fields1.length; i++) {
+                    for (var i = 0; i < fields1.length; i++) {
                         $('#select_class').append($(`
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input edit_checkbox" type="checkbox" name="binary_fields" value="${fields1[i]}" id="flexCheckDefault">
@@ -353,12 +353,12 @@ $(function() {
                     $("#select_classifier").html("");
                     $("#select_classifier").append($("<option value='default' selected>Select classifier</option>"));
                     var classifiers = [
-                        'Auto', 
-                        'BinaryRelevance', 
-                        'LabelPowerset', 
+                        'Auto',
+                        'BinaryRelevance',
+                        'LabelPowerset',
                         'ClassifierChain'
                     ];
-                    for(var i = 0; i < classifiers.length; i++) {
+                    for (var i = 0; i < classifiers.length; i++) {
                         $("#select_classifier").append($(`<option value='${classifiers[i]}'>${classifiers[i]}</option>`));
                     }
 
@@ -366,7 +366,7 @@ $(function() {
                     $("#min_samples_leaf").val("1");
                     $("#kFolds").val("5");
                     $('#params_div').show();
-                } catch(error) {
+                } catch (error) {
                     $('#loadingbtn_dataset').hide();
                     $('#dnload-btn').prop("disabled", true);
                     $('#modal2_text').html("");
@@ -374,7 +374,7 @@ $(function() {
                     $('#modal2_text').html("Unable to proccess this dataset.");
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 var response = JSON.parse(xhr.responseText);
                 var errormes = response.errormesg;
                 $('#loadingbtn_dataset').hide();
@@ -388,7 +388,7 @@ $(function() {
     });
 
     // Handling Dataset's Deletion.
-    $('#delbtn').click(function() {
+    $('#delbtn').click(function () {
         var file = $("#select_dataset :selected").val(); // Getting current file selection.
         var folder = $("#select_dataset :selected").attr("class"); // Getting current folder type selection.
 
@@ -400,10 +400,10 @@ $(function() {
         $.ajax({
             url: '../server/php/api/destroyDataset.php',
             method: 'DELETE',
-            data: JSON.stringify({file: file, folder: folder, token: token}),
+            data: JSON.stringify({ file: file, folder: folder, token: token }),
             dataType: "json",
             contentType: 'application/json',
-            success: function() {
+            success: function () {
                 $("#loadingbtn2").hide();
                 $("#delbtn").show();
                 $('#delbtn').prop("disabled", true);
@@ -416,7 +416,7 @@ $(function() {
                 $('#modal2').modal('show');
                 $('#modal2_text').html("Dataset successfully deleted.");
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 var response = JSON.parse(xhr.responseText);
                 var errormes = response.errormesg;
                 $("#loadingbtn2").hide();
@@ -434,7 +434,7 @@ $(function() {
     });
 
     // Handling Dataset's Downloading.
-    $('#dnload-btn').click(function(event) {
+    $('#dnload-btn').click(function (event) {
         var file = $("#select_dataset :selected").val();
         var folder = $("#select_dataset :selected").attr("class");
         var link = '../server/php/api/downloadDataset.php?token=' + token + '&folder=' + folder + '&file=' + file;
@@ -443,8 +443,8 @@ $(function() {
     });
 
     // Handling Auto checkbox for max_depth.
-    $("#max_depth_auto_checkbox").change(function() {
-        if(this.checked) {
+    $("#max_depth_auto_checkbox").change(function () {
+        if (this.checked) {
             $("#max_depth").val("Auto").prop("disabled", true);
         } else {
             $("#max_depth").val("").prop("disabled", false);
@@ -452,8 +452,8 @@ $(function() {
     });
 
     // Handling Auto checkbox for min_samples_leaf.
-    $("#min_samples_leaf_auto_checkbox").change(function() {
-        if(this.checked) {
+    $("#min_samples_leaf_auto_checkbox").change(function () {
+        if (this.checked) {
             $("#min_samples_leaf").val("Auto").prop("disabled", true);
         } else {
             $("#min_samples_leaf").val("").prop("disabled", false);
@@ -461,7 +461,7 @@ $(function() {
     });
 
     // Handling Build Model for Multilabel Cross Validation.
-    $("#buildModelBtn").click(function() {
+    $("#buildModelBtn").click(function () {
 
         $('#modelEvaluationResults').hide(); // Hidding Model Evaluation Results.
 
@@ -470,38 +470,38 @@ $(function() {
         $("#kFolds:focus").blur(); // K for KFold.
 
         $("#model_name").val("my_multilabel_model"); // Default Model's Name.
-        
+
         // Features Selection Validation.
         var check = $("input[name=num_field]:checked");
 
-        if(check.length == 0) {
+        if (check.length == 0) {
             $('#modal2_text').html("");
             $('#modal2').modal('show');
             $('#modal2_text').html("You didn't select any feature.");
             return;
         }
         var selected_features = {};
-        $.each(check, function(i) {
+        $.each(check, function (i) {
             selected_features[i] = $(this).val();
         });
 
         // Labels Selection Validation.
         var check2 = $("input[name=binary_fields]:checked");
 
-        if(check2.length < 2) {
+        if (check2.length < 2) {
             $('#modal2_text').html("");
             $('#modal2').modal('show');
             $('#modal2_text').html("You must select two or more labels.");
             return;
         }
         var selected_labels = {};
-        $.each(check2, function(i) {
+        $.each(check2, function (i) {
             selected_labels[i] = $(this).val();
         });
 
         // Classifier Selection Validation.
         var selected_classifier = $("#select_classifier :selected").val();
-        if(selected_classifier == 'default') {
+        if (selected_classifier == 'default') {
             $('#modal2_text').html("");
             $('#modal2').modal('show');
             $('#modal2_text').html("Please select a classifier.");
@@ -511,17 +511,17 @@ $(function() {
         // Max Depth Input Validation.
         var max_depth = $("#max_depth").val().trim();
 
-        if(max_depth.length > 0 && max_depth !== 'Auto') {
+        if (max_depth.length > 0 && max_depth !== 'Auto') {
 
             max_depth = Number.parseInt(max_depth);
 
-            if(Number.isNaN(max_depth)) {
+            if (Number.isNaN(max_depth)) {
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
                 $('#modal2_text').html("Please give a valid value for the Max Depth.");
                 return;
             }
-            if(max_depth < 1) {
+            if (max_depth < 1) {
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
                 $('#modal2_text').html("You should give a Max Depth &ge; 1.");
@@ -532,9 +532,9 @@ $(function() {
         // Min Samples Leaf Validation.
         var min_samples_leaf = $("#min_samples_leaf").val().trim();
 
-        if(min_samples_leaf !== 'Auto') {
+        if (min_samples_leaf !== 'Auto') {
 
-            if(min_samples_leaf.length == 0) {
+            if (min_samples_leaf.length == 0) {
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
                 $('#modal2_text').html("Please give a Min Samples Leaf.");
@@ -543,14 +543,14 @@ $(function() {
 
             var min_samples_leaf = Number.parseInt(min_samples_leaf);
 
-            if(Number.isNaN(min_samples_leaf)) {
+            if (Number.isNaN(min_samples_leaf)) {
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
                 $('#modal2_text').html("Please give a valid value for the Min Samples Leaf.");
                 return;
             }
 
-            if(min_samples_leaf < 1) {
+            if (min_samples_leaf < 1) {
                 $('#modal2_text').html("");
                 $('#modal2').modal('show');
                 $('#modal2_text').html("You should give a Min Samples Leaf &ge; 1.");
@@ -560,7 +560,7 @@ $(function() {
 
         // K for KFolds Validation.
         var kFolds = $("#kFolds").val().trim();
-        if(kFolds.length == 0) {
+        if (kFolds.length == 0) {
             $('#modal2_text').html("");
             $('#modal2').modal('show');
             $('#modal2_text').html("Please give the k value.");
@@ -568,14 +568,14 @@ $(function() {
         }
 
         var kFoldsInt = Number.parseInt(kFolds);
-        if(Number.isNaN(kFoldsInt)) {
-	        $('#modal2_text').html("");
+        if (Number.isNaN(kFoldsInt)) {
+            $('#modal2_text').html("");
             $('#modal2').modal('show');
             $('#modal2_text').html("Please give a valid value for k.");
             return;
         }
 
-        if((kFoldsInt < 5) || (kFoldsInt > 50)) {
+        if ((kFoldsInt < 5) || (kFoldsInt > 50)) {
             $('#modal2_text').html("");
             $('#modal2').modal('show');
             $('#modal2_text').html("Incorrect k. Range of accepted values: 5 - 50.");
@@ -605,13 +605,13 @@ $(function() {
             }),
             dataType: "json",
             contentType: 'application/json',
-            success: function(data) {
+            success: function (data) {
 
                 // console.log(data);
 
                 var avg_hl = data.avg_hl;
                 var avg_acc = data.avg_acc;
-                var avg_pre = data.avg_pre; 
+                var avg_pre = data.avg_pre;
                 var avg_rec = data.avg_rec;
                 var avg_fsc = data.avg_fsc;
                 var pre_per_label = data.pre_per_label;
@@ -628,7 +628,7 @@ $(function() {
                 // Metrics Information Display for Each Label.
                 $("#results_container").html("");
 
-                for(var i = 0; i < labels.length; i++) {
+                for (var i = 0; i < labels.length; i++) {
                     $("#results_tbody").append($(`
                         <tr>
                             <td>${labels[i]}</td>
@@ -673,7 +673,7 @@ $(function() {
                                 </tbody>
                             </table>
                         </div>`;
-                        
+
                     $("#results_container").append($(tableHtml));
                 }
 
@@ -690,13 +690,13 @@ $(function() {
                 $("#selectedMaxDepth").text(max_depth ? max_depth : "None");
                 $("#selectedMinSamplesLeaf").text(min_samples_leaf);
                 $("#selectedK").text(k);
-                
+
                 $("#loadingbtn3").hide();
                 $("#buildModelBtn").show();
                 $('#modelEvaluationResults').show();
                 window.location.href = '#modelEvaluationResults';
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 var response = JSON.parse(xhr.responseText);
                 var errormes = response.errormesg;
                 $("#loadingbtn3").hide();
@@ -709,21 +709,21 @@ $(function() {
     });
 
     // Handling Clear Btn.
-    $('#clearBtn').click(function() {
+    $('#clearBtn').click(function () {
         // Unchecking the checkboxes of the patameters.
-        $('#checkSelectAll input[type="checkbox"], #checkBoxes input[type="checkbox"], #checkSelectAll2 input[type="checkbox"], #select_class input[type="checkbox"], #max_depth_auto_checkbox, #min_samples_leaf_auto_checkbox').each(function() {
+        $('#checkSelectAll input[type="checkbox"], #checkBoxes input[type="checkbox"], #checkSelectAll2 input[type="checkbox"], #select_class input[type="checkbox"], #max_depth_auto_checkbox, #min_samples_leaf_auto_checkbox').each(function () {
             $(this).prop('checked', false);
         });
         // Initializing the values of the parameters.
         $("#select_classifier").html("");
         $("#select_classifier").append($("<option value='default' selected>Select classifier</option>"));
         var classifiers = [
-            'Auto', 
-            'BinaryRelevance', 
-            'LabelPowerset', 
+            'Auto',
+            'BinaryRelevance',
+            'LabelPowerset',
             'ClassifierChain'
         ];
-        for(var i = 0; i < classifiers.length; i++) {
+        for (var i = 0; i < classifiers.length; i++) {
             $("#select_classifier").append($(`<option value='${classifiers[i]}'>${classifiers[i]}</option>`));
         }
         $("#min_samples_leaf").val("1");
@@ -732,40 +732,40 @@ $(function() {
     });
 
     // Handling Cancel Btn.
-    $('#cancelBtn').click(function() {
+    $('#cancelBtn').click(function () {
         location.reload();
     });
 
     // Handling Save Model.
-    $("#saveModelBtn").click(function() {
+    $("#saveModelBtn").click(function () {
 
         $("#model_name:focus").blur(); // Model Name.
-        
+
         // Features Selection Validation.
         var check = $("input[name=num_field]:checked");
 
-        if(check.length == 0) {
+        if (check.length == 0) {
             $('#modal2_text').html("");
             $('#modal2').modal('show');
             $('#modal2_text').html("You didn't select any feature.");
             return;
         }
         var selected_features = {};
-        $.each(check, function(i) {
+        $.each(check, function (i) {
             selected_features[i] = $(this).val();
         });
 
         // Labels Selection Validation.
         var check2 = $("input[name=binary_fields]:checked");
 
-        if(check2.length < 2) {
+        if (check2.length < 2) {
             $('#modal2_text').html("");
             $('#modal2').modal('show');
             $('#modal2_text').html("You must select two or more labels.");
             return;
         }
         var selected_labels = {};
-        $.each(check2, function(i) {
+        $.each(check2, function (i) {
             selected_labels[i] = $(this).val();
         });
 
@@ -781,7 +781,7 @@ $(function() {
         // Model Name Validation.
         var model_name = $("#model_name").val().trim();
 
-        if(model_name.length == 0) {
+        if (model_name.length == 0) {
             $('#modal2_text').html("");
             $('#modal2').modal('show');
             $('#modal2_text').html("Please give a name for your Model.");
@@ -811,7 +811,7 @@ $(function() {
             }),
             dataType: "json",
             contentType: 'application/json',
-            success: function(data) {
+            success: function (data) {
                 var mes = data.message;
                 $("#loadingbtnSave").hide();
                 $("#saveModelBtn").show();
@@ -824,7 +824,7 @@ $(function() {
                     </div>
                 `));
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 var response = JSON.parse(xhr.responseText);
                 var errormes = response.errormesg;
                 $("#loadingbtnSave").hide();

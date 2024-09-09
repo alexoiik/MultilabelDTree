@@ -72,7 +72,7 @@
 
     $countFields = 0;
     $num_fields = array(); // Only numerical fields (features).
-    $fields = array();    // Only fields that have values 0, 1 only (labels).
+    $binary_fields = array();    // Only fields that have values 0, 1 only (labels).
     $csv_array = array();
     $row = 0;
 
@@ -137,19 +137,19 @@
                 }
             }
             if ($is_binary && $csv_array[0][$j2] !== "" && !preg_match('/^Att/', $csv_array[0][$j2])) {
-                array_push($fields, $csv_array[0][$j2]);
+                array_push($binary_fields, $csv_array[0][$j2]);
             }
         }
 
         // Check if fields (labels) is empty. Return an error if true.
-        if (empty($fields)) {
+        if (empty($binary_fields)) {
             header("HTTP/1.1 400 Bad Request");
             print json_encode(['errormesg' => "This dataset does not contain labels."]);
             exit;
         }
 
         // Check if fields (labels) is less than two. Return an error if true.
-        if (count($fields) < 2) {
+        if (count($binary_fields) < 2) {
             header("HTTP/1.1 400 Bad Request");
             print json_encode(['errormesg' => "This dataset contains a small number of labels."]);
             exit;
@@ -158,7 +158,7 @@
         print json_encode([
             'csv_array' => $csv_array,
             'numerical_fields' => $num_fields,
-            'fields' => $fields
+            'binary_fields' => $binary_fields
         ]);
     }
     else {

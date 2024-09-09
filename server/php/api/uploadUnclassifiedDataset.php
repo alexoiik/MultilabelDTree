@@ -64,5 +64,5 @@
         exit;
     }
 
-    print json_encode(['message'=>"File successfully uploaded."]);
+    print json_encode(['message'=>"Dataset successfully uploaded."]);
 ?>

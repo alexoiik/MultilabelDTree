@@ -3,12 +3,1576 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="../src/assets/img/tree.png">
+    <!-- Favicon -->
+    <link 
+        rel="icon" 
+        type="image/x-icon" 
+        href="../src/assets/img/tree.png"
+    >
+    <!-- CSS Links -->
+    <link 
+        rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    >
+    <link 
+        rel="stylesheet" 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+        crossorigin="anonymous"
+    > 
+    <link 
+        rel="stylesheet" 
+        href="../src/css/vendor.css"
+    >
+    <link 
+        rel="stylesheet" 
+        href="../src/css/multilabelDTree.css"
+    >
+    <!-- JS Scripts -->
+    <script 
+        src="../src/js/jquery-3.7.0.min.js">
+    </script>
+    <script 
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" 
+        crossorigin="anonymous">
+    </script>
+    <script 
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" 
+        integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" 
+        crossorigin="anonymous">
+    </script>   
+    <script 
+        src="../src/js/pace.min.js">
+    </script>
+    <script 
+        src="../src/js/apiDocs.js">
+    </script>
     <title>
         MultilabelDTree - API Docs
     </title>
 </head>
-<body>
-    <p>MultilabelDTree - API Docs</p>
+<body id="top">
+    <!-- Responsive Navbar -->
+    <nav 
+        class="navbar navbar-expand-xl bg-light mr-2 fixed-top"
+        data-aos="fade-down"
+    >
+        <div 
+            id="navContainer"
+            class="container-fluid" 
+        >
+            <a 
+                class="appTitle" 
+                href="../"
+            >
+                <img 
+                    src="../src/assets/img/tree.png" 
+                    alt="App Logo" 
+                    width="40px" 
+                    style="margin-bottom: 10px;"
+                >
+                MLDTree
+            </a>
+            <button 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#navbarSupportedContent" 
+                aria-controls="navbarSupportedContent" 
+                aria-expanded="false" 
+                aria-label="Toggle navigation"
+                class="navbar-toggler" 
+            >
+                <span class="navbar-toggler-icon">
+                </span>
+            </button>
+            <div 
+                class="collapse navbar-collapse" 
+                id="navbarSupportedContent"
+            >
+                <div class="navbar-nav me-auto">
+                    <a 
+                        class="font-size navLink"
+                        href="../"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>
+                        <span>Home</span>
+                    </a>
+                    <a 
+                        class="font-size navLink" 
+                        href="./modelCreation.html" 
+                        role="button" 
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" style="width: 22px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z" />
+                        </svg>
+                        <span>Build a Model</span>
+                    </a>
+                    <a 
+                        class="font-size navLink" 
+                        href="./pretrainedModels.html" 
+                        role="button" 
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" style="width: 22px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3" />
+                        </svg>
+                        <span>Pretrained Models</span>
+                    </a>
+                    <a 
+                        class="font-size navLink" 
+                        href="./about.html"
+                        role="button"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" style="width: 22px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                        </svg>
+                        <span>About</span>
+                    </a>
+                    <a  
+                        class="font-size navLink"
+                        href="#"
+                        role="button"
+                        target="_blank"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" style="width: 22px; margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
+                        </svg>
+                        <span>Rate Us!</span>
+                    </a>
+                </div>
+                <div class="navbar-nav">
+                    <div 
+                        class="nav-item dropdown" 
+                        id="acc_dropdown"
+                    >
+                        <a      
+                            class="nav-link btn-dropdown" 
+                            style="color: #2869bede; text-align: left;"
+                            href="#" 
+                            role="button" 
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false"
+                        >
+                            <img 
+                                src="../src/assets/img/user.png" 
+                                alt="User Icon" 
+                                width="48px"
+                            >
+                        </a>
+                        <ul 
+                            style="right: -40px;"
+                            class="dropdown-menu dropdown-menu-end drop-ul"
+                            id="drop_width" 
+                        >
+                            <li>
+                                <p 
+                                    class="dropdown-header userName" 
+                                    id="username"
+                                >
+                                    Username
+                                </p>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a 
+                                    class="dropdown-item" 
+                                    href="#"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                    </svg>
+                                    <span>Edit Account</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-submenu-left">
+                                    <li>
+                                        <a 
+                                            class="dropdown-item" 
+                                            href="./editCredentials.html"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 17px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                                            </svg>
+                                            <span>Edit Credentials</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a 
+                                            class="dropdown-item" 
+                                            href="./editEmail.html"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 17px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25" />
+                                            </svg>
+                                            <span>Edit Email</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a 
+                                            class="dropdown-item" 
+                                            href="./deleteAccount.html"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 17px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM4 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 10.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                                            </svg>
+                                            <span>Delete Account</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a 
+                                    class="dropdown-item active2"
+                                    href="#"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                                    </svg>
+                                    <span>API Docs</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a 
+                                    class="dropdown-item"
+                                    id="logoutb"
+                                    href="#"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; margin-bottom: 2px;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                                    </svg>
+                                    <span>Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Title -->
+    <div class="pageTitle">
+        <div data-aos="fade-down">
+            API Documentation
+        </div>
+    </div>
+
+    <!-- Main Card Container -->
+    <div class="main-card-container">
+        <!-- API Documentation -->
+        <div class="content">
+            <div class="container_3 api-documentation">
+                <div class="doc-section">
+                    <i 
+                        class="fa fa-info-circle" 
+                        style="font-size: 21px; margin-right: 4px;"
+                    >
+                    </i>
+                    <span style="margin-right: 4px;">
+                        App Source Code:
+                    </span>
+                    <a 
+                        class="btn btn-dark" 
+                        type="button" 
+                        href="https://github.com/alexoiik/MultilabelDTree" 
+                        target="_blank"
+                    >
+                        <i 
+                            class="fa fa-github" 
+                            style="font-size: 20px;"
+                        >
+                        </i>
+                        <span class="btn-text">
+                            GitHub Repository
+                        </span>
+                    </a>   
+                </div>
+                <div class="doc-section">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; margin-bottom: 3px;" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                        <path fill-rule="evenodd" d="M15.75 1.5a6.75 6.75 0 0 0-6.651 7.906c.067.39-.032.717-.221.906l-6.5 6.499a3 3 0 0 0-.878 2.121v2.818c0 .414.336.75.75.75H6a.75.75 0 0 0 .75-.75v-1.5h1.5A.75.75 0 0 0 9 19.5V18h1.5a.75.75 0 0 0 .53-.22l2.658-2.658c.19-.189.517-.288.906-.22A6.75 6.75 0 1 0 15.75 1.5Zm0 3a.75.75 0 0 0 0 1.5A2.25 2.25 0 0 1 18 8.25a.75.75 0 0 0 1.5 0 3.75 3.75 0 0 0-3.75-3.75Z" clip-rule="evenodd" />
+                    </svg>
+                    <span style="margin-right: 4px;">
+                        Your Personal API Token:
+                    </span>
+                    <div class="input-group mt-2">
+                        <input 
+                            id="userToken" 
+                            type="text" 
+                            class="form-control" 
+                            aria-label="Token" 
+                            disabled
+                        >
+                        <button 
+                            class="btn btn-dark" 
+                            type="button" 
+                            id="copyToken"
+                        > 
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; margin-bottom: 3px;" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                <path fill-rule="evenodd" d="M17.663 3.118c.225.015.45.032.673.05C19.876 3.298 21 4.604 21 6.109v9.642a3 3 0 0 1-3 3V16.5c0-5.922-4.576-10.775-10.384-11.217.324-1.132 1.3-2.01 2.548-2.114.224-.019.448-.036.673-.051A3 3 0 0 1 13.5 1.5H15a3 3 0 0 1 2.663 1.618ZM12 4.5A1.5 1.5 0 0 1 13.5 3H15a1.5 1.5 0 0 1 1.5 1.5H12Z" clip-rule="evenodd" />
+                                <path d="M3 8.625c0-1.036.84-1.875 1.875-1.875h.375A3.75 3.75 0 0 1 9 10.5v1.875c0 1.036.84 1.875 1.875 1.875h1.875A3.75 3.75 0 0 1 16.5 18v2.625c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625v-12Z" />
+                                <path d="M10.5 10.5a5.23 5.23 0 0 0-1.279-3.434 9.768 9.768 0 0 1 6.963 6.963 5.23 5.23 0 0 0-3.434-1.279h-1.875a.375.375 0 0 1-.375-.375V10.5Z" />
+                            </svg>
+                            <span 
+                                class="btn-text"
+                                style="padding-left: 1px;"
+                            >
+                                Copy
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="doc-section">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="width: 23px; margin-bottom: 3px;" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                        <path fill-rule="evenodd" d="M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm14.25 6a.75.75 0 0 1-.22.53l-2.25 2.25a.75.75 0 1 1-1.06-1.06L15.44 12l-1.72-1.72a.75.75 0 1 1 1.06-1.06l2.25 2.25c.141.14.22.331.22.53Zm-10.28-.53a.75.75 0 0 0 0 1.06l2.25 2.25a.75.75 0 1 0 1.06-1.06L8.56 12l1.72-1.72a.75.75 0 1 0-1.06-1.06l-2.25 2.25Z" clip-rule="evenodd" />
+                    </svg>
+                    <span style="margin-right: 4px;">
+                        MultilabelDTree Public API Endpoints:
+                    </span>
+                    <div 
+                        class="accordion mt-2" 
+                        id="accordionExample"
+                    >
+                        <div class="accordion-item acc_item_style">
+                            <h2 class="accordion-header">
+                                <button 
+                                    class="accordion-button collapsed accordionBgColor" 
+                                    type="button" 
+                                    data-bs-toggle="collapse" 
+                                    data-bs-target="#collapseOne" 
+                                    aria-expanded="true" 
+                                    aria-controls="collapseOne"
+                                >
+                                    <i class="fa fa-users"></i>
+                                    <span class="api_section">
+                                        Users
+                                    </span>
+                                </button>
+                            </h2>
+                            <div 
+                                id="collapseOne" 
+                                class="accordion-collapse collapse" 
+                                data-bs-parent="#accordionExample"
+                            >
+                            <div class="accordion-body">
+                                <div class="accordion-item acc_item_style">
+                                    <h2 class="accordion-header">
+                                        <button 
+                                            class="accordion-button collapsed accordionBgColor_post" 
+                                            type="button" 
+                                            data-bs-toggle="collapse" 
+                                            data-bs-target="#collapse5" 
+                                            aria-expanded="false" 
+                                            aria-controls="collapse5"
+                                        >
+                                        <span class="http_request">
+                                            POST
+                                        </span>
+                                        <span class="http_request2">
+                                            /server/php/api/register.php
+                                        </span>
+                                        </button>
+                                    </h2>
+                                    <div 
+                                        id="collapse5" 
+                                        class="accordion-collapse collapse" 
+                                        data-bs-parent="#collapseOne"
+                                    >
+                                        <div class="accordion-body">
+                                            <h5 class="requestTitle">
+                                                Registers a User and sends him an Account Verification Email.
+                                            </h5>
+                                            <h6>
+                                                Request Body Example:
+                                            </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"fname"</span>: <span class="fieldValue">"yourFirstName"</span>,
+    <span class="fieldName">"lname"</span>: <span class="fieldValue">"yourLastName"</span>,
+    <span class="fieldName">"email"</span>: <span class="fieldValue">"yourEmail@email.com"</span>,
+    <span class="fieldName">"pass"</span>: <span class="fieldValue">"yourPassword"</span>,
+    <span class="fieldName">"pass_confirm"</span>: <span class="fieldValue">"yourPassword"</span>
+}
+</pre>
+                                            <h6>
+                                                Response Example:
+                                            </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"message"</span>: <span class="fieldValue">"User registered successfully. Verification email sent."</span>
+}
+</pre>  
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item acc_item_style">
+                                    <h2 class="accordion-header">
+                                        <button 
+                                            class="accordion-button collapsed accordionBgColor_post" 
+                                            type="button" 
+                                            data-bs-toggle="collapse" 
+                                            data-bs-target="#collapse6" 
+                                            aria-expanded="false" 
+                                            aria-controls="collapse6"
+                                        >
+                                            <span class="http_request">
+                                                POST
+                                            </span>
+                                            <span class="http_request2">
+                                                /server/php/api/login.php
+                                            </span>
+                                        </button>
+                                    </h2>
+                                    <div 
+                                        id="collapse6" 
+                                        class="accordion-collapse collapse" 
+                                        data-bs-parent="#collapseOne"
+                                    >
+                                        <div class="accordion-body">
+                                            <h5 class="requestTitle">
+                                                Logs in the User.
+                                            </h5>
+                                            <h6>
+                                                Request Body Example:
+                                            </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"email"</span>: <span class="fieldValue">"yourEmail@email.com"</span>,
+    <span class="fieldName">"pass"</span>: <span class="fieldValue">"yourPassword"</span>
+}
+</pre>
+                                            <h6>
+                                                Response Example:
+                                            </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"email"</span>: <span class="fieldValue">"yourEmail@email.com"</span>,
+    <span class="fieldName">"token"</span>: <span class="fieldValue">"yourToken"</span>,
+    <span class="fieldName">"fname"</span>: <span class="fieldValue">"yourFirstName"</span>,
+    <span class="fieldName">"lname"</span>: <span class="fieldValue">"yourLastName"</span>
+}
+</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item acc_item_style">
+                                    <h2 class="accordion-header">
+                                        <button 
+                                            class="accordion-button collapsed accordionBgColor_post" 
+                                            type="button" 
+                                            data-bs-toggle="collapse" 
+                                            data-bs-target="#collapse7" 
+                                            aria-expanded="false" 
+                                            aria-controls="collapse7"
+                                        >
+                                            <span class="http_request">
+                                                POST
+                                            </span>
+                                            <span class="http_request2">
+                                                /server/php/api/editAccount.php
+                                            </span>
+                                        </button>
+                                    </h2>
+                                    <div 
+                                        id="collapse7" 
+                                        class="accordion-collapse collapse" 
+                                        data-bs-parent="#collapseOne"
+                                    >
+                                        <div class="accordion-body">
+                                            <h5 class="requestTitle">
+                                                Updates User's Information.
+                                            </h5>
+                                            <h6>
+                                                Request Body Example 1 (Updates User's Email):
+                                            </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"token"</span>: <span class="fieldValue">"yourToken"</span>,
+    <span class="fieldName">"email"</span>: <span class="fieldValue">"yourEmail@email.com"</span>
+}
+</pre>
+                                            <h6>
+                                                Response Example 1:
+                                            </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"message"</span>: <span class="fieldValue">"Verification email sent."</span>
+}
+</pre>
+                                            <h6>
+                                                Request Body Example 2 (Updates User's Name/Password):
+                                            </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"token"</span>: <span class="fieldValue">"yourToken"</span>,
+    <span class="fieldName">"fname"</span>: <span class="fieldValue">"yourFirstName" | null</span>,
+    <span class="fieldName">"lname"</span>: <span class="fieldValue">"yourLastName" | null</span>,
+    <span class="fieldName">"pass"</span>: <span class="fieldValue">"yourPassword" | null</span>,
+    <span class="fieldName">"new_pass"</span>: <span class="fieldValue">"yourNewPassword" | null</span>,
+    <span class="fieldName">"new_pass_confirm"</span>: <span class="fieldValue">"yourNewPassword" | null</span>
+}
+</pre>
+                                            <h6>
+                                                Response Example 2:
+                                            </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"fname"</span>: <span class="fieldValue">"yourFirstName"</span>,
+    <span class="fieldName">"lname"</span>: <span class="fieldValue">"yourLastName"</span>
+}
+</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item acc_item_style">
+                                    <h2 class="accordion-header">
+                                        <button 
+                                            class="accordion-button collapsed accordionBgColor_delete" 
+                                            type="button" 
+                                            data-bs-toggle="collapse" 
+                                            data-bs-target="#collapse8" 
+                                            aria-expanded="false" 
+                                            aria-controls="collapse8"
+                                        >
+                                            <span class="http_request">
+                                                DELETE
+                                            </span>
+                                            <span class="http_request2">
+                                                /server/php/api/deleteAccount.php
+                                            </span>
+                                        </button>
+                                    </h2>
+                                    <div 
+                                        id="collapse8" 
+                                        class="accordion-collapse collapse" 
+                                        data-bs-parent="#collapseOne"
+                                    >
+                                        <div class="accordion-body">
+                                            <h5 class="requestTitle">
+                                                Deletes a User's Account.
+                                            </h5>
+                                            <h6>
+                                                Request Body Example:
+                                            </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"token"</span>: <span class="fieldValue">"yourToken"</span>,
+    <span class="fieldName">"pass_del"</span>: <span class="fieldValue">"yourPassword"</span>,
+    <span class="fieldName">"pass_del_confirm"</span>: <span class="fieldValue">"yourPassword"</span>
+}
+</pre>
+                                            <h6>
+                                                Response Example:
+                                            </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"message"</span>: <span class="fieldValue">"Account successfully deleted."</span>
+}
+</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item acc_item_style">
+                            <h2 class="accordion-header">
+                                <button 
+                                    class="accordion-button collapsed accordionBgColor" 
+                                    type="button" 
+                                    data-bs-toggle="collapse" 
+                                    data-bs-target="#collapseTwo" 
+                                    aria-expanded="false" 
+                                    aria-controls="collapseTwo"
+                                >
+                                    <i class="fa fa-file-text" style="margin-left: 3px;"></i>
+                                    <span 
+                                        class="api_section"
+                                        style="margin-left: 11px;"
+                                    >
+                                        Datasets
+                                    </span>
+                                </button>
+                            </h2>
+                            <div 
+                                id="collapseTwo" 
+                                class="accordion-collapse collapse" 
+                                data-bs-parent="#accordionExample"
+                            >
+                                <div class="accordion-body">
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_get" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseDatasets1" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseDatasets1"
+                                            >
+                                                <span class="http_request">
+                                                    GET
+                                                </span>
+                                                <span class="http_request2">
+                                                    /server/php/api/receiveDatasets.php?token={token}
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseDatasets1" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseTwo"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                   Returns All Uploaded Public and Private Datasets.
+                                                </h5>
+                                                <h6>
+                                                    Response Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"public_data"</span>: <span class="fieldValue">["emotions.csv", "yeast.csv",…]</span>,
+    <span class="fieldName">"private_data"</span>: <span class="fieldValue">["water-quality.csv", "flags.csv",…]</span>
+}
+</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_post" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseUpload" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseUpload"
+                                            >
+                                                <span class="http_request">
+                                                    POST
+                                                </span>
+                                                <span class="http_request2">
+                                                    /server/php/api/uploadDatasets.php
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseUpload" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseTwo"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Uploads a .csv Dataset.
+                                                </h5>
+                                                <h6>
+                                                    Request Body Example:
+                                                </h6>
+<pre class="preStyle">
+Form Data:
+<span class="fieldName">token</span>:<span class="fieldValue"> "yourToken"</span>
+<span class="fieldName">folder</span>:<span class="fieldValue"> "public | private"</span>
+<span class="fieldName">file</span>:<span class="fieldValue"> (Selected File)</span>
+</pre>
+                                                <h6>
+                                                    Response Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"message"</span>: <span class="fieldValue">"Dataset successfully uploaded."</span>
+}
+</pre>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_get" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseDatasets2" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseDatasets2"
+                                            >
+                                                <span class="http_request">
+                                                    GET
+                                                </span>
+                                                <span class="http_request2">
+                                                    /server/php/api/multilabelDatasetContent.php?token={token}&file={selectedFile}&folder={public|private}
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseDatasets2" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseTwo"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Returns a Multilabel Dataset's Content.
+                                                </h5>
+                                                <h6>
+                                                    Response Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"csv_array"</span>: <span class="fieldValue">[["landmass", "zone", "area", "population", "language",…],["3", "1", "29", "3", "6",…],["6", "3", "0", "0", "1",…],…]</span>,
+    <span class="fieldName">"numerical_fields"</span>: <span class="fieldValue">["landmass", "zone", "area", "population", "language",…]</span>,
+    <span class="fieldName">"binary_fields"</span>: <span class="fieldValue">["saltires", "crescent", "triangle", "icon", "animate",…]</span>
+}
+</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_delete" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseDatasets3" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseDatasets3"
+                                            >
+                                                <span class="http_request">
+                                                    DELETE
+                                                </span>
+                                                <span class="http_request2">
+                                                    /server/php/api/destroyDataset.php
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseDatasets3" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseTwo"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Deletes a Dataset.
+                                                </h5>
+                                                <h6>
+                                                    Request Body Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"token"</span>: <span class="fieldValue">"yourToken"</span>,
+    <span class="fieldName">"folder"</span>: <span class="fieldValue">"public | private"</span>,
+    <span class="fieldName">"file"</span>: <span class="fieldValue">"selectedFile.csv"</span>
+}
+</pre>
+                                                <h6>
+                                                    Response Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"message"</span>: <span class="fieldValue">"Dataset successfully deleted."</span>
+}
+</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_get" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseDatasets21" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseDatasets21"
+                                            >
+                                                <span class="http_request">
+                                                    GET
+                                                </span>
+                                                <span class="http_request2">
+                                                    /server/php/api/receiveUnclassifiedDatasets.php?token={token}
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseDatasets21" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseTwo"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Returns All Uploaded Unclassified Datasets.
+                                                </h5>
+                                                <h6>
+                                                    Response Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"unclassified_data"</span>: <span class="fieldValue">["emotions.csv", "yeast.csv", "flags.csv",…]</span>
+}
+</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_post" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseUpload2" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseUpload2"
+                                            >
+                                                <span class="http_request">
+                                                    POST
+                                                </span>
+                                                <span class="http_request2">
+                                                    /server/php/api/uploadUnclassifiedDataset.php
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseUpload2" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseTwo"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Uploads an Unclassified .csv Dataset.
+                                                </h5>
+                                                <h6>
+                                                    Request Body Example:
+                                                </h6>
+<pre class="preStyle">
+Form Data:
+<span class="fieldName">token</span>:<span class="fieldValue"> "yourToken"</span>
+<span class="fieldName">file</span>:<span class="fieldValue"> {Selected File}</span>
+</pre>
+                                                <h6>
+                                                    Response Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"message"</span>: <span class="fieldValue">"Dataset successfully uploaded."</span>
+}
+</pre>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_get" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseDatasets22" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseDatasets22"
+                                            >
+                                                <span class="http_request">
+                                                    GET
+                                                </span>
+                                                <span class="http_request2">
+                                                    /server/php/api/multilabelUnclassifiedDatasetContent.php?token={token}&file={selectedFile}
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseDatasets22" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseTwo"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Returns an Unclassified Dataset's Content.
+                                                </h5>
+                                                <h6>
+                                                    Response Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"csv_array"</span>: <span class="fieldValue">[["landmass", "zone", "area", "population", "language",…], ["3", "1", "29", "3", "6",…], ["6", "3", "0", "0", "1",…],…]</span>
+}
+</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_delete" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseDatasets23" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseDatasets23"
+                                            >
+                                                <span class="http_request">
+                                                    DELETE
+                                                </span>
+                                                <span class="http_request2">
+                                                    /server/php/api/destroyUnclassifiedDataset.php
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseDatasets23" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseTwo"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Deletes an Unclassified Dataset.
+                                                </h5>
+                                                <h6>
+                                                    Request Body Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"token"</span>: <span class="fieldValue">"yourToken"</span>,
+    <span class="fieldName">"file"</span>: <span class="fieldValue">"selectedFile.csv"</span>
+}
+</pre>
+                                                <h6>
+                                                    Response Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"message"</span>: <span class="fieldValue">"Dataset successfully deleted."</span>
+}
+</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item acc_item_style">
+                            <h2 class="accordion-header">
+                                <button 
+                                    class="accordion-button collapsed accordionBgColor" 
+                                    type="button" 
+                                    data-bs-toggle="collapse" 
+                                    data-bs-target="#collapseThree" 
+                                    aria-expanded="false" 
+                                    aria-controls="collapseThree"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width: 21px; padding-top: 2px;" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M2.273 5.625A4.483 4.483 0 0 1 5.25 4.5h13.5c1.141 0 2.183.425 2.977 1.125A3 3 0 0 0 18.75 3H5.25a3 3 0 0 0-2.977 2.625ZM2.273 8.625A4.483 4.483 0 0 1 5.25 7.5h13.5c1.141 0 2.183.425 2.977 1.125A3 3 0 0 0 18.75 6H5.25a3 3 0 0 0-2.977 2.625ZM5.25 9a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h13.5a3 3 0 0 0 3-3v-6a3 3 0 0 0-3-3H15a.75.75 0 0 0-.75.75 2.25 2.25 0 0 1-4.5 0A.75.75 0 0 0 9 9H5.25Z" />
+                                    </svg>
+                                    <span class="api_section">
+                                        Models
+                                    </span>
+                                </button>
+                            </h2>
+                            <div 
+                                id="collapseThree" 
+                                class="accordion-collapse collapse" 
+                                data-bs-parent="#accordionExample"
+                            >
+                                <div class="accordion-body">
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_get" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseModels" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseModels"
+                                            >
+                                                <span class="http_request">
+                                                    GET
+                                                </span>
+                                                <span class="http_request2">
+                                                    /server/php/api/receiveModels.php?token={token}
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseModels" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseThree"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">Returns All Pretrained Models.</h5>
+                                                <h6>
+                                                    Response Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"models_data"</span>: <span class="fieldValue">["emotions_multilabelModel.pkl", "yeast_multilabelModel.pkl", "flags_multilabelModel.pkl",…]</span>
+}
+</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_get" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseModels2" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseModels2"
+                                            >
+                                                <span class="http_request">
+                                                    GET
+                                                </span>
+                                                <span class="http_request2">
+                                                    /server/php/api/multilabelModelContent.php?token={token}&file={selectedFile}
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseModels2" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseThree"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Returns a Multilabel Model's Content.
+                                                </h5>
+                                                <h6>
+                                                    Response Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"columns"</span>: <span class="fieldValue">["landmass", "zone", "colours", "circles", "icon", "animate"]</span>,
+    <span class="fieldName">"labels"</span>: <span class="fieldValue">["saltires", "crescent", "triangle", "yellow"]</span>
+    <span class="fieldName">"classifier_type"</span>: <span class="fieldValue">"BinaryRelevance"</span>,
+    <span class="fieldName">"max_depth"</span>: <span class="fieldValue">12</span>
+    <span class="fieldName">"min_samples_leaf"</span>: <span class="fieldValue">2</span>
+}
+</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_delete" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseModels3" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseModels3"
+                                            >
+                                                <span class="http_request">
+                                                    DELETE
+                                                </span>
+                                                <span class="http_request2">
+                                                    /server/php/api/destroyModel.php
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseModels3" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseThree"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Deletes a Pretrained Model.
+                                                </h5>
+                                                <h6>
+                                                    Request Body Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"token"</span>: <span class="fieldValue">"yourToken"</span>,
+    <span class="fieldName">"file"</span>: <span class="fieldValue">"selectedFile.pkl"</span>
+}
+</pre>
+                                                <h6>
+                                                    Response Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"message"</span>: <span class="fieldValue">"Model successfully deleted."</span>
+}
+</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_get" 
+                                                type="button" 
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#collapseModels4" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseModels4"
+                                            >
+                                                <span class="http_request">
+                                                    GET
+                                                </span>
+                                                <span class="http_request2">
+                                                    /server/php/api/visualizeDTrees.php?token={token}&file={selectedFile}
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseModels4" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseThree"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Returns All Decision Trees Visualization for the Selected Model.
+                                                </h5>
+                                                <h6>
+                                                    Response Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"image"</span>: <span class="fieldValue">[
+        "http://localhost/MultilabelDTree/server/py/users/models/flags_multilabelModel_tree_1.png", 
+        "http://localhost/MultilabelDTree/server/py/users/models/flags_multilabelModel_tree_2.png", 
+        "http://localhost/MultilabelDTree/server/py/users/models/flags_multilabelModel_tree_3.png",
+        …
+    ]</span>
+}
+</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item acc_item_style">
+                            <h2 class="accordion-header">
+                                <button 
+                                    class="accordion-button collapsed accordionBgColor" 
+                                    type="button" 
+                                    data-bs-toggle="collapse" 
+                                    data-bs-target="#collapse4" 
+                                    aria-expanded="false" 
+                                    aria-controls="collapse4"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width: 23px; padding-bottom: 2px;"  viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                        <path fill-rule="evenodd" d="M1.5 7.125c0-1.036.84-1.875 1.875-1.875h6c1.036 0 1.875.84 1.875 1.875v3.75c0 1.036-.84 1.875-1.875 1.875h-6A1.875 1.875 0 0 1 1.5 10.875v-3.75Zm12 1.5c0-1.036.84-1.875 1.875-1.875h5.25c1.035 0 1.875.84 1.875 1.875v8.25c0 1.035-.84 1.875-1.875 1.875h-5.25a1.875 1.875 0 0 1-1.875-1.875v-8.25ZM3 16.125c0-1.036.84-1.875 1.875-1.875h5.25c1.036 0 1.875.84 1.875 1.875v2.25c0 1.035-.84 1.875-1.875 1.875h-5.25A1.875 1.875 0 0 1 3 18.375v-2.25Z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="api_section">
+                                        Multilabel Data Classification
+                                    </span>
+                                </button>
+                            </h2>
+                            <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_post" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseClassification1" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseClassification1"
+                                            >
+                                                <span class="http_request">
+                                                    POST
+                                                </span>
+                                                <span class="http_request2">
+                                                    /server/php/api/multilabelCrossValidation.php
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseClassification1" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapse4"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Builds a Multilabel Model with Auto Mode or by Selecting Specific Values for the Parameters, including Problem Transformation Approaches Classifiers, DTrees and k-Fold Cross Validation. Finally, returns the Results of Evaluation Metrics.
+                                            </h5>
+                                            <h6>
+                                                Request Body Example:
+                                            </h6>             
+<pre class="preStyle">
+{
+    <span class="fieldName">"token"</span>: <span class="fieldValue">"yourToken"</span>,
+    <span class="fieldName">"folder"</span>: <span class="fieldValue">"public | private"</span>,
+    <span class="fieldName">"file"</span>: <span class="fieldValue">"selectedFile.csv"</span>,
+    <span class="fieldName">"features"</span>: <span class="fieldValue">["feature1", "feature2", "feature3",…]</span>,
+    <span class="fieldName">"labels"</span>: <span class="fieldValue">["label1", "label2", "label3",…]</span>,
+    <span class="fieldName">"classifier"</span>: <span class="fieldValue">"Auto" | "BinaryRelevance" | "LabelPowerser" | "ClassifierChain"</span>,
+    <span class="fieldName">"max_depth"</span>: <span class="fieldValue">"" | "Auto" | Integer</span>,
+    <span class="fieldName">"min_samples_leaf"</span>: <span class="fieldValue">"Auto" | Integer</span>,
+    <span class="fieldName">"kFoldsInt"</span>: <span class="fieldValue">Integer</span>
+}
+</pre>
+                                            <h6>
+                                                Response Example:
+                                            </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"avg_hl"</span>: <span class="fieldValue">avg_hamming_loss</span>,
+    <span class="fieldName">"avg_acc"</span>: <span class="fieldValue">avg_accuracy</span>
+    <span class="fieldName">"avg_pre"</span>: <span class="fieldValue">avg_precision</span>,
+    <span class="fieldName">"avg_rec"</span>: <span class="fieldValue">avg_recall</span>,
+    <span class="fieldName">"avg_fsc"</span>: <span class="fieldValue">avg_f1_score</span>,
+    <span class="fieldName">"pre_per_label"</span>: <span class="fieldValue">[[precision_L1_v0, precision_L1_v1], [precision_L2_v0, precision_L2_v1], [precision_L3_v0, precision_L3_v1],…]</span>,
+    <span class="fieldName">"rec_per_label"</span>: <span class="fieldValue">[[recall_L1_v0, recall_L1_v1], [recall_L2_v0, recall_L2_v1], [recall_L3_v0, recall_L3_v1],…]</span>,
+    <span class="fieldName">"fsc_per_label"</span>: <span class="fieldValue">[[fscore_L1_v0, fscore_L1_v1], [fscore_L2_v0, fscore_L2_v1], [fscore_L3_v0, fscore_L3_v1],…]</span>,
+    <span class="fieldName">"labels"</span>: <span class="fieldValue">[[label1_value0, label1_value1], [label2_value0, label2_value1], [label3_value0, label3_value1],…]</span>,
+    <span class="fieldName">"classifier"</span>: <span class="fieldValue">best_classifier</span>,
+    <span class="fieldName">"max_depth"</span>: <span class="fieldValue">best_max_depth</span>
+    <span class="fieldName">"min_samples_leaf"</span>: <span class="fieldValue">best_min_samples_leaf</span>,
+    <span class="fieldName">"k"</span>: <span class="fieldValue">k</span>
+}
+</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_post" 
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#collapseClassification2" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseClassification2"
+                                            >
+                                                <span class="http_request">
+                                                    POST
+                                                </span>
+                                                <span class="http_request2">
+                                                    /server/php/api/saveMultilabelModel.php
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseClassification2" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapse4"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Saves the Created Multilabel Model to the User's Account.
+                                                </h5>
+                                                <h6>
+                                                    Request Body Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"token"</span>: <span class="fieldValue">"yourToken"</span>,
+    <span class="fieldName">"folder"</span>: <span class="fieldValue">"public | private"</span>,
+    <span class="fieldName">"file"</span>: <span class="fieldValue">"selectedFile.csv"</span>,
+    <span class="fieldName">"features"</span>: <span class="fieldValue">["feature1", "feature2", "feature3",…]</span>,
+    <span class="fieldName">"labels"</span>: <span class="fieldValue">["label1", "label2", "label3",…]</span>,
+    <span class="fieldName">"classifier"</span>: <span class="fieldValue">"BinaryRelevance" | "LabelPowerser" | "ClassifierChain"</span>,
+    <span class="fieldName">"max_depth"</span>: <span class="fieldValue">"None" | Integer</span>,
+    <span class="fieldName">"min_samples_leaf"</span>: <span class="fieldValue">Integer</span>,
+    <span class="fieldName">"model_name"</span>: <span class="fieldValue">"yourModelName"</span>
+}
+</pre>
+                                                <h6>
+                                                    Response Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"message"</span>: <span class="fieldValue">"Model successfully saved."</span>
+}
+</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_post" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseClassification3" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseClassification3"
+                                            >
+                                                <span class="http_request">
+                                                    POST
+                                                </span>
+                                                <span class="http_request2">
+                                                    /server/php/api/classifyMultilabelData.php
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseClassification3" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapse4"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Classifies the Selected Unclassified Dataset based on the Pretrained Model. Returns the Classified Data and the Results of Evaluation Metrics.
+                                                </h5>
+                                                <h6>
+                                                    Request Body Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"token"</span>: <span class="fieldValue">"yourToken"</span>,
+    <span class="fieldName">"file"</span>: <span class="fieldValue">"selected_unclassified_file.csv"</span>,
+    <span class="fieldName">"model"</span>: <span class="fieldValue">"model_name.pkl"</span>,
+    <span class="fieldName">"features"</span>: <span class="fieldValue">["modelFeature1", "modelFeature2", "modelFeature3",…]</span>,
+    <span class="fieldName">"labels"</span>: <span class="fieldValue">["modelLabel1", "modelLabel2", "modelLabel3",…]</span>
+}
+</pre>
+                                                <h6>
+                                                    Response Example:
+                                                </h6>
+<pre class="preStyle">
+{
+    <span class="fieldName">"dataset"</span>: <span class="fieldValue">[["landmass", "zone", "colours", "circles", "icon", "animate", "predictions_L1", "predictions_L2",…], [3, 1, 3, 0, 0, 1, 0, 1,…], [6, 3, 5, 0, 1, 1, 0, 1,…],…]</span>,
+    <span class="fieldName">"avg_hl"</span>: <span class="fieldValue">avg_hl</span>,
+    <span class="fieldName">"avg_acc"</span>: <span class="fieldValue">avg_acc</span>,
+    <span class="fieldName">"avg_pre"</span>: <span class="fieldValue">avg_pre</span>,
+    <span class="fieldName">"avg_rec"</span>: <span class="fieldValue">avg_rec</span>,
+    <span class="fieldName">"avg_fsc"</span>: <span class="fieldValue">avg_fsc</span>,
+    <span class="fieldName">"pre_per_label"</span>: <span class="fieldValue">[[precision_L1_v0, precision_L1_v1], [precision_L2_v0, precision_L2_v1],…]</span>,
+    <span class="fieldName">"rec_per_label"</span>: <span class="fieldValue">[[recall_L1_v0, recall_L1_v1], [recall_L2_v0, recall_L2_v1],…]</span>,
+    <span class="fieldName">"fsc_per_label"</span>: <span class="fieldValue">[[fscore_L1_v0, fscore_L1_v1], [fscore_L2_v0, fscore_L2_v1],…]</span>,
+    <span class="fieldName">"labels"</span>: <span class="fieldValue">[[label1_value0, label1_value1], [label2_value0, label2_value1], [label3_value0, label3_value1],…]</span>
+}
+</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="doc-section">
+                    <i class="fa fa-database" style="margin-right: 4px;"></i>
+                    <span style="margin-right: 4px;">
+                        MultilabelDTree Database:
+                    </span>
+                    <div 
+                        class="accordion mt-2" 
+                        id="accordionDatabase"
+                    >
+                        <div class="accordion-item acc_item_style">
+                            <h2 class="accordion-header">
+                                <button 
+                                    class="accordion-button collapsed accordionBgColor" 
+                                    type="button" 
+                                    data-bs-toggle="collapse" 
+                                    data-bs-target="#collapseTables" 
+                                    aria-expanded="true" 
+                                    aria-controls="collapseTables"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width: 21px;" viewBox="0 0 24 24" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M1.5 5.625c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v12.75c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 18.375V5.625ZM21 9.375A.375.375 0 0 0 20.625 9h-7.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 0 0 .375-.375v-1.5Zm0 3.75a.375.375 0 0 0-.375-.375h-7.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 0 0 .375-.375v-1.5Zm0 3.75a.375.375 0 0 0-.375-.375h-7.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 0 0 .375-.375v-1.5ZM10.875 18.75a.375.375 0 0 0 .375-.375v-1.5a.375.375 0 0 0-.375-.375h-7.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h7.5ZM3.375 15h7.5a.375.375 0 0 0 .375-.375v-1.5a.375.375 0 0 0-.375-.375h-7.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375Zm0-3.75h7.5a.375.375 0 0 0 .375-.375v-1.5A.375.375 0 0 0 10.875 9h-7.5A.375.375 0 0 0 3 9.375v1.5c0 .207.168.375.375.375Z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="api_section">
+                                        Tables
+                                    </span>
+                                </button>
+                            </h2>
+                            <div 
+                                id="collapseTables" 
+                                class="accordion-collapse collapse" 
+                                data-bs-parent="#accordionDatabase"
+                            >
+                                <div class="accordion-body">
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_table" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseTable1" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseTable1"
+                                            >
+                                            <span class="table_number">
+                                                Table 1
+                                            </span>
+                                            <span class="table_name">
+                                                Users
+                                            </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseTable1" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseTables"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Stores Users' Personal Information.
+                                                </h5>
+                                                <h6>
+                                                    Columns Structure:
+                                                </h6>
+                                                <div class="preTableStyle">
+                                                    <ul class="table_list">
+                                                        <li><span>id</span> - INT (11) <i class="fa fa-key" style="color: rgb(194, 156, 33);"></i></li>
+                                                        <li><span>fname</span> - VARCHAR (50)</li>
+                                                        <li><span>lname</span> - VARCHAR (50)</li>
+                                                        <li><span>email</span> - VARCHAR (50)</li>
+                                                        <li><span>pass</span> - VARCHAR (100)</li>
+                                                        <li><span>token</span> - VARCHAR (100)</li>
+                                                        <li><span>email_verification</span> - TINYINT (1)</li>
+                                                        <li><span>public_permission</span> - TINYINT (1)</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_table" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseTable2" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseTable2"
+                                            >
+                                            <span class="table_number">
+                                                Table 2
+                                            </span>
+                                            <span class="table_name">
+                                                Verify Account
+                                            </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseTable2" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseTables"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Stores Information related to the Users' Account Verification.
+                                                </h5>
+                                                <h6>
+                                                    Columns Structure:
+                                                </h6>
+                                                <div class="preTableStyle">
+                                                    <ul class="table_list">
+                                                        <li><span>id</span> - INT (11) <i class="fa fa-key" style="color: rgb(194, 156, 33);"></i></li>
+                                                        <li><span>user_id</span> - INT (11) <i class="fa fa-key" style="color: rgb(33, 162, 194);"></i></li>
+                                                        <li><span>verif_key</span> - VARCHAR (100)</li>
+                                                        <li><span>creation_time</span> - TIMESTAMP</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_table" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseTable3" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseTable3"
+                                            >
+                                            <span class="table_number">
+                                                Table 3
+                                            </span>
+                                            <span class="table_name">
+                                                Models
+                                            </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseTable3" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseTables"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Stores Multilabel Models' Information.
+                                                </h5>
+                                                <h6>
+                                                    Columns Structure:
+                                                </h6>
+                                                <div class="preTableStyle">
+                                                    <ul class="table_list">
+                                                        <li><span>id</span> - INT (11) <i class="fa fa-key" style="color: rgb(194, 156, 33);"></i></li>
+                                                        <li><span>user_id</span> - INT (11) <i class="fa fa-key" style="color: rgb(33, 162, 194);"></i></li>
+                                                        <li><span>transformation_approach</span> - VARCHAR (50)</li>
+                                                        <li><span>model_name</span> - VARCHAR (50)</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item acc_item_style">
+                                        <h2 class="accordion-header">
+                                            <button 
+                                                class="accordion-button collapsed accordionBgColor_table" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseTable4" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseTable4"
+                                            >
+                                            <span class="table_number">
+                                                Table 4
+                                            </span>
+                                            <span class="table_name">
+                                                Labels
+                                            </span>
+                                            </button>
+                                        </h2>
+                                        <div 
+                                            id="collapseTable4" 
+                                            class="accordion-collapse collapse" 
+                                            data-bs-parent="#collapseTables"
+                                        >
+                                            <div class="accordion-body">
+                                                <h5 class="requestTitle">
+                                                    Stores Information related to the Labels of each Model.
+                                                </h5>
+                                                <h6>
+                                                    Columns Structure:
+                                                </h6>
+                                                <div class="preTableStyle">
+                                                    <ul class="table_list">
+                                                        <li><span>id</span> - INT (11) <i class="fa fa-key" style="color: rgb(194, 156, 33);"></i></li>
+                                                        <li><span>model_id</span> - INT (11) <i class="fa fa-key" style="color: rgb(33, 162, 194);"></i></li>
+                                                        <li><span>label_name</span> - VARCHAR (100)</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GoTop Button -->
+    <div id="go-top">
+        <a 
+            class="smoothscroll" 
+            title="Back to Top" 
+            href="#top"
+        >
+            <i class="fa fa-long-arrow-up"></i>
+        </a>
+    </div>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- JS Scripts -->
+    <script src="../src/js/plugins.js"></script>
+    <script src="../src/js/main.js"></script>
 </body>
 </html>
