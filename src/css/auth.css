@@ -1,0 +1,310 @@
+/* Importing CSS Fonts */
+@import url("fonts.css");
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+
+/* Root Features CSS */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    background: url('../assets/img/bg1.jpg') center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.shadow-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .5;
+    background-color: #b6b2b252;
+}
+
+/* Auth Structure CSS */
+.container {
+    position: relative;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 450px;
+    background-color: #ffffff;
+    box-shadow: 0 0 25px #ccc;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+@media(max-height: 480px) {
+    .container {
+        overflow-y: auto;
+        height: 90vh;
+    }
+}
+
+.container-inner {
+    padding: 25px 45px;
+}
+
+.go-back {
+    text-align: left;
+    font-size: 18px;
+    padding-top: 8px;
+}
+
+.go-back a {
+    font-family: "muli-bold", sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    color: #030303
+}
+
+.go-back a:hover {
+    color: rgba(14, 110, 221, 0.808);
+}
+
+.page-title {
+    text-align: center;
+    font-weight: 300;
+    font-size: 40px;
+    padding-bottom: 30px;
+}
+
+.loading-text {
+    padding-left: 3px;
+}
+
+.loading-spinner {
+    width: 1.4rem;
+    height: 1.4rem;
+}
+
+.alert-danger-color {
+    fill: #842029;
+}
+
+.field-text {
+    font-size: 17px;
+    color: #868686;
+    font-family: "muli-semibold", sans-serif;
+}
+
+.alert-text {
+    font-size: 17px;
+    overflow: auto;
+}
+
+.authIcon {
+    width: 28px;
+    height: 28px;
+    fill: #868686;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
+
+/* Log In CSS */
+.login-button {
+    padding-top: 30px;
+}
+
+.login-button button {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.forgot-password-register {
+    padding-top: 30px;
+    font-size: 16px;
+}
+
+.forgot-password-register li {
+    font-family: "muli-semibold", sans-serif;
+}
+
+.forgot-password-register li a {
+    font-family: "muli-semibold", sans-serif;
+    color: rgba(14, 110, 221, 0.808);
+    text-decoration: none;
+}
+
+.forgot-password-register a:hover {
+    text-decoration: underline;
+}
+
+.login-alert-icon {
+    width: 25px;
+    height: 25px;
+    padding-right: 10px;
+}
+
+/* Forgot Password CSS */
+.page-button {
+    padding-top: 30px;
+}
+
+.page-button button {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.alert-icon {
+    width: 25px;
+    height: 25px;
+    padding-right: 10px;
+}
+
+/* Sign Up CSS */
+.register-button {
+    padding-top: 20px;
+}
+
+.register-button button {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.login-now-register {
+    padding-top: 20px;
+    font-size: 16px;
+}
+
+.login-now-register li {
+    font-family: "muli-semibold", sans-serif;
+}
+
+.login-now-register li a {
+    font-family: "muli-semibold", sans-serif;
+    color: rgba(14, 110, 221, 0.808);
+    text-decoration: none;
+}
+
+.login-now-register a:hover {
+    text-decoration: underline;
+}
+
+.register-alert-icon {
+    width: 25px;
+    height: 25px;
+    padding-right: 10px;
+}
+
+/* GoTop */
+#go-top {
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 600;
+    display: none;
+}
+
+#go-top a,
+#go-top a:visited {
+    text-decoration: none;
+    border: 0 none;
+    display: block;
+    height: 60px;
+    width: 60px;
+    line-height: 60px;
+    text-align: center;
+    background: rgba(59, 143, 211, 0.959);
+    color: rgba(255, 255, 255, 0.959);
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 5px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+#go-top a i,
+#go-top a:visited i {
+    font-size: 18px;
+    line-height: inherit;
+}
+
+#go-top a:hover,
+#go-top a:focus {
+    color: #ffffff;
+    background-color: rgba(36, 124, 196, 0.959)
+}
+
+/* pace.js Styling (center simple) */
+.pace {
+    -webkit-pointer-events: none;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    z-index: 2000;
+    position: fixed;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 5px;
+    width: 150px;
+    background: #dedede;
+    overflow: hidden;
+    border-radius: 60px;
+}
+
+.pace .pace-progress {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    max-width: 150px;
+    position: fixed;
+    z-index: 2000;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 100%;
+    height: 100%;
+    width: 100%;
+    background: #6ba0da;
+}
+
+.pace.pace-inactive {
+    display: none;
+}
+
+.oldie .pace {
+    display: none;
+}
+
+/* Preloader Styling */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffff;
+    z-index: 800;
+    height: 100%;
+    width: 100%;
+}
+
+.no-js #preloader,
+.oldie #preloader {
+    display: none;
+}

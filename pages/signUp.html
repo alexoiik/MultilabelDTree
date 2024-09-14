@@ -46,17 +46,17 @@
         src="../src/js/pace.min.js">
     </script>
     <script 
-        src="../src/js/login.js">
+        src="../src/js/signUp.js">
     </script>
     <title>
-        MultilabelDTree - Login
+        MultilabelDTree - Sign Up
     </title>
 </head>
 <body id="top">
     <div class="shadow-overlay"></div>
-    <!-- Login -->
-    <div 
-        class="container" 
+    <!-- Sign Up -->
+    <div    
+        class="container"
         data-aos="fade-up"
     >
         <div class="go-back"> 
@@ -69,10 +69,42 @@
         </div>
         <div class="container-inner">
             <div class="page-title">
-                Log In
+                Sign Up
             </div>
             <div id="alertPlaceholder"></div>
             <form action="#">
+                <div class="form-floating mb-3">
+                    <input 
+                        type="text" 
+                        id="fname" 
+                        class="form-control" 
+                        placeholder="Enter First Name"
+                    >
+                    <label for="fname">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="authIcon" viewBox="0 0 24 24" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.5 3.75a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V6.75a3 3 0 0 0-3-3h-15Zm4.125 3a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Zm-3.873 8.703a4.126 4.126 0 0 1 7.746 0 .75.75 0 0 1-.351.92 7.47 7.47 0 0 1-3.522.877 7.47 7.47 0 0 1-3.522-.877.75.75 0 0 1-.351-.92ZM15 8.25a.75.75 0 0 0 0 1.5h3.75a.75.75 0 0 0 0-1.5H15ZM14.25 12a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H15a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3.75a.75.75 0 0 0 0-1.5H15Z" clip-rule="evenodd" />
+                        </svg>                          
+                        <span class="field-text">
+                            Enter First Name
+                        </span>
+                    </label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input 
+                        type="text" 
+                        id="lname" 
+                        class="form-control" 
+                        placeholder="Enter Last Name"
+                    >
+                    <label for="lname">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="authIcon" viewBox="0 0 24 24" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.5 3.75a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V6.75a3 3 0 0 0-3-3h-15Zm4.125 3a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Zm-3.873 8.703a4.126 4.126 0 0 1 7.746 0 .75.75 0 0 1-.351.92 7.47 7.47 0 0 1-3.522.877 7.47 7.47 0 0 1-3.522-.877.75.75 0 0 1-.351-.92ZM15 8.25a.75.75 0 0 0 0 1.5h3.75a.75.75 0 0 0 0-1.5H15ZM14.25 12a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H15a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3.75a.75.75 0 0 0 0-1.5H15Z" clip-rule="evenodd" />
+                        </svg> 
+                        <span class="field-text">
+                            Enter Last Name
+                        </span>
+                    </label>
+                </div>
                 <div class="form-floating mb-3">
                     <input 
                         type="email" 
@@ -80,7 +112,7 @@
                         class="form-control" 
                         placeholder="Enter Email"
                     >
-                    <label for="email"> 
+                    <label for="email">
                         <svg xmlns="http://www.w3.org/2000/svg" class="authIcon" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
                             <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
@@ -90,10 +122,10 @@
                         </span>
                     </label>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating mb-3">
                     <input 
                         type="password" 
-                        class="form-control" 
+                        class="form-control"
                         id="pass" 
                         placeholder="Enter Password"
                     >
@@ -106,13 +138,36 @@
                         </span>
                     </label>
                 </div>
-                <div class="d-grid gap-2 col-12 mx-auto login-button">
+                <div class="form-floating">
+                    <input 
+                        type="password" 
+                        class="form-control" 
+                        id="pass_confirm" 
+                        placeholder="Confirm Password"
+                    >
+                    <label for="pass_confirm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="size-6 authIcon" viewBox="0 0 24 24" fill="currentColor">
+                            <path fill-rule="evenodd" d="M15.75 1.5a6.75 6.75 0 0 0-6.651 7.906c.067.39-.032.717-.221.906l-6.5 6.499a3 3 0 0 0-.878 2.121v2.818c0 .414.336.75.75.75H6a.75.75 0 0 0 .75-.75v-1.5h1.5A.75.75 0 0 0 9 19.5V18h1.5a.75.75 0 0 0 .53-.22l2.658-2.658c.19-.189.517-.288.906-.22A6.75 6.75 0 1 0 15.75 1.5Zm0 3a.75.75 0 0 0 0 1.5A2.25 2.25 0 0 1 18 8.25a.75.75 0 0 0 1.5 0 3.75 3.75 0 0 0-3.75-3.75Z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="field-text">
+                            Confirm Password
+                        </span>
+                    </label>
+                </div>
+                <div class="d-grid gap-2 col-12 mx-auto register-button">
                     <button 
                         class="btn btn-primary" 
                         type="button" 
-                        id="loginbtn"
+                        id="regbtn"
                     >
-                        Log In
+                        Sign Up
+                    </button>
+                    <button 
+                        class="btn btn-primary" 
+                        type="button" 
+                        id="email_resend"
+                    >
+                        Resend Verification Email
                     </button>
                     <button 
                         class="btn btn-primary" 
@@ -131,20 +186,15 @@
                         </span>
                     </button>
                 </div>
-                <div class="forgot-password-register">
+                <div class="login-now-register">
                     <ul>
-                        <li>
-                            Forgot Password? <a href="./forgotPassword.html">Click to Reset.</a>
-                        </li>
-                        <li>
-                            New to MultilabelDTree? <a href="./signUp.html">Sign Up Now!</a>
-                        </li>
+                        <li>Already have an Account? <a href="login.html">Log In.</a></li>
                     </ul>
                 </div>
             </form>
         </div>
     </div>
-    
+
     <!-- GoTop Button -->
     <div id="go-top">
         <a 
