@@ -3,7 +3,7 @@
 	"use strict";
 
 	var cfg = {
-		scrollDuration: 800, // smoothscroll duration.
+		scrollDuration: 800, // Smoothscroll Duration.
 	},
 
 	$WIN = $(window);
@@ -11,10 +11,10 @@
 	// Preloader.
 	var ssPreloader = function () {
 		$WIN.on('load', function () {
-			// force page scroll position to top at page refresh.
+			// Force page scroll position to top at page refresh.
 			$('html, body').animate({ scrollTop: 0 }, 'normal');
 
-			// will fade out the whole preloader DIV that covers the website.
+			// Will fade out the whole preloader DIV that covers the website.
 			$("#preloader").delay(500).fadeOut('slow');
 		});
 	};
@@ -56,10 +56,10 @@
 	// Back to Top.
 	var ssBackToTop = function () {
 
-		var pxShow = 500,           // height on which the button will show.
-			fadeInTime = 400,      // how slow/fast you want the button to show.
-			fadeOutTime = 400,    // how slow/fast you want the button to hide.
-			scrollSpeed = 300,   // how slow/fast you want the button to scroll to top. can be a value, 'slow', 'normal' or 'fast'.
+		var pxShow = 500,           // Height on which the button will show.
+			fadeInTime = 400,      // How slow/fast you want the button to show.
+			fadeOutTime = 400,    // How slow/fast you want the button to hide.
+			scrollSpeed = 300,   // How slow/fast you want the button to scroll to top. can be a value, 'slow', 'normal' or 'fast'.
 			goTopButton = $("#go-top")
 
 		// Show or hide the sticky footer button.

@@ -19,6 +19,7 @@ body {
     background: url('../assets/img/bg1.jpg') center;
     background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: fixed;
     display: flex;
     justify-content: center;
     align-items: center;

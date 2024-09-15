@@ -47,7 +47,8 @@ body {
 .appTitle {
   font-size: 31px;
   font-weight: 300;
-  margin-right: 16%;
+  margin-right: 8%;
+  margin-top: 7px;
 }
 
 /* Navbar CSS */
@@ -76,7 +77,7 @@ nav a.active {
 .navLink {
   padding: 0 5px;
   text-align: left;
-  padding-top: 14.5px;
+  padding-top: 13.5px;
   padding-bottom: 10px;
 }
 
@@ -87,7 +88,7 @@ nav a.active {
 
 #navContainer {
   margin-left: 10%;
-  margin-right: 5%;
+  margin-right: 10%;
 }
 
 .font-size {
@@ -95,24 +96,16 @@ nav a.active {
   font-weight: 400;
 }
 
-@media(max-width: 1700px) {
+@media(max-width: 1600px) {
   #navContainer {
-    margin-left: 7%;
-    margin-right: 0%;
-  }
-
-  .appTitle {
-    margin-right: 8%;
+    margin-left: 1%;
+    margin-right: 1%;
   }
 }
 
-@media(max-width: 1476px) {
-  #navContainer {
-    margin-left: 3%;
-  }
-
+@media(max-width: 1500px) {
   .appTitle {
-    margin-right: 2%;
+    margin-right: 3%;
   }
 }
 
@@ -185,16 +178,6 @@ nav a.active {
   font-weight: 400;
 }
 
-@media(max-width: 1300px) {
-  .dropdown-menu .dropdown-submenu-left {
-    display: none;
-    position: absolute;
-    right: 5%;
-    left: 5%;
-    top: 32px;
-  }
-}
-
 @media(max-width: 1199px) {
   #navContainer {
     margin-left: 7%;
@@ -203,13 +186,17 @@ nav a.active {
 
   .navLink {
     margin-top: 6px;
-    margin-bottom: 6px;
+    margin-bottom: 2px;
     padding-top: 6px;
-    padding-bottom: 6px;
+    padding-bottom: 2px;
   }
 
-  .appTitle {
-    margin-right: 3%;
+  .dropdown-menu .dropdown-submenu-left {
+    display: none;
+    position: absolute;
+    right: 5%;
+    left: 5%;
+    top: 32px;
   }
 }
 
