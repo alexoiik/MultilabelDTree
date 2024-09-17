@@ -59,6 +59,10 @@ body {
     padding: 25px 45px;
 }
 
+.container-inner2 {
+    padding: 25px 35px;
+}
+
 .go-back {
     text-align: left;
     font-size: 18px;
@@ -83,6 +87,11 @@ body {
     padding-bottom: 30px;
 }
 
+.page-text {
+    font-size: 38px;
+    font-weight: 400;
+}
+
 .loading-text {
     padding-left: 3px;
 }
@@ -103,6 +112,7 @@ body {
 }
 
 .alert-text {
+    font-family: "muli-semibold", sans-serif;
     font-size: 17px;
     overflow: auto;
 }
@@ -196,9 +206,10 @@ body {
 }
 
 .register-alert-icon {
-    width: 25px;
-    height: 25px;
+    width: 26px;
+    height: 26px;
     padding-right: 10px;
+    padding-bottom: 2.2px;
 }
 
 /* GoTop */

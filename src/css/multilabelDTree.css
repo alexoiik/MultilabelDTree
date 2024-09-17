@@ -833,9 +833,10 @@ ul.table_list li span {
 }
 
 .alert-icon {
-    width: 25px;
-    height: 25px;
+    width: 26px;
+    height: 26px;
     padding-right: 10px;
+    padding-bottom: 2.2px;
 }
 
 .alert-text {
