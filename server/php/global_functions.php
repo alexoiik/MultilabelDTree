@@ -19,7 +19,6 @@
         $st->execute();
         $res = $st->get_result();
         $count = $res->fetch_assoc()['c'];
-        
         if($count > 0) {
             return true;
         }
@@ -33,19 +32,17 @@
         global $mysqli;
         $query = 'select count(*) as c from verify_account where verif_key=? and creation_time < (NOW() - INTERVAL 5 MINUTE)';
         $st = $mysqli->prepare($query);
-        $st->bind_param('s',$verif_key);
+        $st->bind_param('s', $verif_key);
         $st->execute();
         $res = $st->get_result();
         $count = $res->fetch_assoc()['c'];
-    
         if($count > 0) {
             $query3 = 'select u.email as address from users u join verify_account va on u.id=va.user_id where va.verif_key=? and va.creation_time < (NOW() - INTERVAL 5 MINUTE)';
             $st3 = $mysqli->prepare($query3);
-            $st3->bind_param('s',$verif_key);
+            $st3->bind_param('s', $verif_key);
             $st3->execute();
             $res3 = $st3->get_result();
             $address = $res3->fetch_assoc()['address'];
-            
             return $address;
         }
         else {
@@ -62,7 +59,6 @@
         $st->execute();
         $res = $st->get_result();
         $count = $res->fetch_assoc()['c'];
-        
         if($count > 0) {
             return true;
         }
@@ -88,7 +84,7 @@
         global $mysqli;
         $query = 'select email from users where token=?';
         $st = $mysqli->prepare($query);
-        $st->bind_param('s',$token);
+        $st->bind_param('s', $token);
         $st->execute();
         $res = $st->get_result();
         $email = $res->fetch_assoc()['email'];

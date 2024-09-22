@@ -112,7 +112,7 @@ $(function () {
             dataType: "json",
             contentType: 'application/json',
             success: function () {
-                alert_success("User signed up successfully.");
+                alert_success("You signed up successfully.");
                 alert_warning("Check your inbox for verification instructions.");
                 $('#loadingbtn').hide();
                 $("#email_resend").show();

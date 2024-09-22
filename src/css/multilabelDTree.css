@@ -124,10 +124,10 @@ nav a.active2 {
 
 /* User Menu Dropdown CSS */
 .userName {
-    font-size: 16.5px;
+    font-size: 16px;
     font-weight: 400;
-    color: black;
-    padding-left: 17px;
+    color: #151515;
+    padding-left: 15px;
 }
 
 .drop-ul li a span {
@@ -140,6 +140,7 @@ nav a.active2 {
 
 .drop-ul li a {
     margin: auto;
+    font-size: 16px;
 }
 
 .drop-ul li a {
@@ -168,6 +169,10 @@ nav a.active2 {
 
 .dropdown-menu>li:hover>.dropdown-submenu-left {
     display: block;
+}
+
+.dropdown-item {
+    padding: 5px 15px;
 }
 
 .dropdown-item span {

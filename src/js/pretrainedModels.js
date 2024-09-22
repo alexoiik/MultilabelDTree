@@ -26,7 +26,7 @@ $(function () {
         </svg><span style="margin-left: 10px;">${sessionStorage.getItem("fname")} ${sessionStorage.getItem("lname")}</span>`));
     }
     else {
-        // window.location.href = 'login.html'; << Correct for redirect.
+        window.location.href = 'login.html';
     }
 
     var token = sessionStorage.getItem("token");
