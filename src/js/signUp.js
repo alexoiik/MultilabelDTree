@@ -112,8 +112,8 @@ $(function () {
             dataType: "json",
             contentType: 'application/json',
             success: function () {
-                alert_success("You signed up successfully.");
-                alert_warning("Check your inbox for verification instructions.");
+                alert_success("You successfully signed up.");
+                alert_warning("Check your inbox to verify account.");
                 $('#loadingbtn').hide();
                 $("#email_resend").show();
             },
@@ -124,8 +124,7 @@ $(function () {
                 $('#loadingbtn').hide();
                 if (errormes == "Mailer Error. Message could not be sent.") {
                     $("#email_resend").show();
-                }
-                else {
+                } else {
                     $('#regbtn').show();
                 }
             }
@@ -145,7 +144,7 @@ $(function () {
             method: 'GET',
             success: function () {
                 alert_success("Email successfully sent.");
-                alert_warning("Check your inbox for verification instructions.");
+                alert_warning("Check your inbox to verify account.");
                 $('#loadingbtn').hide();
                 $("#email_resend").show();
             },

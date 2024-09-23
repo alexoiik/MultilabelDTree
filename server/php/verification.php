@@ -35,12 +35,12 @@
     // Storing Info to the database, related to the User's Account Verification.
     $query = 'update users u join verify_account va on u.id=va.user_id set u.email_verification=1 where va.verif_key=?';
     $st = $mysqli->prepare($query);
-    $st->bind_param('s',$verif_key);
+    $st->bind_param('s', $verif_key);
     $st->execute();
 
     $query2 = 'delete from verify_account where verif_key=?';
     $st2 = $mysqli->prepare($query2);
-    $st2->bind_param('s',$verif_key);
+    $st2->bind_param('s', $verif_key);
     $st2->execute();   
     
     print json_encode(['message'=>"Successfully verified."]);

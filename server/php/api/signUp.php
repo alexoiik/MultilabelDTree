@@ -94,7 +94,7 @@
         exit;
     }
 
-    $pass_hash = password_hash($pass, PASSWORD_BCRYPT);
+    $pass_hash = password_hash($pass, PASSWORD_BCRYPT); // Hashing Password.
 
     // Storing User's Info to the database.
     $query = 'insert into users(fname, lname, email, pass, token) values(?,?,?,?,md5(CONCAT( ?, NOW())))';

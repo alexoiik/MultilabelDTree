@@ -15,10 +15,10 @@
     // 1. Email Validation!
     // 2. Account Validation!
 
-    // Checking Email Set Up.
+    // Checking Email Existance.
     if(!isset($_GET['email'])) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"Email is not set."]);
+        print json_encode(['errormesg'=>"Email is Required."]);
         exit;
     }
     $email = $_GET['email'];
@@ -84,7 +84,7 @@
     $st->execute();
 
     // Account Verification Email Structure.
-    $subject = 'Account Verification Email - AutoDTrees App';
+    $subject = 'Account Verification Email - MultilabelDTree App';
     $domain = getdomain();
     $email_body = "Hello $fname!<br/>This is an Account Verification Email.<br/>In order to complete your sign up to the MultilabelDTree App, please click <a href='$domain/pages/verification.html?verif_key=$verif_key'>here</a> or paste the following to your browser: $domain/pages/verification.html?verif_key=$verif_key";
     $alt_body = "Hello $fname!<br/>This is an Account Verification Email.<br/>In order to complete your sign up to the MultilabelDTree App, please paste the following to your browser: $domain/pages/verification.html?verif_key=$verif_key";

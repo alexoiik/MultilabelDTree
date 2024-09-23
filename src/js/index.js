@@ -11,8 +11,12 @@ $(function () {
                 ${sessionStorage.getItem("fname")} ${sessionStorage.getItem("lname")}
             </span>
         `));
+        $("#LogInButton").hide();
+        $("#SignUpButton").hide();
     } else {
         $("#acc_dropdown").hide();
+        $("#LogInButton").show();
+        $("#SignUpButton").show();
     }
 
     $("#logoutb").click(function () {
