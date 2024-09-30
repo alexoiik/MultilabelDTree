@@ -62,11 +62,16 @@ nav a {
   text-align: center;
   border-radius: 5px;
   color: black;
+  transition: all 150ms ease-in-out;
+  display: inline-block;
+  position: relative;
 }
 
 nav a:hover {
   border-radius: 5px;
   color: #2869be;
+  transform: scale(1.1);
+  transition: all 250ms ease-in-out;
 }
 
 nav a.active {
@@ -200,6 +205,10 @@ nav a.active {
     right: 5%;
     left: 5%;
     top: 32px;
+  }
+
+  nav a:hover {
+    transform: none;
   }
 }
 
