@@ -3,7 +3,7 @@ $(function () {
     $('#email_resend').hide();
     $("#loginb").hide();
 
-    // Handling Alert Message for the User's Edit Email. 
+    // Handling Alert Messages for the User's Edit Email. 
     const alertPlaceholder = $('#alertPlaceholder');
 
     const alert_danger = (message) => {

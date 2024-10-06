@@ -3,7 +3,7 @@ $(function () {
     $('#loginbtn').hide();
     $('#retry').hide();
 
-    // Handling Alert Message for the User's Password Resetting. 
+    // Handling Alert Messages for the User's Password Resetting. 
     const alertPlaceholder = $('#alertPlaceholder');
 
     const alert_danger = (message) => {

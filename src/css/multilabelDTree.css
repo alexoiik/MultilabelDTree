@@ -629,11 +629,16 @@ nav a.active2 {
     font-family: "muli-bold", sans-serif;
     cursor: pointer;
     text-decoration: none;
-    color: #030303
+    color: #030303;
+    transition: all 150ms ease-in-out;
+    display: inline-block;
+    position: relative;
 }
 
 .go-back a:hover {
     color: rgba(14, 110, 221, 0.808);
+    transform: scale(1.1);
+    transition: all 250ms ease-in-out;
 }
 
 .page_title {

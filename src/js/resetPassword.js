@@ -1,7 +1,7 @@
 $(function () {
     $('#loadingbtn').hide();
 
-    // Handling Alert Message for the User's Resetting of Forgotten Password. 
+    // Handling Alert Messages for the User's Resetting of Forgotten Password. 
     const alertPlaceholder = $('#alertPlaceholder');
 
     const alert_danger = (message) => {

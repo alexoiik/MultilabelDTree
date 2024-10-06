@@ -1,7 +1,7 @@
 $(function () {
     $('#loadingbtn').hide();
 
-    // Handling Alert Message for the User's Edit Credentials. 
+    // Handling Alert Messages for the User's Edit Credentials. 
     const alertPlaceholder = $('#alertPlaceholder');
 
     const alert_danger = (message) => {
