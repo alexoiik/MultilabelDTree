@@ -70,11 +70,11 @@ $(function () {
     $('#confbtn1').click(function () {
 
         $('#alertPlaceholder').html("");
-        var fname = $('#fname').val().trim();
-        var lname = $('#lname').val().trim();
-        var pass = $('#pass').val().trim();
-        var new_pass = $('#new_pass').val().trim();
-        var new_pass_confirm = $('#new_pass_confirm').val().trim();
+        var fname = $('#fname').val().trim(); // Getting User's First Name.
+        var lname = $('#lname').val().trim(); // Getting User's Last Name.
+        var pass = $('#pass').val().trim(); // Getting User's Password.
+        var new_pass = $('#new_pass').val().trim(); // Getting User's New Password.
+        var new_pass_confirm = $('#new_pass_confirm').val().trim(); // Getting User's Confirmed Password.
 
         // User's Information Validation.
         if ((fname.length == 0) && (lname.length == 0) && (pass.length == 0) && (new_pass.length == 0) && (new_pass_confirm.length == 0)) {
@@ -130,8 +130,9 @@ $(function () {
         $('#confbtn1').hide();
         $('#loadingbtn').show();
 
+        // AJAX Request to Handle User's Edit Credentials.
         $.ajax({
-            url: '../server/php/api/editCredentials.php',
+            url: '../server/php/api/editAccount.php',
             method: 'POST',
             data: JSON.stringify(edited_fields),
             dataType: "json",

@@ -77,6 +77,7 @@ $(function () {
         $('#confbtn').hide();
         $('#loadingbtn').show();
 
+        // AJAX Request to Handle Password Resetting.
         $.ajax({
             url: '../server/php/passwordReseting.php',
             method: 'POST',

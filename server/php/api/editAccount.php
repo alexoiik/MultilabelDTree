@@ -80,13 +80,13 @@
         $id = $res['id'];
         $fname = $res['fname'];
 
-        $query = 'delete from verify_account where id=?';
+        $query = 'delete from verify_account where user_id=?';
         $st = $mysqli->prepare($query);
         $st->bind_param('i', $id);
         $st->execute();
 
         $verif_key = md5(random_bytes(16));
-        $query = 'insert into verify_account(id,verif_key) values(?,?)';
+        $query = 'insert into verify_account(user_id,verif_key) values(?,?)';
         $st = $mysqli->prepare($query);
         $st->bind_param('is', $id, $verif_key);
         $st->execute();
@@ -203,13 +203,12 @@
         // Updating User's Password.
         if(isset($input['pass']) && isset($input['new_pass']) && isset($input['new_pass_confirm'])) {
 
-            // User's New Password Validation.
+            // User's Password Validation.
             if(!password_verify($input['pass'], $old_pass)) {
                 header("HTTP/1.1 400 Bad Request");
                 print json_encode(['errormesg'=>"Current Password is Incorrect."]);
                 exit;
             }
-
             if($input['pass'] == $input['new_pass']) {
                 header("HTTP/1.1 400 Bad Request");
                 print json_encode(['errormesg'=>"Enter a different Password from the existing."]);
@@ -225,7 +224,6 @@
                 print json_encode(['errormesg'=>"Enter at least 8 characters, 1 uppercase letter & 1 number."]);
                 exit;
             }
-
             if($input['new_pass'] != $input['new_pass_confirm']) {
                 header("HTTP/1.1 400 Bad Request");
                 print json_encode(['errormesg'=>"Passwords do not match."]);
@@ -238,6 +236,7 @@
             array_push($edited_values, $pass_hash);
         }
 
+        // Updating User's Final Information.
         $query2 = "";
         if(count($edited_columns) == 1) {
             $query2 = "update users set $edited_columns[0] = '$edited_values[0]' where token=?";

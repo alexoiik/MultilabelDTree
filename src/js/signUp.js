@@ -139,6 +139,7 @@ $(function () {
         $("#email_resend").hide();
         $('#loadingbtn').show();
 
+        // AJAX Request to Handle Email Resend.
         $.ajax({
             url: link,
             method: 'GET',

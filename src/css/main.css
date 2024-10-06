@@ -1041,6 +1041,7 @@ h1.intro-header::before {
   -webkit-transform: translateY(-55%);
   -ms-transform: translateY(-55%);
   transform: translateY(-55%);
+  transition: all 150ms ease-in-out;
 }
 
 .home-social-list::before {
@@ -1067,6 +1068,7 @@ h1.intro-header::before {
 .home-social-list li a:hover,
 .home-social-list li a:focus,
 .home-social-list li a:active {
+  transition: all 250ms ease-in-out;
   color: rgb(110, 180, 236);
 }
 
@@ -1082,10 +1084,12 @@ h1.intro-header::before {
   -ms-transform-origin: right top;
   transform-origin: right top;
   float: right;
+  transition: all 150ms ease-in-out;
 }
 
 .home-scrolldown a:hover,
 .home-scrolldown a:focus {
+  transition: all 250ms ease-in-out;
   color: rgb(53, 123, 180) !important;
 }
 
