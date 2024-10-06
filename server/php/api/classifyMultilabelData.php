@@ -1,6 +1,6 @@
 <?php
     require_once "../dbconnect.php";
-    // require_once "../global_functions.php";
+    require_once "../global_functions.php";
 
     $method = $_SERVER['REQUEST_METHOD'];
     $input = json_decode(file_get_contents('php://input'), true);
@@ -11,17 +11,18 @@
         exit;
     }
 
-    // if(!isset($input['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token is not set."]);
-    //     exit;
-    // }
+    // Token Validation.
+    if(!isset($input['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token is not set."]);
+        exit;
+    }
 
-    // if(!token_exists($input['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token doesn't exist."]);
-    //     exit;
-    // }
+    if(!token_exists($input['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token doesn't exist."]);
+        exit;
+    }
 
     // File Validation.
     if(!isset($input['file'])) {
@@ -75,11 +76,10 @@
     $features = str_replace(" ", "_", $features);
     $labels = str_replace(" ", "_", $labels);
 
-    // $email = user_mail($input['token']);
-    // $hash_user = md5($email);
+    $email = user_mail($input['token']);
+    $hash_user = md5($email);
 
-    // $file_path = "../../py/users/$hash_user/unclassified_datasets/$file";
-    $file_path = "../../py/users/unclassified_datasets/$file";
+    $file_path = "../../py/users/$hash_user/unclassified_datasets/$file";
 
     if(!file_exists($file_path)) {
         header("HTTP/1.1 400 Bad Request");
@@ -87,8 +87,7 @@
         exit;
     }
 
-    // $model_path = "../../py/users/$hash_user/models/$model";
-    $model_path = "../../py/users/models/$model";
+    $model_path = "../../py/users/$hash_user/models/$model";
 
     if(!file_exists($model_path)) {
         header("HTTP/1.1 400 Bad Request");
@@ -98,11 +97,10 @@
 
     $name = $file;
     $name = substr($name, 0, -4);
-    // $save_path = "../../py/users/$hash_user/models/$name" . "_classified.csv";
-    $save_path = "../../py/users/models/$name" . "_classified.csv";
 
-    // $paths = glob("../../py/users/$hash_user/models/*.csv");
-    $paths = glob("../../py/users/models/*.csv");
+    $save_path = "../../py/users/$hash_user/models/$name" . "_classified.csv";
+
+    $paths = glob("../../py/users/$hash_user/models/*.csv");
     if(count($paths) > 0) {
         foreach($paths as $p){
             $delete = unlink($p);

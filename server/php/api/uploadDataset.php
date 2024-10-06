@@ -2,7 +2,7 @@
     header("Access-Control-Allow-Origin: *");
 
     require_once "../dbconnect.php";
-    // require_once "../global_functions.php";
+    require_once "../global_functions.php";
 
     $method = $_SERVER['REQUEST_METHOD'];
 
@@ -12,17 +12,18 @@
         exit;
     }
 
-    // if(!isset($_POST['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token is not set."]);
-    //     exit;
-    // }
+    // Token Validation.
+    if(!isset($_POST['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token is not set."]);
+        exit;
+    }
 
-    // if(!token_exists($_POST['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token doesn't exist."]);
-    //     exit;
-    // }
+    if(!token_exists($_POST['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token doesn't exist."]);
+        exit;
+    }
 
     if(!isset($_POST['folder'])) {
         header("HTTP/1.1 400 Bad Request");
@@ -61,47 +62,49 @@
     $upload = false;
 
     if($folder == "public") {
-        // $query = 'select public_permission from users where token=?';
-        // $st = $mysqli->prepare($query);
-        // $st->bind_param('s',$_POST['token']);
-        // $st->execute();
-        // $res = $st->get_result();
-        // $public_permission = $res->fetch_assoc()['public_permission']; 
 
-        // if($public_permission == 0) {
-        //     header("HTTP/1.1 403 Forbidden");
-        //     print json_encode(['errormesg'=>"You aren't allowed to upload public data."]);
-        //     exit;
-        // }
+        $query = 'select public_permission from users where token=?';
+        $st = $mysqli->prepare($query);
+        $st->bind_param('s', $_POST['token']);
+        $st->execute();
+        $res = $st->get_result();
+        $public_permission = $res->fetch_assoc()['public_permission']; 
+
+        if($public_permission == 0) {
+            header("HTTP/1.1 403 Forbidden");
+            print json_encode(['errormesg'=>"You aren't allowed to upload public datasets."]);
+            exit;
+        }
         
         $file_path = "../../py/public/datasets/" . basename($_FILES['file']['name']);
     
         if(file_exists($file_path)) {
             header("HTTP/1.1 400 Bad Request");
-            print json_encode(['errormesg'=>"File already exists."]);
+            print json_encode(['errormesg'=>"Dataset already exists."]);
             exit;
         }
         
         $upload = move_uploaded_file($_FILES["file"]["tmp_name"], $file_path);
     }
     else {
-        // $email = user_mail($_POST['token']);
-        // $hash_user = md5($email);
 
-        // $file_path = "../../py/users/$hash_user/datasets/" . basename($_FILES['file']['name']);
+        $email = user_mail($_POST['token']);
+        $hash_user = md5($email);
 
-        // if(file_exists($file_path)) {
-        //     header("HTTP/1.1 400 Bad Request");
-        //     print json_encode(['errormesg'=>"File already exists."]);
-        //     exit;
-        // }
+        $file_path = "../../py/users/$hash_user/datasets/" . basename($_FILES['file']['name']);
+
+        if(file_exists($file_path)) {
+            header("HTTP/1.1 400 Bad Request");
+            print json_encode(['errormesg'=>"Dataset already exists."]);
+            exit;
+        }
         
-        // $upload = move_uploaded_file($_FILES["file"]["tmp_name"], $file_path);
+        $upload = move_uploaded_file($_FILES["file"]["tmp_name"], $file_path);
     }
     
     if(!$upload) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"Unable to upload file."]);
+        print json_encode(['errormesg'=>"Unable to upload dataset."]);
         exit;
     }
 

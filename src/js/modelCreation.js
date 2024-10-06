@@ -66,13 +66,14 @@ $(function () {
                 $("#select_dataset").html("");
                 $("#select_dataset").append($("<option value='default' selected>Select an existing Dataset</option>"));
 
+                // Public Datasets.
                 for (var i = 0; i < publicDatasets.length; i++) {
                     $("#select_dataset").append($(`<option class='public' value='${publicDatasets[i]}'>[PUBLIC]  ${publicDatasets[i]}</option>`));
                 }
-
-                // for(var i = 0; i < privateDatasets.length; i++) {
-                //     $("#select_dataset").append($(`<option class='private' value='${privateDatasets[i]}'>[PRIVATE]  ${privateDatasets[i]}</option>`));
-                // }
+                // Private Datasets.
+                for (var i = 0; i < privateDatasets.length; i++) {
+                    $("#select_dataset").append($(`<option class='private' value='${privateDatasets[i]}'>[PRIVATE]  ${privateDatasets[i]}</option>`));
+                }
 
                 $('#delbtn').prop("disabled", true);
                 $('#dnload-btn').prop("disabled", true);
@@ -729,8 +730,8 @@ $(function () {
         for (var i = 0; i < classifiers.length; i++) {
             $("#select_classifier").append($(`<option value='${classifiers[i]}'>${classifiers[i]}</option>`));
         }
-        $("#min_samples_leaf").val("1");
-        $("#max_depth").val("");
+        $("#min_samples_leaf").val("1").prop("disabled", false);;
+        $("#max_depth").val("").prop("disabled", false);;
         $("#kFolds").val("5");
     });
 

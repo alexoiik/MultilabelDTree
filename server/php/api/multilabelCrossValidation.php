@@ -1,6 +1,6 @@
 <?php
     require_once "../dbconnect.php";
-    // require_once "../global_functions.php";
+    require_once "../global_functions.php";
 
     $method = $_SERVER['REQUEST_METHOD'];
     $input = json_decode(file_get_contents('php://input'), true);
@@ -11,17 +11,18 @@
         exit;
     }
 
-    // if(!isset($input['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token is not set."]);
-    //     exit;
-    // }
+    // Token Validation.
+    if(!isset($input['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token is not set."]);
+        exit;
+    }
 
-    // if(!token_exists($input['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token doesn't exist."]);
-    //     exit;
-    // }
+    if(!token_exists($input['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token doesn't exist."]);
+        exit;
+    }
 
     // Folder Validation.
     if(!isset($input['folder'])) {
@@ -38,7 +39,7 @@
         exit;
     }
 
-    // File Validation.
+    // Dataset Validation.
     if(!isset($input['file'])) {
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"Please select a dataset."]);
@@ -153,29 +154,30 @@
         exit;
     }
 
-    
     $file_path = "";
 
     if($folder == "public") {
+
         $file_path = "../../py/public/datasets/$file";
 
         if(!file_exists($file_path)) {
             header("HTTP/1.1 400 Bad Request");
-            print json_encode(['errormesg'=>"File doesn't exist."]);
+            print json_encode(['errormesg'=>"Dataset doesn't exist."]);
             exit;
         }
     }
     else {
-        // $email = user_mail($input['token']);
 
-        // $hash_user = md5($email);
-        // $file_path = "../../py/users/$hash_user/datasets/$file";
+        $email = user_mail($input['token']);
+        $hash_user = md5($email);
 
-        // if(!file_exists($file_path)) {
-        //     header("HTTP/1.1 400 Bad Request");
-        //     print json_encode(['errormesg'=>"File doesn't exist."]);
-        //     exit;
-        // }
+        $file_path = "../../py/users/$hash_user/datasets/$file";
+
+        if(!file_exists($file_path)) {
+            header("HTTP/1.1 400 Bad Request");
+            print json_encode(['errormesg'=>"Dataset doesn't exist."]);
+            exit;
+        }
     }
 
     $countFields = 0;
@@ -265,14 +267,11 @@
 
         // Replacing.
         $features = str_replace(" ", "_", $features);
-
         $labels = str_replace(" ", "_", $labels);
-
         $classifier = str_replace(" ", "_", $classifier);
         
         // Imploding.
         $featuresImplode = implode(",", $features);
-
         $labelsImplode = implode(",", $labels);
 
         $results;

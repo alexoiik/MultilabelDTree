@@ -1,6 +1,6 @@
 <?php
     require_once "../dbconnect.php";
-    // require_once "../global_functions.php";
+    require_once "../global_functions.php";
 
     $method = $_SERVER['REQUEST_METHOD'];
     $input = json_decode(file_get_contents('php://input'), true);
@@ -11,17 +11,18 @@
         exit;
     }
 
-    // if(!isset($input['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token is not set."]);
-    //     exit;
-    // }
+    // Token Validation.
+    if(!isset($input['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token is not set."]);
+        exit;
+    }
 
-    // if(!token_exists($input['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token doesn't exist."]);
-    //     exit;
-    // }
+    if(!token_exists($input['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token doesn't exist."]);
+        exit;
+    }
 
     // Folder Validation.
     if(!isset($input['folder'])) {
@@ -157,25 +158,27 @@
     $file_path = "";
 
     if($folder == "public") {
+
         $file_path = "../../py/public/datasets/$file";
 
         if(!file_exists($file_path)) {
             header("HTTP/1.1 400 Bad Request");
-            print json_encode(['errormesg'=>"File doesn't exist."]);
+            print json_encode(['errormesg'=>"Dataset doesn't exist."]);
             exit;
         }
     }
     else {
-        // $email = user_mail($input['token']);
 
-        // $hash_user = md5($email);
-        // $file_path = "../../py/users/$hash_user/datasets/$file";
+        $email = user_mail($input['token']);
+        $hash_user = md5($email);
 
-        // if(!file_exists($file_path)) {
-        //     header("HTTP/1.1 400 Bad Request");
-        //     print json_encode(['errormesg'=>"File doesn't exist."]);
-        //     exit;
-        // }
+        $file_path = "../../py/users/$hash_user/datasets/$file";
+
+        if(!file_exists($file_path)) {
+            header("HTTP/1.1 400 Bad Request");
+            print json_encode(['errormesg'=>"Dataset doesn't exist."]);
+            exit;
+        }
     }
 
     $countFields = 0;
@@ -273,34 +276,17 @@
         $labelsImplode = implode(",", $labels);
         
         // Model's Existance Validation.
+        $email = user_mail($input['token']);
+        $hash_user = md5($email);
 
-        // $email = user_mail($input['token']);
-        // $hash_user = md5($email);
-
-        // $model_transformation = "../../py/users/$hash_user/transformations/$model_file_transformation";
-        // if(file_exists($model_transformation)) {
-        //     header("HTTP/1.1 400 Bad Request");
-        //     print json_encode(['errormesg'=>"Model already exists. Try a different name."]);
-        //     exit;
-        // }
-
-        // $model_path = "../../py/users/$hash_user/models/$model_file";
-        // if(file_exists($model_path)) {
-        //     header("HTTP/1.1 400 Bad Request");
-        //     print json_encode(['errormesg'=>"Model already exists. Try a different name."]);
-        //     exit;
-        // }
-
-        $model_transformation = "../../py/users/transformations/$model_file_transformation";  // ΕΓΩ ΤΟ ΕΒΑΛΑ. (Testing model_transformation to save the transformation).
-
+        $model_transformation = "../../py/users/$hash_user/transformations/$model_file_transformation";
         if(file_exists($model_transformation)) {
             header("HTTP/1.1 400 Bad Request");
             print json_encode(['errormesg'=>"Model already exists. Try a different name."]);
             exit;
         }
 
-        $model_path = "../../py/users/models/$model_file"; // ΕΓΩ ΤΟ ΕΒΑΛΑ. (Testing model_path to save the model).
-
+        $model_path = "../../py/users/$hash_user/models/$model_file";
         if(file_exists($model_path)) {
             header("HTTP/1.1 400 Bad Request");
             print json_encode(['errormesg'=>"Model already exists. Try a different name."]);
@@ -324,10 +310,9 @@
 
             /* Database Manipulation Steps. */
         // 1) Getting the unique id from users table.
-        $token = 'faketoken'; // fake token.
         $query = 'select id from users where token=?';
         $st = $mysqli->prepare($query);
-        $st->bind_param('s', $token); // later addition: $input['token'] 
+        $st->bind_param('s', $input['token']);
         $st->execute();
         $res = $st->get_result();
         $user_id = $res->fetch_assoc()['id'];
