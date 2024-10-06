@@ -3,8 +3,7 @@
     function getdomain() {
         if(gethostname() == 'nireas') {
             $d = 'https://kclusterhub.iee.ihu.gr/MultilabelDTree';
-        }
-        else {
+        } else {
             $d = 'http://localhost/MultilabelDTree';
         }
         return $d;
@@ -21,8 +20,7 @@
         $count = $res->fetch_assoc()['c'];
         if($count > 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -44,8 +42,7 @@
             $res3 = $st3->get_result();
             $address = $res3->fetch_assoc()['address'];
             return $address;
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -61,8 +58,7 @@
         $count = $res->fetch_assoc()['c'];
         if($count > 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -73,8 +69,7 @@
         $dir4 = rmdir($pathName);
         if($dir4) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
