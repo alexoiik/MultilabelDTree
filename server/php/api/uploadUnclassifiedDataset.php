@@ -2,7 +2,7 @@
     header("Access-Control-Allow-Origin: *");
     
     require_once "../dbconnect.php";
-    // require_once "../global_functions.php";
+    require_once "../global_functions.php";
 
     $method = $_SERVER['REQUEST_METHOD'];
 
@@ -12,18 +12,20 @@
         exit;
     }
 
-    // if(!isset($_POST['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token is not set."]);
-    //     exit;
-    // }
+    // Token Validation.
+    if(!isset($_POST['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token is not set."]);
+        exit;
+    }
 
-    // if(!token_exists($_POST['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token doesn't exist."]);
-    //     exit;
-    // }
+    if(!token_exists($_POST['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token doesn't exist."]);
+        exit;
+    }
 
+    // Dataset Validation.
     if(!isset($_FILES['file'])) {
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"Please select a dataset."]);
@@ -44,15 +46,13 @@
         exit;
     }
     
-    // $email = user_mail($_POST['token']);
-    // $hash_user = md5($email);
+    $email = user_mail($_POST['token']);
+    $hash_user = md5($email);
 
-    // $file_path = "../../py/users/$hash_user/unclassified_datasets/" . basename($_FILES['file']['name']);
-    $file_path = "../../py/users/unclassified_datasets/" . basename($_FILES['file']['name']);
-
+    $file_path = "../../py/users/$hash_user/unclassified_datasets/" . basename($_FILES['file']['name']);
     if(file_exists($file_path)) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"File already exists."]);
+        print json_encode(['errormesg'=>"Dataset already exists."]);
         exit;
     }
     
@@ -60,7 +60,7 @@
     
     if(!$upload) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"Unable to upload file."]);
+        print json_encode(['errormesg'=>"Unable to upload dataset."]);
         exit;
     }
 

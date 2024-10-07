@@ -1,6 +1,6 @@
 <?php
     require_once "../dbconnect.php";
-    // require_once "../global_functions.php";
+    require_once "../global_functions.php";
 
     $method = $_SERVER['REQUEST_METHOD'];
 
@@ -10,19 +10,20 @@
         exit;
     }
     
-    // if(!isset($_GET['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token is not set."]);
-    //     exit;
-    // }
+    // Token Validation.
+    if(!isset($_GET['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token is not set."]);
+        exit;
+    }
 
-    // if(!token_exists($_GET['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token doesn't exist."]);
-    //     exit;
-    // }
+    if(!token_exists($_GET['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token doesn't exist."]);
+        exit;
+    }
 
-    // File Validation.
+    // Model Validation.
     if(!isset($_GET['file'])) {
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"Please select a model."]);
@@ -31,15 +32,13 @@
 
     $file = $_GET['file'];
 
-    // $email = user_mail($_GET['token']);
-    // $hash_user = md5($email);
+    $email = user_mail($_GET['token']);
+    $hash_user = md5($email);
 
-    // $file_path = "../../py/users/$hash_user/models/$file"; # << CORRECT (for later addition)
-    $file_path = "../../py/users/models/$file"; # << ΕΓΩ ΤΟ ΈΒΑΛΑ 
-
+    $file_path = "../../py/users/$hash_user/models/$file";
     if(!file_exists($file_path)) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"File doesn't exist."]);
+        print json_encode(['errormesg'=>"Model doesn't exist."]);
         exit;
     }
 
@@ -60,10 +59,9 @@
 
         /* Database Manipulation Steps. */
     // 1) Getting the unique id from users table.
-    $token = 'faketoken'; // fake token.
     $query = 'select id from users where token=?';
     $st = $mysqli->prepare($query);
-    $st->bind_param('s', $token); // later addition: $_GET['token']
+    $st->bind_param('s', $_GET['token']);
     $st->execute();
     $res = $st->get_result();
     $user_id = $res->fetch_assoc()['id'];

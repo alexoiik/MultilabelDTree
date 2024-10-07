@@ -1,6 +1,6 @@
 <?php
     require_once "../dbconnect.php";
-    // require_once "../global_functions.php";
+    require_once "../global_functions.php";
 
     $method = $_SERVER['REQUEST_METHOD'];
     
@@ -12,18 +12,20 @@
         exit;
     }
 
-    // if(!isset($input['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token is not set."]);
-    //     exit;
-    // }
+    // Token Validation.
+    if(!isset($input['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token is not set."]);
+        exit;
+    }
 
-    // if(!token_exists($input['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token doesn't exist."]);
-    //     exit;
-    // }
+    if(!token_exists($input['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token doesn't exist."]);
+        exit;
+    }
 
+    // Model Validation.
     if(!isset($input['file'])) {
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"Please select a model to delete."]);
@@ -32,48 +34,45 @@
 
     $file = $input['file'];
 
-    // $email = user_mail($input['token']);
-    // $hash_user = md5($email);
+    $email = user_mail($input['token']);
+    $hash_user = md5($email);
 
-    // $file_path = "../../py/users/$hash_user/models/$file"; # << CORRECT (for later addition)
-    $file_path = "../../py/users/models/$file"; # << ΕΓΩ ΤΟ ΈΒΑΛΑ 
-
+    $file_path = "../../py/users/$hash_user/models/$file";
     if(!file_exists($file_path)) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"File doesn't exist."]);
+        print json_encode(['errormesg'=>"Model doesn't exist."]);
         exit;
     }
     
+    // Transformation Validation.
     $trf_file = str_replace('.pkl', '', $file);
-    // $transformation_path = "../../py/users/transformations/$hash_user/" . $trf_file . "_transformation.pkl"; # << CORRECT (for later addition)
-    $transformation_path = "../../py/users/transformations/" . $trf_file . "_transformation.pkl"; # << ΕΓΩ ΤΟ ΈΒΑΛΑ 
-
+    $transformation_path = "../../py/users/$hash_user/transformations/" . $trf_file . "_transformation.pkl";
     if(!file_exists($transformation_path)) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"File doesn't exist."]);
+        print json_encode(['errormesg'=>"Transformation doesn't exist."]);
         exit;
     }
 
+    // Deleting Model & Corresponding Transformation.
     $delete = unlink($file_path);
     if(!$delete) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"Unable to delete this file."]);
+        print json_encode(['errormesg'=>"Unable to delete model."]);
         exit;
     }
 
     $delete2 = unlink($transformation_path);
     if(!$delete2) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"Unable to delete this file."]);
+        print json_encode(['errormesg'=>"Unable to delete transformation."]);
         exit;
     }
 
         /* Database Manipulation Steps. */
     // 1) Getting the unique id from users table.
-    $token = 'faketoken'; // fake token.
     $query = 'select id from users where token=?';
     $st = $mysqli->prepare($query);
-    $st->bind_param('s', $token); // later addition: $input['token'] 
+    $st->bind_param('s', $input['token']);
     $st->execute();
     $res = $st->get_result();
     $user_id = $res->fetch_assoc()['id'];

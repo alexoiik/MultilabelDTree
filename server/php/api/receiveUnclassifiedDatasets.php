@@ -1,6 +1,6 @@
 <?php
     require_once "../dbconnect.php";
-    // require_once "../global_functions.php";
+    require_once "../global_functions.php";
     
     $method = $_SERVER['REQUEST_METHOD'];
 
@@ -10,23 +10,23 @@
         exit;
     }
 
-    // if(!isset($_GET['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token is not set."]);
-    //     exit;
-    // }
+    // Token Validation.
+    if(!isset($_GET['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token is not set."]);
+        exit;
+    }
 
-    // if(!token_exists($_GET['token'])) {
-    //     header("HTTP/1.1 400 Bad Request");
-    //     print json_encode(['errormesg'=>"Token doesn't exist."]);
-    //     exit;
-    // }
+    if(!token_exists($_GET['token'])) {
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token doesn't exist."]);
+        exit;
+    }
 
-    // $email = user_mail($_GET['token']);
-    // $hash_user = md5($email);
+    $email = user_mail($_GET['token']);
+    $hash_user = md5($email);
 
-    // $path = "../../py/users/$hash_user/unclassified_datasets";
-    $path = "../../py/users/unclassified_datasets";
+    $path = "../../py/users/$hash_user/unclassified_datasets";
 
     $unclassified_data = [];
     $data = glob($path . '/' . '*');
