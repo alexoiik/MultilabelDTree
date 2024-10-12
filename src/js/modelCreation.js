@@ -292,6 +292,9 @@ $(function () {
                     var num_fields = data2.numerical_fields;
                     var fields1 = data2.binary_fields;
 
+                    // Filtering out from numerical fields, only the labels.
+                    var filteredNumFields = num_fields.filter(field => !fields1.includes(field));
+
                     $("#data_table_head_tr").html("");
                     $("#data_table_tbody").html("");
 
@@ -322,12 +325,12 @@ $(function () {
                         </label>
                     `));
                     $('#checkBoxes').html("");
-                    for (var i = 0; i < num_fields.length; i++) {
+                    for (var i = 0; i < filteredNumFields.length; i++) {
                         $('#checkBoxes').append($(`
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input edit_checkbox" type="checkbox" name="num_field" value="${num_fields[i]}" id="flexCheckDefault">
+                                <input class="form-check-input edit_checkbox" type="checkbox" name="num_field" value="${filteredNumFields[i]}" id="flexCheckDefault">
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    ${num_fields[i]}
+                                    ${filteredNumFields[i]}
                                 </label>
                             </div>
                         `));

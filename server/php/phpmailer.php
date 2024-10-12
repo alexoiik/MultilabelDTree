@@ -15,7 +15,7 @@
             // SMTP SetUp.
             $mail->SMTPDebug = 0;       
             $mail->isSMTP();            
-            $mail->Host       = 'smtp.zoho.eu';   
+            $mail->Host       = 'smtp.gmail.com';   
             $mail->SMTPAuth   = true;       
                            
             // SMTP Options.
