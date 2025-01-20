@@ -1,21 +1,21 @@
 <?php
     require_once "db_upass.php";
-
+    
     $host = $REMOTE_HOST;
     $db = $DB_SCHEMA;
-    $user_local = $DB_USER_LOCAL;
-    $user_server = $DB_USER_SERVER;
-    $pass = $DB_PASS;                   
+    $user = $DB_USER;
+    $pass = $DB_PASS;
 
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    
-    if(gethostname()=='nireas') {
-        $mysqli = new mysqli($host, $user_server, $pass, $db);
+
+    if (gethostname() == 'nireas') {
+        $mysqli = new mysqli($host, $user, $pass, $db);
     } else {
-        $host = 'localhost';
-        $pass = null;
-        $db = 'multilabeldtree_db';
-        $mysqli = new mysqli($host, $user_local, $pass, $db);
+        $host = "localhost";
+        $userlocal = $DB_USER_LOCAL;
+        $pass = "";
+        $db = "autoknn_db";
+        $mysqli = new mysqli($host, $userlocal, $pass, $db);
     }
 
     if ($mysqli->connect_errno) {

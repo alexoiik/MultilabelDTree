@@ -83,16 +83,16 @@
 
     $results;
     try {
-        $results = shell_exec("python ../../py/visualize_ml_dtrees.py $trf_path $file_path $tree_path");
+        $results = shell_exec("python3 ../../py/visualize_ml_dtrees.py $trf_path $file_path $tree_path");
     } catch(Exception $e) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"An error has occured while trying to run the Python module for DTrees Visualization"]);
+        print json_encode(['errormesg'=>"An error has occured while trying to run the python3 module for DTrees Visualization"]);
         exit;
     }
 
     if(!$results || $results == null) {
         header("HTTP/1.1 400 Bad Request");
-        print json_encode(['errormesg'=>"An error has occured while trying to run the Python module for DTrees Visualization"]);
+        print json_encode(['errormesg'=>"An error has occured while trying to run the python3 module for DTrees Visualization"]);
         exit;
     }
 

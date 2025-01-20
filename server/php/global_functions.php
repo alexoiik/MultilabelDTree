@@ -2,9 +2,9 @@
     // Function to return domain name.
     function getdomain() {
         if(gethostname() == 'nireas') {
-            $d = 'https://kclusterhub.iee.ihu.gr/MultilabelDTree';
+            $d = 'https://kclusterhub.iee.ihu.gr/multilabeldtree';
         } else {
-            $d = 'http://localhost/MultilabelDTree';
+            $d = 'http://localhost/multilabeldtree';
         }
         return $d;
     }

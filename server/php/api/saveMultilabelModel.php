@@ -295,16 +295,16 @@
 
         $results;
         try {
-            $results = shell_exec("python ../../py/save_multilabel_model.py $file_path $featuresImplode $labelsImplode $max_depth $min_samples_leaf $model_transformation $model_path $classifier");
+            $results = shell_exec("python3 ../../py/save_multilabel_model.py $file_path $featuresImplode $labelsImplode $max_depth $min_samples_leaf $model_transformation $model_path $classifier");
         } catch(Exception $e) {
             header("HTTP/1.1 400 Bad Request");
-            print json_encode(['errormesg'=>"An error has occured while trying to run the Python module. <br><br> Please check the possibility of missing values existence in given columns and try again."]);
+            print json_encode(['errormesg'=>"An error has occured while trying to run the python3 module. <br><br> Please check the possibility of missing values existence in given columns and try again."]);
             exit;
         }
 
         if(!$results || $results == null) {
             header("HTTP/1.1 400 Bad Request");
-            print json_encode(['errormesg'=>"An error has occured while trying to run the Python module. <br><br> Please check the possibility of missing values existence in given columns and try again."]);
+            print json_encode(['errormesg'=>"An error has occured while trying to run the python3 module. <br><br> Please check the possibility of missing values existence in given columns and try again."]);
             exit;
         }
 
