@@ -14,7 +14,7 @@
         $host = "localhost";
         $userlocal = $DB_USER_LOCAL;
         $pass = "";
-        $db = "autoknn_db";
+        $db = "multilabeldtree_db";
         $mysqli = new mysqli($host, $userlocal, $pass, $db);
     }
 

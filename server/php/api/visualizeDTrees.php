@@ -103,8 +103,8 @@
         $name = basename($dotFile, ".dot"); // Getting the base name of the .dot file.
         $pngFile = "../../py/users/$hash_user/models/$name" . ".png"; // Setting the corresponding .png file.
         try {
-            // shell_exec("/var/www/html/webkmeans/kclusterhub/multilabeldtree/miniconda3/bin/dot -Tpng $dotFile -o $pngFile");
-            shell_exec("dot -Tpng $dotFile -o $pngFile"); // Converting the .dot file to a .png file.
+            shell_exec("/var/www/html/webkmeans/kclusterhub/multilabeldtree/graphviz/bin/dot -Tpng $dotFile -o $pngFile");
+            //shell_exec("dot -Tpng $dotFile -o $pngFile"); // Converting the .dot file to a .png file (for locall).
         } catch(Exception $e) {
             header("HTTP/1.1 400 Bad Request");
             print json_encode(['errormesg'=>"An error has occured while trying to render the DTrees."]);
