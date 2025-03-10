@@ -118,11 +118,11 @@
     // Creating App's Secret Directories for the users.
     $hash_user = md5($email);
 	try {
-        $dir1 = mkdir("../../py/users/$hash_user");
-        $dir2 = mkdir("../../py/users/$hash_user/datasets");
-        $dir3 = mkdir("../../py/users/$hash_user/models");
-        $dir4 = mkdir("../../py/users/$hash_user/transformations");
-        $dir5 = mkdir("../../py/users/$hash_user/unclassified_datasets");
+        $dir1 = mkdir("../../py/users/$hash_user", 04775);
+        $dir2 = mkdir("../../py/users/$hash_user/datasets", 04775);
+        $dir3 = mkdir("../../py/users/$hash_user/models", 04775);
+        $dir4 = mkdir("../../py/users/$hash_user/transformations", 04775);
+        $dir5 = mkdir("../../py/users/$hash_user/unclassified_datasets", 04775);
     } catch(Exception $e) {
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"An error has occured while trying to create user's directory."]);
