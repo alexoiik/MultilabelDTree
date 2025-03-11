@@ -103,7 +103,7 @@
         $name = basename($dotFile, ".dot"); // Getting the base name of the .dot file.
         $pngFile = "../../py/users/$hash_user/models/$name" . ".png"; // Setting the corresponding .png file.
         try {
-            shell_exec("/var/www/html/webkmeans/kclusterhub/multilabeldtree/miniconda3/bin/dot -Tpng $dotFile -o $pngFile");
+            shell_exec("/var/www/html/webkmeans/kclusterhub/multilabeldtree/miniconda3/envs/myenv/bin/dot -Tpng $dotFile -o $pngFile");
             // shell_exec("/var/www/html/webkmeans/kclusterhub/multilabeldtree/graphviz/bin/dot -Tpng $dotFile -o $pngFile");
             //shell_exec("dot -Tpng $dotFile -o $pngFile"); // Converting the .dot file to a .png file (for locall).
         } catch(Exception $e) {
